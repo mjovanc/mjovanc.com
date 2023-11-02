@@ -41,13 +41,13 @@ code[class*=language-], pre[class*=language-], pre code {
 
 a {
   cursor: pointer;
-  color: #ff2e88;
+  color: #ff6a5a;
   text-decoration: none;
-  border-bottom: 1px solid #ff2e88
+  border-bottom: 1px solid #891daf
 }
 
 a:hover {
-  background-color: #ff2e88;
+  background-color: #891daf;
   color: #fff
 }
 
@@ -459,8 +459,8 @@ table tbody td:first-child {
 }
 
 .form-group.form-warning label {
-  color: #ff9800 !important;
-  border-color: #ff9800 !important
+  color: #ff6a5a !important;
+  border-color: #ff6a5a !important
 }
 
 .form-group.form-error label {
@@ -621,8 +621,8 @@ select.form-control {
 
 .btn-warning {
   color: #fff;
-  background-color: #ff9800;
-  border: 1px solid #ff9800
+  background-color: #ff6a5a;
+  border: 1px solid #ff6a5a
 }
 
 .btn-warning:focus:not(.btn-ghost), .btn-warning:hover {
@@ -631,8 +631,8 @@ select.form-control {
 }
 
 .btn-warning.btn-ghost {
-  border-color: #ff9800;
-  color: #ff9800
+  border-color: #ff6a5a;
+  color: #ff6a5a
 }
 
 .btn-warning.btn-ghost:focus, .btn-warning.btn-ghost:hover {
@@ -731,8 +731,8 @@ select.form-control {
 }
 
 .alert-warning {
-  color: #ff9800;
-  border-color: #ff9800
+  color: #ff6a5a;
+  border-color: #ff6a5a
 }
 
 .media:not(:last-child) {
@@ -871,7 +871,7 @@ select.form-control {
 }
 
 .dark, .dark pre {
-  background-color: #000
+  background-color: #0e1117
 }
 
 .dark pre {

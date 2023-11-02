@@ -3,33 +3,26 @@ base_url = "https://mjovanc.com"
 title = "Marcus Cvjeticanin"
 description = "Software Engineer"
 theme = "after-dark"
-
-# Whether to automatically compile all Sass files in the sass directory
+generate_feed = true
 compile_sass = true
-
-# Whether to build a search index to be used later on by a JavaScript library
 build_search_index = true
 
+taxonomies = [
+    { name = "categories", feed = true },
+    { name = "tags", feed = true },
+]
+
 [markdown]
-# Whether to do syntax highlighting
 # Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
 highlight_code = true
 
 [extra]
 author = "Marcus Cvjeticanin"
-# Put all your custom variables here
-
-taxonomies = [
-    # You can enable/disable RSS
-    { name = "categories", feed = true },
-    { name = "tags", feed = true },
-]
+after_dark_title = "Marcus Cvjeticanin"
 
 after_dark_menu = [
     { url = "$BASE_URL", name = "Home" },
     { url = "$BASE_URL/categories", name = "Categories" },
     { url = "$BASE_URL/tags", name = "Tags" },
-    { url = "https://x.com/mjovanc", name = "X" },
-    { url = "https://github.com/mjovanc", name = "GitHub" },
-    { url = "https://www.linkedin.com/in/marcuscvjeticanin/", name = "LinkedIn" },
+    { url = "https://x.com/mjovanc", name = "𝕏" },
 ]

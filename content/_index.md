@@ -1,5 +1,4 @@
 +++
-title = "index"
-paginate_by = 10
+paginate_by = 5
 +++
 
