@@ -1,5 +1,6 @@
 +++
 title = "Handy shortcuts in IntelliJ IDEA"
+description = "Shortcut examples using the IntelliJ IDEA."
 date = 2022-10-12
 
 [taxonomies]
@@ -9,7 +10,7 @@ tags = ["intellij", "ide", "jetbrains"]
 
 <img src="/handy-shortcuts-in-intellij-idea/main.png" class="rounded-image-main" alt="IntelliJ IDEA" style="max-width: 100%;">
 
-IntelliJ is my daily driver. Since I was introduced to Eclipse for Java at my university a while ago and experienced the terror, I was looking for alternatives and I found Intellij. I use it all the time, and it's definitely my favorite IDE. All the other Jetbrains products such as PyCharm and WebStorm are also on the same high standard.
+[IntelliJ IDEA](https://www.jetbrains.com/idea/) is my daily driver. Since I was introduced to [Eclipse](https://eclipseide.org) for Java at my university a while ago and experienced the terror, I was looking for alternatives and I found Intellij. I use it all the time, and it's definitely my favorite IDE. All the other Jetbrains products such as PyCharm and WebStorm are also on the same high standard.
 <!-- more -->
 In this short article I'm going to go through what kind of good commands you could use to maximize your development experience with the IDE to get more productive.
 

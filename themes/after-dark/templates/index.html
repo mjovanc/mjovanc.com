@@ -10,14 +10,28 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% if page %}
+    <meta property="twitter:title" content="{{ page.title }}" />
+
+        {% if page.slug %}
+            <meta property="twitter:url" content="{{ config.base_url }}/{{ page.slug }}" />
+        {% else %}
+            <meta property="twitter:url" content="{{ config.base_url }}" />
+        {% endif %}
+
       {% if page.description %}
-      <meta name="description" content="{{ page.description }}" />
+        <meta name="description" content="{{ page.description }}" />
+        <meta property="twitter:description" content="{{ page.description }}" />
       {% elif config.description %}
-      <meta name="description" content="{{ config.description }}" />
+        <meta name="description" content="{{ config.description }}" />
+        <meta property="twitter:description" content="{{ config.description }}" />
       {% endif %}
     {% elif config.description %}
-      <meta name="description" content="{{ config.description }}" />
+        <meta name="description" content="{{ config.description }}" />
     {% endif %}
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:image" content="{{ config.base_url }}/images/mjovanc.png" />
 
       <title>{% block title %}{{ config.title }}{% endblock title %}</title>
 

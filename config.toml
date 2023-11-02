@@ -1,7 +1,7 @@
 # The URL the site will be built for
 base_url = "https://mjovanc.com"
 title = "Marcus Cvjeticanin"
-description = "Software Engineer"
+description = "Software Engineer specialized in backend systems. Java, Kotlin, JVM, CI/CD, Concurrency, Distributed Systems, Decentralized Systems."
 theme = "after-dark"
 generate_feed = true
 compile_sass = true
