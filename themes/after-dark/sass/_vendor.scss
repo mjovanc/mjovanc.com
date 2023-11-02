@@ -16,7 +16,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  line-height: 1.3em
+  // line-height: 1.3em
 }
 
 fieldset {
@@ -178,9 +178,16 @@ a:hover {
 }
 
 .hack, .hack blockquote, .hack code, .hack em, .hack h1, .hack h2, .hack h3, .hack h4, .hack h5, .hack h6, .hack strong {
-  font-size: 1rem;
+  // font-size: 1rem;
   font-style: normal;
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif
+}
+
+.small-title {
+    font-size: 1rem;
+    font-style: normal;
+    line-height: 1.3em;
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif
 }
 
 .hack blockquote, .hack code, .hack em, .hack strong {
@@ -222,9 +229,42 @@ a:hover {
   margin-top: 0
 }
 
-.hack h2, .hack h3, .hack h4, .hack h5, .hack h6 {
-  position: relative;
-  margin-bottom: 1.75rem
+.hack h2 {
+    position: relative;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    /* Add margin-top for spacing above the heading */
+    line-height: 1.3;
+}
+
+.hack h3 {
+    position: relative;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    /* Add margin-top for spacing above the heading */
+    line-height: 1.4;
+}
+
+.hack h4 {
+    position: relative;
+    margin-top: 1rem;
+    /* Add margin-top for spacing above the heading */
+    line-height: 1.5;
+}
+
+.hack h5 {
+    position: relative;
+    margin-top: 1rem;
+    /* Add margin-top for spacing above the heading */
+    line-height: 1.6;
+}
+
+.hack h6 {
+    position: relative;
+    margin-top: 1rem;
+    /* Add margin-top for spacing above the heading */
+    margin-bottom: 1.75rem;
+    line-height: 1.7;
 }
 
 .hack h2:before, .hack h3:before, .hack h4:before, .hack h5:before, .hack h6:before {

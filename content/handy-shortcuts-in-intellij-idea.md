@@ -62,7 +62,7 @@ CTRL + ALT + b
 
 This will take you to the actual code in DaemonBasic class that implements that method.
 
-<img src="/handy-shortcuts-in-intellij-idea/image-4.webp" alt="IntelliJ IDEA Screenshot 1" style="margin-bottom: 1.5em; max-width: 100%;">
+<img src="/handy-shortcuts-in-intellij-idea/image-4.webp" alt="IntelliJ IDEA Screenshot 1" style="max-width: 100%;">
 
 ## Go to declaration
 
@@ -77,7 +77,7 @@ CTRL + b
 **Linux**\
 CTRL + b
 
-<img src="/handy-shortcuts-in-intellij-idea/image-5.webp" alt="IntelliJ IDEA Screenshot 1" style="margin-bottom: 1.5em;max-width: 100%;">
+<img src="/handy-shortcuts-in-intellij-idea/image-5.webp" alt="IntelliJ IDEA Screenshot 1" style="max-width: 100%;">
 
 ## Go to last/previous cursor position
 
@@ -124,7 +124,7 @@ SHIFT + F6
 **Linux**\
 SHIFT + F6
 
-<img src="/handy-shortcuts-in-intellij-idea/image-7.webp" alt="IntelliJ IDEA Screenshot 1" style="margin-bottom: 1.5em;max-width: 100%;">
+<img src="/handy-shortcuts-in-intellij-idea/image-7.webp" alt="IntelliJ IDEA Screenshot 1" style="max-width: 100%;">
 
 ## Browse recent files
 
@@ -139,7 +139,7 @@ CTRL + E
 **Linux**\
 CTRL + E
 
-<img src="/handy-shortcuts-in-intellij-idea/image-8.webp" alt="IntelliJ IDEA Screenshot 1" style="margin-bottom: 1.5em;max-width: 100%;">
+<img src="/handy-shortcuts-in-intellij-idea/image-8.webp" alt="IntelliJ IDEA Screenshot 1" style="max-width: 100%;">
 
 ## Summary
 
