@@ -10,6 +10,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% if page %}
+    <title>{% block title %}{{ page.title }}{% endblock title %}</title>
     <meta property="twitter:title" content="{{ page.title }}" />
 
         {% if page.slug %}
@@ -27,13 +28,15 @@
       {% endif %}
     {% elif config.description %}
         <meta name="description" content="{{ config.description }}" />
+    {% else %}
+        <title>{% block title %}{{ config.title }}{% endblock title %}</title>
     {% endif %}
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:image" content="{{ config.base_url }}/images/mjovanc.png" />
 
-      <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+      
 
       {% if config.generate_feed %}
         <link rel="alternate" type={% if config.feed_filename == "atom.xml" %}"application/atom+xml"{% else %}"application/rss+xml"{% endif %} title="RSS" href="{{ get_url(path=config.feed_filename) | safe }}">

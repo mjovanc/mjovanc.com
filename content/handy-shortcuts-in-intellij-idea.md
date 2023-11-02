@@ -1,6 +1,6 @@
 +++
 title = "Handy shortcuts in IntelliJ IDEA"
-description = "Shortcut examples using the IntelliJ IDEA."
+description = "In this article we are going through some useful shortcut examples using the IntelliJ IDEA."
 date = 2022-10-12
 
 [taxonomies]
