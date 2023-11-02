@@ -28,7 +28,6 @@
       {% endif %}
     {% elif config.description %}
         <meta name="description" content="{{ config.description }}" />
-    {% else %}
         <title>{% block title %}{{ config.title }}{% endblock title %}</title>
     {% endif %}
     
