@@ -7,7 +7,7 @@ categories = ["Tooling"]
 tags = ["intellij", "ide", "jetbrains"]
 +++
 
-<img src="/handy-shortcuts-in-intellij-idea/main.png" class="rounded-image-main" alt="IntelliJ IDEA" style="margin-top: 1.5em; max-width: 100%;">
+<img src="/handy-shortcuts-in-intellij-idea/main.png" class="rounded-image-main" alt="IntelliJ IDEA" style="max-width: 100%;">
 
 IntelliJ is my daily driver. Since I was introduced to Eclipse for Java at my university a while ago and experienced the terror, I was looking for alternatives and I found Intellij. I use it all the time, and it's definitely my favorite IDE. All the other Jetbrains products such as PyCharm and WebStorm are also on the same high standard.
 <!-- more -->
