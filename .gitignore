@@ -31,6 +31,7 @@ e2e/*.js
 e2e/*.map
 
 # System Files
-.DS_Store/
+.DS_Store
+public/
 
 # End of https://www.toptal.com/developers/gitignore/api/angular

@@ -1,8 +1,8 @@
 # The URL the site will be built for
 base_url = "https://mjovanc.com"
 title = "Marcus Cvjeticanin"
-description = "Backend Software Engineer"
-theme = "anatole-zola"
+description = "Software Engineer"
+theme = "after-dark"
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
@@ -16,28 +16,20 @@ build_search_index = true
 highlight_code = true
 
 [extra]
+author = "Marcus Cvjeticanin"
 # Put all your custom variables here
 
-[languages.en.translations]
-language_name = "English"
-about = "About"
-home = "Home"
-tags = "Tags"
-archive = "Archive"
-links = "Links"
-date_format = "%Y-%m-%d"
-next_page = "Next Page"
-last_page = "Last Page"
+taxonomies = [
+    # You can enable/disable RSS
+    { name = "categories", feed = true },
+    { name = "tags", feed = true },
+]
 
-[extra.social]
-github = "mjovanc"
-gitlab = ""
-stackoverflow = "" # use user_id
-twitter = "mjovanc"
-mastodon = "" # use hostname/@username
-facebook = ""
-instagram = ""
-dribbble = ""
-weibo = ""
-linkedin = "marcuscvjeticanin"
-flickr = ""
+after_dark_menu = [
+    { url = "$BASE_URL", name = "Home" },
+    { url = "$BASE_URL/categories", name = "Categories" },
+    { url = "$BASE_URL/tags", name = "Tags" },
+    { url = "https://x.com/mjovanc", name = "X" },
+    { url = "https://github.com/mjovanc", name = "GitHub" },
+    { url = "https://www.linkedin.com/in/marcuscvjeticanin/", name = "LinkedIn" },
+]
