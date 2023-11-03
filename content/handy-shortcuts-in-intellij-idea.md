@@ -2,9 +2,10 @@
 title = "Handy shortcuts in IntelliJ IDEA"
 description = "In this article we are going through some useful shortcut examples using the IntelliJ IDEA."
 date = 2022-10-12
+path = "tooling/handy-shortcuts-in-intellij-idea"
 
 [taxonomies]
-categories = ["Tooling"]
+categories = ["tooling"]
 tags = ["intellij", "ide", "jetbrains"]
 +++
 
