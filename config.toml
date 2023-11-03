@@ -6,6 +6,7 @@ theme = "after-dark"
 generate_feed = true
 compile_sass = true
 build_search_index = true
+output_dir = "docs"
 
 taxonomies = [
     { name = "categories", feed = true },
