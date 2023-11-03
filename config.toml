@@ -7,6 +7,7 @@ generate_feed = true
 compile_sass = true
 build_search_index = true
 output_dir = "docs"
+preserve_dotfiles_in_output = true
 
 taxonomies = [
     { name = "categories", feed = true },
