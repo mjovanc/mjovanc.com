@@ -10,8 +10,10 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
 
-      - name: build and deploy
+      - name: build
         uses: shalzz/zola-deploy-action@v0.17.2
         env:
-          PAGES_BRANCH: gh-pages
+          BUILD_DIR: docs
+          BUILD_ONLY: true
+          BUILD_FLAGS: --drafts
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
