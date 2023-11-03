@@ -9,3 +9,4 @@ zola build
 
 # copy back the cname record for version control
 cp ~/preserved/CNAME docs/CNAME
+
