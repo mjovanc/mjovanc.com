@@ -21,7 +21,7 @@ The search functionality is great in IntelliJ. To open up the quick search press
 SHIFT + SHIFT and you will get up a popup like this.
 
 <div style="text-align: center;">
-  <img src="/handy-shortcuts-in-intellij-idea/image-0.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 0" style="max-width: 100%; display: inline-block;">
+  <img src="/tooling/handy-shortcuts-in-intellij-idea/image-0.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 0" style="max-width: 100%; display: inline-block;">
 </div>
 
 Here you can enter in class name, file, method, field and much more and it will display it and you can move the arrows up and down and press enter to go to the location easily.
@@ -29,7 +29,7 @@ You can also add / to see available commands such as searching for plugins with 
 And also there is option to change the behaviour of your editor by enable/disable features.
 
 <div style="text-align: center;">
-  <img src="/handy-shortcuts-in-intellij-idea/image-1.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 1" style="max-width: 100%; display: inline-block;">
+  <img src="/tooling/handy-shortcuts-in-intellij-idea/image-1.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 1" style="max-width: 100%; display: inline-block;">
 </div>
 
 There is a bunch of commands here so I won't cover all of them. But those are useful ones.
@@ -37,7 +37,7 @@ There is a bunch of commands here so I won't cover all of them. But those are us
 ## Search for everything in the project
 
 <div style="text-align: center;">
-  <img src="/handy-shortcuts-in-intellij-idea/image-2.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 2" style="max-width: 100%; display: inline-block;">
+  <img src="/tooling/handy-shortcuts-in-intellij-idea/image-2.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 2" style="max-width: 100%; display: inline-block;">
 </div>
 
 Sometimes you want to search for strings or something inside a file to do that I usually use:
@@ -56,7 +56,7 @@ CTRL + SHIFT + F
 Lets say that you are on your interface or anywhere in the source code that uses a method, but you want to go to that code to see how it works under the hood.
 
 <div style="text-align: center;">
-  <img src="/handy-shortcuts-in-intellij-idea/image-3.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 3" style="max-width: 100%; display: inline-block;">
+  <img src="/tooling/handy-shortcuts-in-intellij-idea/image-3.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 3" style="max-width: 100%; display: inline-block;">
 </div>
 
 To do that you could simply put your cursor as in this example on the interface method name and press the following.
@@ -73,7 +73,7 @@ CTRL + ALT + b
 This will take you to the actual code in DaemonBasic class that implements that method.
 
 <div style="text-align: center;">
-  <img src="/handy-shortcuts-in-intellij-idea/image-4.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 4" style="max-width: 100%; display: inline-block;">
+  <img src="/tooling/handy-shortcuts-in-intellij-idea/image-4.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 4" style="max-width: 100%; display: inline-block;">
 </div>
 
 ## Go to declaration
@@ -90,7 +90,7 @@ CTRL + b
 CTRL + b
 
 <div style="text-align: center;">
-  <img src="/handy-shortcuts-in-intellij-idea/image-5.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 5" style="max-width: 100%; display: inline-block;">
+  <img src="/tooling/handy-shortcuts-in-intellij-idea/image-5.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 5" style="max-width: 100%; display: inline-block;">
 </div>
 
 ## Go to last/previous cursor position
@@ -111,7 +111,7 @@ You change left with right arrow if you want to go forward.
 ## Collapse/expand all code blocks
 
 <div style="text-align: center;">
-  <img src="/handy-shortcuts-in-intellij-idea/image-6.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 6" style="max-width: 100%; display: inline-block;">
+  <img src="/tooling/handy-shortcuts-in-intellij-idea/image-6.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 6" style="max-width: 100%; display: inline-block;">
 </div>
 
 Sometimes I like to just collapse all the code blocks to get an overview. This can be done by pressing the following.
@@ -141,7 +141,7 @@ SHIFT + F6
 SHIFT + F6
 
 <div style="text-align: center;">
-  <img src="/handy-shortcuts-in-intellij-idea/image-7.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 1" style="max-width: 100%; display: inline-block;">
+  <img src="/tooling/handy-shortcuts-in-intellij-idea/image-7.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 1" style="max-width: 100%; display: inline-block;">
 </div>
 
 ## Browse recent files
@@ -158,7 +158,7 @@ CTRL + E
 CTRL + E
 
 <div style="text-align: center;">
-  <img src="/handy-shortcuts-in-intellij-idea/image-8.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 8" style="max-width: 100%; display: inline-block;">
+  <img src="/tooling/handy-shortcuts-in-intellij-idea/image-8.webp" class="rounded-image" alt="IntelliJ IDEA Screenshot 8" style="max-width: 100%; display: inline-block;">
 </div>
 
 ## Summary

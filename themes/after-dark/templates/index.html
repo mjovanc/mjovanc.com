@@ -12,16 +12,20 @@
 
             gtag('config', 'G-YZ8BXTEW5D');
         </script>
-        
+
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
       <!-- Enable responsiveness on mobile devices-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+
     {% if page %}
     <title>{% block title %}{{ page.title }}{% endblock title %}</title>
     <meta property="twitter:title" content="{{ page.title }}" />
+    <meta property="twitter:image" content="{{ config.base_url }}/{{ page.path }}/main_thumb.png" />
 
         {% if page.slug %}
             <meta property="twitter:url" content="{{ config.base_url }}/{{ page.slug }}" />
@@ -39,11 +43,11 @@
     {% elif config.description %}
         <meta name="description" content="{{ config.description }}" />
         <title>{% block title %}{{ config.title }} - {{ config.description}} {% endblock title %}</title>
+        <meta property="twitter:image" content="{{ config.base_url }}/images/mjovanc.png" />
     {% endif %}
     
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:image" content="{{ config.base_url }}/images/mjovanc.png" />
+    
+    
 
       
 
