@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>Marcus Cvjeticanin - Other</title>
+    <subtitle>Software Engineer specialized in backend systems. Java, Kotlin, JVM, CI&#x2F;CD, Concurrency, Distributed Systems, Decentralized Systems.</subtitle>
+    <link href="https://mjovanc.com/categories/other/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://mjovanc.com"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-11-02T00:00:00+00:00</updated>
+    <id>https://mjovanc.com/categories/other/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Welcome to my new blog!</title>
+        <published>2023-11-02T00:00:00+00:00</published>
+        <updated>2023-11-02T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://mjovanc.com/welcome/" type="text/html"/>
+        <id>https://mjovanc.com/welcome/</id>
+        
+        <summary type="html">&lt;p&gt;Welcome to my new blog! In this newly styled (self hosted) blog will I cover a range of topics but mainly the Java ecosystem with the language, JVM, tooling and much more. I will try to migrate over my older articles from Medium to this place incrementally. Stay tuned for more!&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+</feed>
