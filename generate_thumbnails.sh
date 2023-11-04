@@ -27,7 +27,7 @@ if ! command -v convert &> /dev/null; then
 fi
 
 # define the parent directories
-parent_directories=("static/tooling" "static/java")
+parent_directories=("static/tooling" "static/java", "static/other")
 
 # desired dimensions
 width=1200
