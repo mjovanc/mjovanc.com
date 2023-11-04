@@ -17,7 +17,7 @@
         <link rel="alternate" href="https://mjovanc.com/java/java-21-a-deep-dive-into-virtual-threads/" type="text/html"/>
         <id>https://mjovanc.com/java/java-21-a-deep-dive-into-virtual-threads/</id>
         
-        <summary type="html">&lt;p&gt;So the &lt;a href=&quot;https:&#x2F;&#x2F;openjdk.org&#x2F;projects&#x2F;jdk&#x2F;21&#x2F;&quot;&gt;JDK 21&lt;&#x2F;a&gt; came out, we already had some insight how the virtual threads looked like earlier with the &lt;em&gt;preview&lt;&#x2F;em&gt; flag. However with a proper release now it&#x27;s more accessible and I encourage everyone that can to upgrade to this version. &lt;&#x2F;p&gt;
+        <summary type="html">&lt;p&gt;So the &lt;a href=&quot;https:&#x2F;&#x2F;openjdk.org&#x2F;projects&#x2F;jdk&#x2F;21&#x2F;&quot;&gt;JDK 21&lt;&#x2F;a&gt; came out, we already had some insight into how the virtual threads looked like earlier with the &lt;em&gt;preview&lt;&#x2F;em&gt; flag. However with a proper release now it is more accessible and I encourage everyone who can to upgrade to this version. &lt;&#x2F;p&gt;
 </summary>
         
     </entry>

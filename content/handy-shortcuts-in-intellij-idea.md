@@ -165,7 +165,7 @@ Every day I discover something new in IntelliJ IDEA that helps a lot for my prod
 
 I hope this helped you and if you find these articles interesting, please follow me here for upcoming tutorials and consider follow me on my social medias below. I am thinking of doing a separate tutorial on how to use IntelliJ for debugging.
 
-Please consider sharing it if you found it valuable and perhaps valuable to others. Let me know if you have any questions by reaching me on 𝕏!
+If you found it valuable, please consider sharing it, as it might also be valuable to others. Let me know if you have any questions by reaching me on 𝕏!
 
 ## References
 - [IntelliJ IDEA keyboard shortcuts](https://www.jetbrains.com/help/idea/mastering-keyboard-shortcuts.html)
