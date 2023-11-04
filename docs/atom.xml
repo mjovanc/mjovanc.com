@@ -5,8 +5,22 @@
     <link href="https://mjovanc.com/atom.xml" rel="self" type="application/atom+xml"/>
     <link href="https://mjovanc.com"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
-    <updated>2023-11-02T00:00:00+00:00</updated>
+    <updated>2023-11-03T00:00:00+00:00</updated>
     <id>https://mjovanc.com/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Java 21 - A deep dive into Virtual Threads</title>
+        <published>2023-11-03T00:00:00+00:00</published>
+        <updated>2023-11-03T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://mjovanc.com/java/java-21-a-deep-dive-into-virtual-threads/" type="text/html"/>
+        <id>https://mjovanc.com/java/java-21-a-deep-dive-into-virtual-threads/</id>
+        
+        <summary type="html">&lt;p&gt;So the &lt;a href=&quot;https:&#x2F;&#x2F;openjdk.org&#x2F;projects&#x2F;jdk&#x2F;21&#x2F;&quot;&gt;JDK 21&lt;&#x2F;a&gt; came out, we already had some insight how the virtual threads looked like earlier with the &lt;em&gt;preview&lt;&#x2F;em&gt; flag. However with a proper release now it&#x27;s more accessible and I encourage everyone that can to upgrade to this version. &lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
     <entry xml:lang="en">
         <title>Welcome to my new blog!</title>
         <published>2023-11-02T00:00:00+00:00</published>
@@ -31,8 +45,7 @@
         <link rel="alternate" href="https://mjovanc.com/tooling/handy-shortcuts-in-intellij-idea/" type="text/html"/>
         <id>https://mjovanc.com/tooling/handy-shortcuts-in-intellij-idea/</id>
         
-        <summary type="html">&lt;img src=&quot;&#x2F;tooling&#x2F;handy-shortcuts-in-intellij-idea&#x2F;main.png&quot; class=&quot;rounded-image-main&quot; alt=&quot;IntelliJ IDEA&quot; style=&quot;max-width: 100%;&quot;&gt;
-&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.jetbrains.com&#x2F;idea&#x2F;&quot;&gt;IntelliJ IDEA&lt;&#x2F;a&gt; is my daily driver. Since I was introduced to &lt;a href=&quot;https:&#x2F;&#x2F;eclipseide.org&quot;&gt;Eclipse&lt;&#x2F;a&gt; for Java at my university a while ago and experienced the terror, I was looking for alternatives and I found Intellij. I use it all the time, and it&#x27;s definitely my favorite IDE. All the other Jetbrains products such as PyCharm and WebStorm are also on the same high standard.&lt;&#x2F;p&gt;
+        <summary type="html">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.jetbrains.com&#x2F;idea&#x2F;&quot;&gt;IntelliJ IDEA&lt;&#x2F;a&gt; is my daily driver. Since I was introduced to &lt;a href=&quot;https:&#x2F;&#x2F;eclipseide.org&quot;&gt;Eclipse&lt;&#x2F;a&gt; for Java at my university a while ago and experienced the terror, I was looking for alternatives and I found Intellij. I use it all the time, and it&#x27;s definitely my favorite IDE. All the other Jetbrains products such as PyCharm and WebStorm are also on the same high standard.&lt;&#x2F;p&gt;
 </summary>
         
     </entry>

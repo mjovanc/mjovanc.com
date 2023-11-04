@@ -7,10 +7,17 @@
         <loc>https://mjovanc.com/categories/</loc>
     </url>
     <url>
+        <loc>https://mjovanc.com/categories/java/</loc>
+    </url>
+    <url>
         <loc>https://mjovanc.com/categories/other/</loc>
     </url>
     <url>
         <loc>https://mjovanc.com/categories/tooling/</loc>
+    </url>
+    <url>
+        <loc>https://mjovanc.com/java/java-21-a-deep-dive-into-virtual-threads/</loc>
+        <lastmod>2023-11-03</lastmod>
     </url>
     <url>
         <loc>https://mjovanc.com/other/welcome-to-my-new-blog/</loc>
@@ -35,7 +42,16 @@
         <loc>https://mjovanc.com/tags/intellij/</loc>
     </url>
     <url>
+        <loc>https://mjovanc.com/tags/java/</loc>
+    </url>
+    <url>
+        <loc>https://mjovanc.com/tags/jdk21/</loc>
+    </url>
+    <url>
         <loc>https://mjovanc.com/tags/jetbrains/</loc>
+    </url>
+    <url>
+        <loc>https://mjovanc.com/tags/virtual-threads/</loc>
     </url>
     <url>
         <loc>https://mjovanc.com/tooling/handy-shortcuts-in-intellij-idea/</loc>

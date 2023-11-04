@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZ8BXTEW5D"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'G-YZ8BXTEW5D');
+        </script>
+
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+
+    
+    <title>Java 21 - A deep dive into Virtual Threads</title>
+    <meta property="twitter:title" content="Java 21 - A deep dive into Virtual Threads" />
+    <meta property="twitter:image" content="https:&#x2F;&#x2F;mjovanc.com/&#x2F;java&#x2F;java-21-a-deep-dive-into-virtual-threads&#x2F;/main_thumb.png" />
+
+        
+            <meta property="twitter:url" content="https:&#x2F;&#x2F;mjovanc.com/java-21-a-deep-dive-into-virtual-threads" />
+        
+
+      
+        <meta name="description" content="Java 21 is now out and with it comes a good amount of new features. But in this article we are going to be focusing on the most exciting one, virtual threads." />
+        <meta property="twitter:description" content="Java 21 is now out and with it comes a good amount of new features. But in this article we are going to be focusing on the most exciting one, virtual threads." />
+      
+    
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+      
+
+      
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="https://mjovanc.com/atom.xml">
+      
+
+      
+          <link rel="stylesheet" href="https://mjovanc.com/site.css">
+      
+
+      
+      
+    </head>
+
+    <body class="hack dark main container">
+        
+    
+        
+                
+                    <header>
+                        <nav itemscope itemtype="http://schema.org/SiteNavigationElement">
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com">
+                                <span itemprop="name">Home</span></a>
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com/categories">
+                                <span itemprop="name">Categories</span></a>
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com/tags">
+                                <span itemprop="name">Tags</span></a>
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://x.com/mjovanc">
+                                <span itemprop="name">𝕏</span></a>
+                        
+                        </nav>
+                    </header>
+                
+            
+    
+
+<article itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+        <h1 class="small-title" itemprop="headline">Java 21 - A deep dive into Virtual Threads</h1>
+        <span class="muted">
+    <svg class="icon i-clock" viewBox="0 0 32 32"
+         width="16" height="16" fill="none" stroke="currentcolor"
+         stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+        <circle cx="16" cy="16" r="14"/>
+        <path d="M16 8 L16 16 20 20"/>
+    </svg>
+    <span>14 minute read</span>
+    <svg class="icon i-edit" viewBox="0 0 32 32"
+         width="16" height="16" fill="none" stroke="currentcolor"
+         stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+        <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z"/>
+    </svg>
+
+    Published: 2023-11-03
+</span>
+    </header>
+    <div class="article-margin" itemprop="articleBody">
+      <p>So the <a href="https://openjdk.org/projects/jdk/21/">JDK 21</a> came out, we already had some insight how the virtual threads looked like earlier with the <em>preview</em> flag. However with a proper release now it's more accessible and I encourage everyone that can to upgrade to this version. </p>
+<span id="continue-reading"></span>
+<p>The version consists of a lot of different features such as:</p>
+<ul>
+<li>Sequenced Collections (JEP 431)</li>
+<li>Generational ZGC (JEP 439)</li>
+<li>Record Patterns (JEP 440)</li>
+<li>Pattern Matching for switch (JEP 441)</li>
+<li>Virtual Threads (JEP 444)</li>
+<li>Key Encapsulation Mechanism API (JEP 452)</li>
+</ul>
+<p>And much more that is currently in preview, like unnamed classes which is similar to what Kotlin does. I might check that out for a new article another time. Exciting times!</p>
+<h2 id="introduction">Introduction</h2>
+<p>Virtual threads are lightweight threads that are cheap to create and almost infinitely plentiful. That means that they are an implementation of threads that is provided by the JDK rather than the operating system (OS). </p>
+<p>In previous versions, threads were limited due to the fact that JDK implemented a wrapper around the operating system (OS) threads aka platform threads. So the cost of using threads was high, so we could not have too many of them.</p>
+<h2 id="virtual-threads-vs-platform-threads">Virtual threads vs. platform threads</h2>
+<p>So what are virtual threads really and how does it differ from platform threads?</p>
+<p>As you read in the introduction, platform threads acts as a wrapper around the operating system (OS) threads. The JDK's virtual thread scheduler assigns the virtual thread for execution on a platform thread by mounting the virtual thread on a platform thread. In other words, the platform thread is basically the carrier of the virtual thread.</p>
+<p>Virtual threads is not by any mean faster threads. They do not run any code faster than platform threads. They do however provide scale (higher throughput) but not speed (lower latency).</p>
+<p>Virtual threads can significantly improve application throughput when:</p>
+<ul>
+<li>The number of concurrent tasks is high</li>
+<li>The workload is not CPU-bound. Having more threads than processor cores cannot improve throughput in that case.</li>
+</ul>
+<div style="text-align: center;">
+  <img src="/java/java-21-a-deep-dive-into-virtual-threads/image-0.png" alt="Virtual threads vs. platform threads" style="max-width: 100%; display: inline-block;">
+</div>
+<h3 id="implementation">Implementation</h3>
+<p>We will implement a task processing system using platform threads to establish a performance baseline. Afterward, we will create an equivalent system using virtual threads and compare the throughput of both implementations to evaluate the benefits of virtual threads.</p>
+<p>We start off by creating the <code>Buffer</code> class which represents a shared buffer that facilitates communication between producers and consumers. Producers add tasks to the buffer, and consumers retrieve and process these tasks. The class ensures thread safety and efficient coordination among threads.</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">public </span><span style="color:#6f8b94;">class </span><span style="text-decoration:underline;color:#8767b7;">Buffer </span><span>{
+</span><span>    </span><span style="color:#8767b7;">private </span><span style="font-style:italic;color:#8767b7;">LinkedList</span><span>&lt;</span><span style="font-style:italic;color:#8767b7;">String</span><span>&gt; data;
+</span><span>    </span><span style="color:#8767b7;">private </span><span style="color:#6f8b94;">int </span><span>capacity;
+</span><span>
+</span><span>    </span><span style="color:#8767b7;">public </span><span style="color:#b5db99;">Buffer</span><span>(</span><span style="color:#6f8b94;">int </span><span>capacity) {
+</span><span>        this.data </span><span style="color:#6f8b94;">= </span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">LinkedList</span><span>&lt;&gt;();
+</span><span>        this.capacity </span><span style="color:#6f8b94;">=</span><span> capacity;
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#8767b7;">public synchronized </span><span style="color:#6f8b94;">void </span><span style="color:#b5db99;">produce</span><span>(</span><span style="font-style:italic;color:#8767b7;">String </span><span>task, </span><span style="font-style:italic;color:#8767b7;">String </span><span>producerName) {
+</span><span>        </span><span style="color:#6f8b94;">while </span><span>(data.size() </span><span style="color:#6f8b94;">&gt;=</span><span> capacity) {
+</span><span>            </span><span style="color:#6f8b94;">try </span><span>{
+</span><span>                wait();
+</span><span>            } </span><span style="color:#6f8b94;">catch </span><span>(</span><span style="font-style:italic;color:#8767b7;">InterruptedException </span><span>e) {
+</span><span>                </span><span style="font-style:italic;color:#8767b7;">Thread</span><span>.currentThread().interrupt();
+</span><span>            }
+</span><span>        }
+</span><span>        data.add(task);
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(producerName </span><span style="color:#6f8b94;">+ </span><span style="color:#b5db99;">&quot; produced &quot; </span><span style="color:#6f8b94;">+</span><span> task);
+</span><span>        notifyAll();
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#8767b7;">public synchronized </span><span style="font-style:italic;color:#8767b7;">String </span><span style="color:#b5db99;">consume</span><span>(</span><span style="font-style:italic;color:#8767b7;">String </span><span>consumerName) {
+</span><span>        </span><span style="color:#6f8b94;">while </span><span>(data.isEmpty()) {
+</span><span>            </span><span style="color:#6f8b94;">try </span><span>{
+</span><span>                </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(consumerName </span><span style="color:#6f8b94;">+ </span><span style="color:#b5db99;">&quot; is waiting for tasks.&quot;</span><span>);
+</span><span>                wait();
+</span><span>            } </span><span style="color:#6f8b94;">catch </span><span>(</span><span style="font-style:italic;color:#8767b7;">InterruptedException </span><span>e) {
+</span><span>                </span><span style="font-style:italic;color:#8767b7;">Thread</span><span>.currentThread().interrupt();
+</span><span>            }
+</span><span>        }
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">String</span><span> task </span><span style="color:#6f8b94;">=</span><span> data.removeFirst();
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(consumerName </span><span style="color:#6f8b94;">+ </span><span style="color:#b5db99;">&quot; consumed &quot; </span><span style="color:#6f8b94;">+</span><span> task);
+</span><span>        notifyAll();
+</span><span>        </span><span style="color:#6f8b94;">return</span><span> task;
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Here we have the constructor that initializes a Buffer instance with a defined capacity:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">public </span><span>Buffer(</span><span style="color:#6f8b94;">int</span><span> capacity) {
+</span><span>    this.data </span><span style="color:#6f8b94;">= </span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">LinkedList</span><span>&lt;&gt;();
+</span><span>    this.capacity </span><span style="color:#6f8b94;">=</span><span> capacity;
+</span><span>}
+</span></code></pre>
+<p>In the <code>produce</code> method, we ensure thread-safe access to a shared buffer by employing synchronization. First, we check if the buffer has reached its capacity to prevent overfilling. If the buffer is full, the <em>producer</em> thread enters a waiting state to allow other threads to run. </p>
+<p>Exception handling is used to address potential interruptions during this wait. Once the waiting period concludes, the <em>producer</em> adds the new task to the buffer and logs a message indicating successful task production. A notification is sent to awaken other waiting threads, such as consumers, signaling the availability of new tasks. </p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">public synchronized</span><span> void produce(</span><span style="font-style:italic;color:#8767b7;">String</span><span> task, </span><span style="font-style:italic;color:#8767b7;">String</span><span> producerName) {
+</span><span>    </span><span style="color:#6f8b94;">while </span><span>(data.size() </span><span style="color:#6f8b94;">&gt;=</span><span> capacity) {
+</span><span>        </span><span style="color:#6f8b94;">try </span><span>{
+</span><span>            wait();
+</span><span>        } </span><span style="color:#6f8b94;">catch </span><span>(</span><span style="font-style:italic;color:#8767b7;">InterruptedException </span><span>e) {
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">Thread</span><span>.currentThread().interrupt();
+</span><span>        }
+</span><span>    }
+</span><span>    data.add(task);
+</span><span>    </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(producerName </span><span style="color:#6f8b94;">+ </span><span style="color:#b5db99;">&quot; produced &quot; </span><span style="color:#6f8b94;">+</span><span> task);
+</span><span>    notifyAll();
+</span><span>}
+</span></code></pre>
+<p>In the <code>consume</code> method, we establish synchronized access to a shared buffer to ensure thread safety. This method is designed for consumers to retrieve and process tasks from the buffer in a coordinated manner. Initially, the method checks if the buffer is empty, which prompts the <em>consumer</em> thread to enter a waiting state while displaying a message indicating that it's waiting for tasks. </p>
+<p>Exception handling is employed to handle any potential interruptions during this waiting period. When tasks become available in the buffer, the <em>consumer</em> retrieves the next task, logs a message indicating successful consumption, and then notifies other threads (producers and consumers) about the buffer state change. </p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">public synchronized </span><span style="font-style:italic;color:#8767b7;">String </span><span>consume(</span><span style="font-style:italic;color:#8767b7;">String</span><span> consumerName) {
+</span><span>    </span><span style="color:#6f8b94;">while </span><span>(data.isEmpty()) {
+</span><span>        </span><span style="color:#6f8b94;">try </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(consumerName </span><span style="color:#6f8b94;">+ </span><span style="color:#b5db99;">&quot; is waiting for tasks.&quot;</span><span>);
+</span><span>            wait();
+</span><span>        } </span><span style="color:#6f8b94;">catch </span><span>(</span><span style="font-style:italic;color:#8767b7;">InterruptedException </span><span>e) {
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">Thread</span><span>.currentThread().interrupt();
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style="font-style:italic;color:#8767b7;">String</span><span> task </span><span style="color:#6f8b94;">=</span><span> data.removeFirst();
+</span><span>    </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(consumerName </span><span style="color:#6f8b94;">+ </span><span style="color:#b5db99;">&quot; consumed &quot; </span><span style="color:#6f8b94;">+</span><span> task);
+</span><span>    notifyAll();
+</span><span>    </span><span style="color:#6f8b94;">return</span><span> task;
+</span><span>}
+</span></code></pre>
+<p>Let's create our <code>Producer</code> and <code>Consumer</code> class that implements the <code>Runnable</code> interface:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">public </span><span style="color:#6f8b94;">class </span><span style="text-decoration:underline;color:#8767b7;">Producer </span><span style="color:#6f8b94;">implements </span><span style="text-decoration:underline;font-style:italic;color:#8767b7;">Runnable </span><span>{
+</span><span>    </span><span style="color:#8767b7;">private </span><span style="font-style:italic;color:#8767b7;">Buffer </span><span>buffer;
+</span><span>    </span><span style="color:#8767b7;">private </span><span style="font-style:italic;color:#8767b7;">String </span><span>name;
+</span><span>    </span><span style="color:#8767b7;">private </span><span style="color:#6f8b94;">int </span><span>numTasksToProduce;
+</span><span>
+</span><span>    </span><span style="color:#8767b7;">public </span><span style="color:#b5db99;">Producer</span><span>(</span><span style="font-style:italic;color:#8767b7;">Buffer </span><span>buffer, </span><span style="font-style:italic;color:#8767b7;">String </span><span>name, </span><span style="color:#6f8b94;">int </span><span>numTasksToProduce) {
+</span><span>        this.buffer </span><span style="color:#6f8b94;">=</span><span> buffer;
+</span><span>        this.name </span><span style="color:#6f8b94;">=</span><span> name;
+</span><span>        this.numTasksToProduce </span><span style="color:#6f8b94;">=</span><span> numTasksToProduce;
+</span><span>    }
+</span><span>
+</span><span>    @Override
+</span><span>    </span><span style="color:#8767b7;">public </span><span style="color:#6f8b94;">void </span><span style="color:#b5db99;">run</span><span>() {
+</span><span>        </span><span style="color:#6f8b94;">for </span><span>(</span><span style="color:#6f8b94;">int</span><span> i </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">1</span><span>; i </span><span style="color:#6f8b94;">&lt;=</span><span> numTasksToProduce; i</span><span style="color:#6f8b94;">++</span><span>) {
+</span><span>            buffer.produce(</span><span style="color:#b5db99;">&quot;task &quot; </span><span style="color:#6f8b94;">+</span><span> i, name);
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">public </span><span style="color:#6f8b94;">class </span><span style="text-decoration:underline;color:#8767b7;">Consumer </span><span style="color:#6f8b94;">implements </span><span style="text-decoration:underline;font-style:italic;color:#8767b7;">Runnable </span><span>{
+</span><span>    </span><span style="color:#8767b7;">private </span><span style="font-style:italic;color:#8767b7;">Buffer </span><span>buffer;
+</span><span>    </span><span style="color:#8767b7;">private </span><span style="font-style:italic;color:#8767b7;">String </span><span>name;
+</span><span>    </span><span style="color:#8767b7;">private </span><span style="color:#6f8b94;">int </span><span>numTasksToConsume;
+</span><span>
+</span><span>    </span><span style="color:#8767b7;">public </span><span style="color:#b5db99;">Consumer</span><span>(</span><span style="font-style:italic;color:#8767b7;">Buffer </span><span>buffer, </span><span style="font-style:italic;color:#8767b7;">String </span><span>name, </span><span style="color:#6f8b94;">int </span><span>numTasksToConsume) {
+</span><span>        this.buffer </span><span style="color:#6f8b94;">=</span><span> buffer;
+</span><span>        this.name </span><span style="color:#6f8b94;">=</span><span> name;
+</span><span>        this.numTasksToConsume </span><span style="color:#6f8b94;">=</span><span> numTasksToConsume;
+</span><span>    }
+</span><span>
+</span><span>    @Override
+</span><span>    </span><span style="color:#8767b7;">public </span><span style="color:#6f8b94;">void </span><span style="color:#b5db99;">run</span><span>() {
+</span><span>        </span><span style="color:#6f8b94;">int</span><span> tasksConsumed </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>;
+</span><span>        </span><span style="color:#6f8b94;">while </span><span>(tasksConsumed </span><span style="color:#6f8b94;">&lt;</span><span> numTasksToConsume) {
+</span><span>            buffer.consume(name);
+</span><span>            tasksConsumed</span><span style="color:#6f8b94;">++</span><span>;
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Within this method of the <code>Consumer</code> class, a <em>consumer</em> aims to consume a predefined number of tasks. It maintains a count of the tasks consumed. In each iteration of the loop, the consumer calls the consume method on the shared <code>Buffer</code> object, passing its name as a parameter. </p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span>@Override
+</span><span style="color:#8767b7;">public</span><span> void run() {
+</span><span>    </span><span style="color:#6f8b94;">int</span><span> tasksConsumed </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>;
+</span><span>    </span><span style="color:#6f8b94;">while </span><span>(tasksConsumed </span><span style="color:#6f8b94;">&lt;</span><span> numTasksToConsume) {
+</span><span>        buffer.consume(name);
+</span><span>        tasksConsumed</span><span style="color:#6f8b94;">++</span><span>;
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h4 id="platform-threads">Platform threads</h4>
+<p>Now let's create the <code>PlatformThreads</code> class:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">public </span><span style="color:#6f8b94;">class </span><span style="text-decoration:underline;color:#8767b7;">PlatformThreads </span><span>{
+</span><span>    </span><span style="color:#8767b7;">public static </span><span style="color:#6f8b94;">void </span><span style="color:#b5db99;">main</span><span>(</span><span style="font-style:italic;color:#8767b7;">String</span><span style="color:#8767b7;">[] </span><span>args) {
+</span><span>        </span><span style="color:#6f8b94;">int</span><span> numProducers </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">1_000</span><span>;
+</span><span>        </span><span style="color:#6f8b94;">int</span><span> numConsumers </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">1_000</span><span>;
+</span><span>        </span><span style="color:#6f8b94;">int</span><span> totalTasks </span><span style="color:#6f8b94;">=</span><span> numProducers </span><span style="color:#6f8b94;">* </span><span style="color:#b5db99;">100</span><span>;
+</span><span>
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">Buffer</span><span> buffer </span><span style="color:#6f8b94;">= </span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">Buffer</span><span>(totalTasks);
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">long</span><span> startTime </span><span style="color:#6f8b94;">= </span><span style="font-style:italic;color:#8767b7;">System</span><span>.nanoTime();
+</span><span>
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">Thread</span><span style="color:#8767b7;">[]</span><span> producerThreads </span><span style="color:#6f8b94;">= </span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">Thread</span><span>[numProducers];
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">Thread</span><span style="color:#8767b7;">[]</span><span> consumerThreads </span><span style="color:#6f8b94;">= </span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">Thread</span><span>[numConsumers];
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">for </span><span>(</span><span style="color:#6f8b94;">int</span><span> i </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>; i </span><span style="color:#6f8b94;">&lt;</span><span> numProducers; i</span><span style="color:#6f8b94;">++</span><span>) {
+</span><span>            producerThreads[i] </span><span style="color:#6f8b94;">= </span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">Thread</span><span>(</span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">Producer</span><span>(buffer, </span><span style="color:#b5db99;">&quot;Producer &quot; </span><span style="color:#6f8b94;">+ </span><span>(i </span><span style="color:#6f8b94;">+ </span><span style="color:#b5db99;">1</span><span>), totalTasks </span><span style="color:#6f8b94;">/</span><span> numProducers));
+</span><span>            producerThreads[i].start();
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">for </span><span>(</span><span style="color:#6f8b94;">int</span><span> i </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>; i </span><span style="color:#6f8b94;">&lt;</span><span> numConsumers; i</span><span style="color:#6f8b94;">++</span><span>) {
+</span><span>            consumerThreads[i] </span><span style="color:#6f8b94;">= </span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">Thread</span><span>(</span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">Consumer</span><span>(buffer, </span><span style="color:#b5db99;">&quot;Consumer &quot; </span><span style="color:#6f8b94;">+ </span><span>(i </span><span style="color:#6f8b94;">+ </span><span style="color:#b5db99;">1</span><span>), totalTasks </span><span style="color:#6f8b94;">/</span><span> numConsumers));
+</span><span>            consumerThreads[i].start();
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">try </span><span>{
+</span><span>            </span><span style="color:#6f8b94;">for </span><span>(</span><span style="color:#6f8b94;">int</span><span> i </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>; i </span><span style="color:#6f8b94;">&lt;</span><span> numProducers; i</span><span style="color:#6f8b94;">++</span><span>) {
+</span><span>                producerThreads[i].join();
+</span><span>            }
+</span><span>        } </span><span style="color:#6f8b94;">catch </span><span>(</span><span style="font-style:italic;color:#8767b7;">InterruptedException </span><span>e) {
+</span><span>            e.printStackTrace();
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">for </span><span>(</span><span style="color:#6f8b94;">int</span><span> i </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>; i </span><span style="color:#6f8b94;">&lt;</span><span> numConsumers; i</span><span style="color:#6f8b94;">++</span><span>) {
+</span><span>            consumerThreads[i].interrupt();
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">try </span><span>{
+</span><span>            </span><span style="color:#6f8b94;">for </span><span>(</span><span style="color:#6f8b94;">int</span><span> i </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>; i </span><span style="color:#6f8b94;">&lt;</span><span> numConsumers; i</span><span style="color:#6f8b94;">++</span><span>) {
+</span><span>                consumerThreads[i].join();
+</span><span>            }
+</span><span>        } </span><span style="color:#6f8b94;">catch </span><span>(</span><span style="font-style:italic;color:#8767b7;">InterruptedException </span><span>e) {
+</span><span>            e.printStackTrace();
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">long</span><span> endTime </span><span style="color:#6f8b94;">= </span><span style="font-style:italic;color:#8767b7;">System</span><span>.nanoTime();
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">double</span><span> elapsedTimeSeconds </span><span style="color:#6f8b94;">= </span><span>(endTime </span><span style="color:#6f8b94;">-</span><span> startTime) </span><span style="color:#6f8b94;">/ </span><span style="color:#b5db99;">1e9</span><span>;
+</span><span>
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Performance Metrics:&quot;</span><span>);
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Elapsed Time: &quot; </span><span style="color:#6f8b94;">+</span><span> elapsedTimeSeconds </span><span style="color:#6f8b94;">+ </span><span style="color:#b5db99;">&quot; seconds&quot;</span><span>);
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Total Tasks Processed: &quot; </span><span style="color:#6f8b94;">+</span><span> totalTasks);
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Throughput (Tasks/Second): &quot; </span><span style="color:#6f8b94;">+</span><span> totalTasks </span><span style="color:#6f8b94;">/</span><span> elapsedTimeSeconds);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h4 id="virtual-threads">Virtual threads</h4>
+<p>Now let's create the <code>VirtualThreads</code> class. This will basically be very similar to the <code>PlatformThreads</code> class but with some small modifications:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">public </span><span style="color:#6f8b94;">class </span><span style="text-decoration:underline;color:#8767b7;">VirtualThreads </span><span>{
+</span><span>    </span><span style="color:#8767b7;">public static </span><span style="color:#6f8b94;">void </span><span style="color:#b5db99;">main</span><span>(</span><span style="font-style:italic;color:#8767b7;">String</span><span style="color:#8767b7;">[] </span><span>args) {
+</span><span>        </span><span style="color:#6f8b94;">int</span><span> numProducers </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">1_000</span><span>;
+</span><span>        </span><span style="color:#6f8b94;">int</span><span> numConsumers </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">1_000</span><span>;
+</span><span>        </span><span style="color:#6f8b94;">int</span><span> totalTasks </span><span style="color:#6f8b94;">=</span><span> numProducers </span><span style="color:#6f8b94;">* </span><span style="color:#b5db99;">100</span><span>;
+</span><span>
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">Buffer</span><span> buffer </span><span style="color:#6f8b94;">= </span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">Buffer</span><span>(totalTasks);
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">long</span><span> startTime </span><span style="color:#6f8b94;">= </span><span style="font-style:italic;color:#8767b7;">System</span><span>.nanoTime();
+</span><span>
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">Thread</span><span style="color:#8767b7;">[]</span><span> producerThreads </span><span style="color:#6f8b94;">= </span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">Thread</span><span>[numProducers];
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">Thread</span><span style="color:#8767b7;">[]</span><span> consumerThreads </span><span style="color:#6f8b94;">= </span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">Thread</span><span>[numConsumers];
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">for </span><span>(</span><span style="color:#6f8b94;">int</span><span> i </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>; i </span><span style="color:#6f8b94;">&lt;</span><span> numProducers; i</span><span style="color:#6f8b94;">++</span><span>) {
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">Runnable</span><span> producerTask </span><span style="color:#6f8b94;">= </span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">Producer</span><span>(buffer, </span><span style="color:#b5db99;">&quot;Producer &quot; </span><span style="color:#6f8b94;">+ </span><span>(i </span><span style="color:#6f8b94;">+ </span><span style="color:#b5db99;">1</span><span>), totalTasks </span><span style="color:#6f8b94;">/</span><span> numProducers);
+</span><span>            producerThreads[i] </span><span style="color:#6f8b94;">= </span><span style="font-style:italic;color:#8767b7;">Thread</span><span>.ofVirtual().start(producerTask);
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">for </span><span>(</span><span style="color:#6f8b94;">int</span><span> i </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>; i </span><span style="color:#6f8b94;">&lt;</span><span> numConsumers; i</span><span style="color:#6f8b94;">++</span><span>) {
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">Runnable</span><span> consumerTask </span><span style="color:#6f8b94;">= </span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">Consumer</span><span>(buffer, </span><span style="color:#b5db99;">&quot;Consumer &quot; </span><span style="color:#6f8b94;">+ </span><span>(i </span><span style="color:#6f8b94;">+ </span><span style="color:#b5db99;">1</span><span>), totalTasks </span><span style="color:#6f8b94;">/</span><span> numConsumers);
+</span><span>            consumerThreads[i] </span><span style="color:#6f8b94;">= </span><span style="font-style:italic;color:#8767b7;">Thread</span><span>.ofVirtual().start(consumerTask);
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">try </span><span>{
+</span><span>            </span><span style="color:#6f8b94;">for </span><span>(</span><span style="color:#6f8b94;">int</span><span> i </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>; i </span><span style="color:#6f8b94;">&lt;</span><span> numProducers; i</span><span style="color:#6f8b94;">++</span><span>) {
+</span><span>                producerThreads[i].join();
+</span><span>            }
+</span><span>        } </span><span style="color:#6f8b94;">catch </span><span>(</span><span style="font-style:italic;color:#8767b7;">InterruptedException </span><span>e) {
+</span><span>            e.printStackTrace();
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">for </span><span>(</span><span style="color:#6f8b94;">int</span><span> i </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>; i </span><span style="color:#6f8b94;">&lt;</span><span> numConsumers; i</span><span style="color:#6f8b94;">++</span><span>) {
+</span><span>            consumerThreads[i].interrupt();
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">try </span><span>{
+</span><span>            </span><span style="color:#6f8b94;">for </span><span>(</span><span style="color:#6f8b94;">int</span><span> i </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>; i </span><span style="color:#6f8b94;">&lt;</span><span> numConsumers; i</span><span style="color:#6f8b94;">++</span><span>) {
+</span><span>                consumerThreads[i].join();
+</span><span>            }
+</span><span>        } </span><span style="color:#6f8b94;">catch </span><span>(</span><span style="font-style:italic;color:#8767b7;">InterruptedException </span><span>e) {
+</span><span>            e.printStackTrace();
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">long</span><span> endTime </span><span style="color:#6f8b94;">= </span><span style="font-style:italic;color:#8767b7;">System</span><span>.nanoTime();
+</span><span>
+</span><span>        </span><span style="color:#6f8b94;">double</span><span> elapsedTimeSeconds </span><span style="color:#6f8b94;">= </span><span>(endTime </span><span style="color:#6f8b94;">-</span><span> startTime) </span><span style="color:#6f8b94;">/ </span><span style="color:#b5db99;">1e9</span><span>;
+</span><span>
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Performance Metrics:&quot;</span><span>);
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Elapsed Time: &quot; </span><span style="color:#6f8b94;">+</span><span> elapsedTimeSeconds </span><span style="color:#6f8b94;">+ </span><span style="color:#b5db99;">&quot; seconds&quot;</span><span>);
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Total Tasks Processed: &quot; </span><span style="color:#6f8b94;">+</span><span> totalTasks);
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Throughput (Tasks/Second): &quot; </span><span style="color:#6f8b94;">+</span><span> totalTasks </span><span style="color:#6f8b94;">/</span><span> elapsedTimeSeconds);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Here, we are initializing a shared Buffer instance with a specified totalTasks capacity. The buffer acts as a data structure that facilitates the communication and coordination between producer and consumer threads. This shared buffer will allow producers to produce tasks, consumers to consume them, and ensure that the overall processing runs smoothly.</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="font-style:italic;color:#8767b7;">Buffer</span><span> buffer </span><span style="color:#6f8b94;">= </span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">Buffer</span><span>(totalTasks);
+</span></code></pre>
+<p>In this section, we are creating virtual threads for producers. For each producer, a new Producer instance is created, and a virtual thread is started to execute its task. The producer threads are named based on their index and use the totalTasks value to distribute the workload among the producers evenly. This approach takes advantage of virtual threads, which are more lightweight than traditional platform threads and can efficiently handle concurrent tasks.</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#6f8b94;">for </span><span>(</span><span style="color:#6f8b94;">int</span><span> i </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>; i </span><span style="color:#6f8b94;">&lt;</span><span> numProducers; i</span><span style="color:#6f8b94;">++</span><span>) {
+</span><span>    </span><span style="font-style:italic;color:#8767b7;">Runnable</span><span> producerTask </span><span style="color:#6f8b94;">= </span><span style="color:#56738e;">new </span><span style="font-style:italic;color:#8767b7;">Producer</span><span>(buffer, </span><span style="color:#b5db99;">&quot;Producer &quot; </span><span style="color:#6f8b94;">+ </span><span>(i </span><span style="color:#6f8b94;">+ </span><span style="color:#b5db99;">1</span><span>), totalTasks </span><span style="color:#6f8b94;">/</span><span> numProducers);
+</span><span>    producerThreads[i] </span><span style="color:#6f8b94;">= </span><span style="font-style:italic;color:#8767b7;">Thread</span><span>.ofVirtual().start(producerTask);
+</span><span>}
+</span></code></pre>
+<p>In this code snippet, we are waiting for all producer threads to complete their tasks by using the join method. If any interruption occurs during this waiting period, it will be caught and printed as an exception. This part of the code ensures that all producers finish their work before moving on to the next steps of the program.</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#6f8b94;">try </span><span>{
+</span><span>    </span><span style="color:#6f8b94;">for </span><span>(</span><span style="color:#6f8b94;">int</span><span> i </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>; i </span><span style="color:#6f8b94;">&lt;</span><span> numProducers; i</span><span style="color:#6f8b94;">++</span><span>) {
+</span><span>        producerThreads[i].join();
+</span><span>    }
+</span><span>} </span><span style="color:#6f8b94;">catch </span><span>(</span><span style="font-style:italic;color:#8767b7;">InterruptedException </span><span>e) {
+</span><span>    e.printStackTrace();
+</span><span>}
+</span></code></pre>
+<p>Here, we are first interrupting all consumer threads, which means we're signaling them to stop. Afterward, we wait for all consumer threads to finish their work using the join method. If any interruption occurs during this waiting period, it will be caught and printed as an exception. This part of the code ensures that all consumers have completed their tasks before proceeding with the rest of the program.</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#6f8b94;">for </span><span>(</span><span style="color:#6f8b94;">int</span><span> i </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>; i </span><span style="color:#6f8b94;">&lt;</span><span> numConsumers; i</span><span style="color:#6f8b94;">++</span><span>) {
+</span><span>    consumerThreads[i].interrupt();
+</span><span>}
+</span><span>
+</span><span style="color:#6f8b94;">try </span><span>{
+</span><span>    </span><span style="color:#6f8b94;">for </span><span>(</span><span style="color:#6f8b94;">int</span><span> i </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">0</span><span>; i </span><span style="color:#6f8b94;">&lt;</span><span> numConsumers; i</span><span style="color:#6f8b94;">++</span><span>) {
+</span><span>        consumerThreads[i].join();
+</span><span>    }
+</span><span>} </span><span style="color:#6f8b94;">catch </span><span>(</span><span style="font-style:italic;color:#8767b7;">InterruptedException </span><span>e) {
+</span><span>    e.printStackTrace();
+</span><span>}
+</span></code></pre>
+<h3 id="performance-results">Performance results</h3>
+<p>As you clearly can see, virtual threads is the winner here for running 100,000 tasks with a throughput more than double than for platform threads. </p>
+<h4 id="platform-threads-1">Platform Threads</h4>
+<p><strong>Performance Metrics:</strong><br />
+<strong>Elapsed Time:</strong> 1.068746208 seconds<br />
+<strong>Total Tasks Processed:</strong> 100000<br />
+<strong>Throughput (Tasks/Second):</strong> 93567.5834463405</p>
+<h4 id="virtual-threads-1">Virtual Threads</h4>
+<p><strong>Performance Metrics:</strong><br />
+<strong>Elapsed Time:</strong> 0.465984125 seconds<br />
+<strong>Total Tasks Processed:</strong> 100000<br />
+<strong>Throughput (Tasks/Second):</strong> 214599.5853399512</p>
+<h2 id="scheduling-virtual-threads">Scheduling virtual threads</h2>
+<p>Using virtual threads means that we will not create platform threads ourselves so we need to understand how a virtual thread gets scheduled to a platform thread to do its work. </p>
+<p>For platform threads, which are the wrapper around operating system (OS) threads, JDK relies on the scheduler of the OS. In contrast by virtual threads, the JDK has its own scheduler. Instead of assigning virtual threads to the processor directly, the JDK's scheduler assigns virtual threads to the platform threads. Then the platform threads are scheduled by the operating system (OS) as usual.</p>
+<p>The JDK's virtual thread scheduler is basically a work-stealing ForkJoinPool that is operating in <a href="https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics)">FIFO</a> (first-in-first-out) mode.</p>
+<div style="text-align: center;">
+  <img src="/java/java-21-a-deep-dive-into-virtual-threads/image-1.png" alt="FIFO" style="max-width: 70%; display: inline-block;">
+</div>
+<blockquote>
+<p>A <code>ForkJoinPool</code> differs from other kinds of <code>ExecutorService</code> mainly by virtue of employing work-stealing: all threads in the pool attempt to find and execute tasks submitted to the pool and/or created by other active tasks (eventually blocking waiting for work if none exist).</p>
+</blockquote>
+<p>The platform thread to which the scheduler assigns a virtual thread is called the virtual threads's carrier. Virtual threads can be scheduled on different carriers over the course of its lifetime. Basically, the scheduler does nto maintain affinity between a virtual thread and any kind of platform thread.</p>
+<p>The scheduler does not at this time implement time sharing for virtual threads. While time sharing can be an effective way of reducing latency of certain tasks where it could be that there are a small number of platform threads and CPU utilization is at 100%, it is not clear that it would be as effective with a million virtual threads.</p>
+<h2 id="thread-per-request-strategy">Thread-per-request strategy</h2>
+<p>To handle concurrent user requests that are independent of each other, server applications generally have been using thread-pre-request strategy so that it can handle a request dedicated to a thread under its entire duration.</p>
+<p>The strategy is easy to understand, easy to implement, debug and profile because it's using the platform's unit of concurrency to represent the application's unit of concurrency.</p>
+<p>Unfortunately, since the number of available threads  is limited because how the JDK implements threads as wrappers around the operating system (OS) threads. They are costly, so using too many of them would make the implementation ill-suited because it's a limiting factor if we want to focus on throughput before we exhaust CPU or network connections.</p>
+<p>By using virtual threads this will make this strategy viable since we can now handle much more requests with virtual threads.</p>
+<h2 id="thread-pools-why-you-should-not-use-it">Thread pools - why you should not use it</h2>
+<div style="text-align: center;">
+  <img src="/java/java-21-a-deep-dive-into-virtual-threads/image-2.png" alt="Thread Pools" style="max-width: 100%; display: inline-block;">
+</div>
+<p>Migrating the application code using the virtual-thread-per-task <code>ExercutorService</code> similar to the tradtional thread-pool based <code>ExercutorService</code> is not neccessary since there is never a need to pool them. A thread pool is like any other resource pool, intended to share expensive resources, but with virtual threads, they are not expensive.</p>
+<p>We typically use thread pools to limit concurrent access to limited resources. Let's say a service cannot handle more than 20 concurrent requests, we typically make all request to the service via tasks submitted to a thread pool of size 20 and that will fix it. The high cost of platform threads has made thread pools ubiquitous.</p>
+<p>Avoid using pool for virtual threads!</p>
+<h2 id="memory-use-and-interaction-with-gc">Memory use and interaction with GC</h2>
+<p>Java's garbage-collected heap stores the stacks of virtual threads as chunk objects. It will grow and shrink the stacks as the application runs, both to be memory-efficient and to accomodate stacks of depth up to the JVM's configured platform thread stack size.</p>
+<p>The amount of activity of the heap space and garbage collector that virtual threads require is hard, specifically when we compare that to asynchronous code. If we would use a million virtual threads, that would be equal to at least a million objects, but so do a million tasks sharing a pool of platform threads.</p>
+<h2 id="thread-local-variables">Thread-local variables</h2>
+<p>Virtual threeds support thread-local variables, <code>ThreadLocal</code>, and inhertiable thread-local variables <code>InhertiableThreadLocal</code>. Just like the platform threads, they can run existing code that uses thread locals. Although use thread-locals after careful consideration since virtual threads can be very numerous.</p>
+<p>We can use the system property <code>jdk.traceVirtualThreadLocals</code> trigger a stack trace when a virtual thread sets a value of any thread-local variable. With this diagnostic output, it may assist with removing thread-locals if migrating code to use virtual threads. The default value is false.</p>
+<h2 id="summary">Summary</h2>
+<p>So now you probably a little bit more about Virtual Threads. The tests I conducted could probably be improved, so please submit a PR to my repo (link below). I will update the article if neccessary!</p>
+<p>The repository used you can find here: <a href="https://github.com/mjovanc/medium-java-21-virtual-threads">https://github.com/mjovanc/medium-java-21-virtual-threads</a></p>
+<p>Please consider sharing it if you found it valuable and perhaps valuable to others. Let me know if you have any questions by reaching me on 𝕏!</p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://openjdk.org/projects/jdk/21/">JDK 21</a></li>
+<li><a href="https://openjdk.org/jeps/444">JEP 444: Virtual Threads</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/20/core/virtual-threads.html#GUID-A0E4C745-6BC3-4DAE-87ED-E4A094D20A38">Oracle - Virtual Threads</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ForkJoinPool.html">Class ForkJoinPool</a></li>
+<li><a href="https://jenkov.com/tutorials/java-concurrency/thread-pools.html">Thread Pools</a></li>
+<li><a href="https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics)">FIFO</a></li>
+</ul>
+<h2 id="connect-with-me">Connect with me</h2>
+<ul>
+<li><a href="https://x.com/mjovanc">𝕏</a></li>
+<li><a href="https://github.com/mjovanc">GitHub</a></li>
+<li><a href="https://www.linkedin.com/in/marcuscvjeticanin/">LinkedIn</a></li>
+</ul>
+
+    </div>
+
+    
+        <footer>
+            <hr>
+            <p>
+                
+                    Published by Marcus Cvjeticanin
+                
+                
+                    
+                    in <a href="https://mjovanc.com/categories/java/">java</a>
+                
+                
+                    and
+                    tagged
+                    
+                        <a href="https://mjovanc.com/tags/java/">java</a>
+                        
+                            
+                                
+                                    ,
+                                
+                            
+                        
+                    
+                        <a href="https://mjovanc.com/tags/virtual-threads/">virtual threads</a>
+                        
+                            
+                                
+                                    and
+                                
+                            
+                        
+                    
+                        <a href="https://mjovanc.com/tags/jdk21/">jdk21</a>
+                        
+                            
+                        
+                    
+                
+            </p>
+            
+            
+        </footer>
+    
+</article>
+
+
+    </body>
+
+</html>

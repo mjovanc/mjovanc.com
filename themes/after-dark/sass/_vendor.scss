@@ -43,11 +43,11 @@ a {
   cursor: pointer;
   color: #ff6a5a;
   text-decoration: none;
-  border-bottom: 1px solid #891daf
+  border-bottom: 1px solid #8767b7
 }
 
 a:hover {
-  background-color: #891daf;
+  background-color: #8767b7;
   color: #fff
 }
 
@@ -320,7 +320,13 @@ a:hover {
   position: relative;
   padding-left: 17px;
   padding-left: 2ch;
-  overflow: hidden
+  overflow: hidden;
+  color: #8767b7;
+}
+
+.hack blockquote code {
+    font-weight: bolder;
+    color: #8767b7;
 }
 
 .hack blockquote:after {

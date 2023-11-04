@@ -9,8 +9,6 @@ categories = ["tooling"]
 tags = ["intellij", "ide", "jetbrains"]
 +++
 
-<img src="/tooling/handy-shortcuts-in-intellij-idea/main.png" class="rounded-image-main" alt="IntelliJ IDEA" style="max-width: 100%;">
-
 [IntelliJ IDEA](https://www.jetbrains.com/idea/) is my daily driver. Since I was introduced to [Eclipse](https://eclipseide.org) for Java at my university a while ago and experienced the terror, I was looking for alternatives and I found Intellij. I use it all the time, and it's definitely my favorite IDE. All the other Jetbrains products such as PyCharm and WebStorm are also on the same high standard.
 <!-- more -->
 In this short article I'm going to go through what kind of good commands you could use to maximize your development experience with the IDE to get more productive.
@@ -167,7 +165,7 @@ Every day I discover something new in IntelliJ IDEA that helps a lot for my prod
 
 I hope this helped you and if you find these articles interesting, please follow me here for upcoming tutorials and consider follow me on my social medias below. I am thinking of doing a separate tutorial on how to use IntelliJ for debugging.
 
-If you spot anything that could be wrong, please send me a post on 𝕏 so I can update the article.
+Please consider sharing it if you found it valuable and perhaps valuable to others. Let me know if you have any questions by reaching me on 𝕏!
 
 ## References
 - [IntelliJ IDEA keyboard shortcuts](https://www.jetbrains.com/help/idea/mastering-keyboard-shortcuts.html)
