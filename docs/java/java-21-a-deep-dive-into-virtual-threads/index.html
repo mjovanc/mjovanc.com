@@ -138,6 +138,8 @@
 <h2 id="introduction">Introduction</h2>
 <p>Virtual threads are lightweight threads that are cheap to create and almost infinitely plentiful. That means that they are an implementation of threads that are provided by the JDK rather than the operating system (OS). </p>
 <p>In previous versions, threads were limited due to the fact that JDK implemented a wrapper around the operating system (OS) threads aka platform threads. So the cost of using threads was high, so we could not have too many of them.</p>
+<p>In this article we are going to discuss what virtual threads is all about, as well as implementing platform threads and virtual threads and to compare performance between the two.</p>
+<p>We are also going to take a look at how the scheduling works, how we now can take advantage of thread-per-request strategy once again but without the higher costs it can bring, thread pools and why you should not use it with virtual threads, memory use and interaction with garbage collector and lastly thread-local variables. </p>
 <h2 id="virtual-threads-vs-platform-threads">Virtual threads vs. platform threads</h2>
 <p>So what are virtual threads really and how do they differ from platform threads?</p>
 <p>As mentioned in the introduction, platform threads act as a wrapper around the operating system (OS) threads. The JDK's virtual thread scheduler assigns the virtual thread for execution on a platform thread by mounting the virtual thread on a platform thread. In other words, the platform thread is basically the carrier of the virtual thread.</p>
