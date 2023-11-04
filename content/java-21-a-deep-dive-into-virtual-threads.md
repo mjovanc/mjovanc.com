@@ -1,7 +1,7 @@
 +++
 title = "Java 21 - A deep dive into Virtual Threads"
 description = "Java 21 is now out and with it comes a good amount of new features. But in this article we are going to be focusing on the most exciting one, virtual threads."
-date = 2023-11-03
+date = 2023-11-04
 path = "java/java-21-a-deep-dive-into-virtual-threads"
 
 [taxonomies]
@@ -432,7 +432,7 @@ The amount of activity of the heap space and garbage collector that virtual thre
 
 ## Thread-local variables
 
-Virtual threeds support thread-local variables, `ThreadLocal`, and inhertiable thread-local variables `InhertiableThreadLocal`. Just like the platform threads, they can run existing code that uses thread locals. Although use thread-locals after careful consideration since virtual threads can be very numerous.
+Virtual threads support thread-local variables, `ThreadLocal`, and inhertiable thread-local variables `InhertiableThreadLocal`. Just like the platform threads, they can run existing code that uses thread locals. Although use thread-locals after careful consideration since virtual threads can be very numerous.
 
 We can use the system property `jdk.traceVirtualThreadLocals` trigger a stack trace when a virtual thread sets a value of any thread-local variable. With this diagnostic output, it may assist with removing thread-locals if migrating code to use virtual threads. The default value is false.
 
@@ -452,6 +452,7 @@ Please consider sharing it if you found it valuable and perhaps valuable to othe
 - [Class ForkJoinPool](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ForkJoinPool.html)
 - [Thread Pools](https://jenkov.com/tutorials/java-concurrency/thread-pools.html)
 - [FIFO](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics))
+- [Class Runnable](https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html)
 
 ## Connect with me
 - [𝕏](https://x.com/mjovanc)

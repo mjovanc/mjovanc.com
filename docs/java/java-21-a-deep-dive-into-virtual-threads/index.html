@@ -119,7 +119,7 @@
         <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z"/>
     </svg>
 
-    Published: 2023-11-03
+    Published: 2023-11-04
 </span>
     </header>
     <div class="article-margin" itemprop="articleBody">
@@ -463,7 +463,7 @@
 <p>Java's garbage-collected heap stores the stacks of virtual threads as chunk objects. It will grow and shrink the stacks as the application runs, both to be memory-efficient and to accomodate stacks of depth up to the JVM's configured platform thread stack size.</p>
 <p>The amount of activity of the heap space and garbage collector that virtual threads require is hard, specifically when we compare that to asynchronous code. If we would use a million virtual threads, that would be equal to at least a million objects, but so do a million tasks sharing a pool of platform threads.</p>
 <h2 id="thread-local-variables">Thread-local variables</h2>
-<p>Virtual threeds support thread-local variables, <code>ThreadLocal</code>, and inhertiable thread-local variables <code>InhertiableThreadLocal</code>. Just like the platform threads, they can run existing code that uses thread locals. Although use thread-locals after careful consideration since virtual threads can be very numerous.</p>
+<p>Virtual threads support thread-local variables, <code>ThreadLocal</code>, and inhertiable thread-local variables <code>InhertiableThreadLocal</code>. Just like the platform threads, they can run existing code that uses thread locals. Although use thread-locals after careful consideration since virtual threads can be very numerous.</p>
 <p>We can use the system property <code>jdk.traceVirtualThreadLocals</code> trigger a stack trace when a virtual thread sets a value of any thread-local variable. With this diagnostic output, it may assist with removing thread-locals if migrating code to use virtual threads. The default value is false.</p>
 <h2 id="summary">Summary</h2>
 <p>So now you probably a little bit more about Virtual Threads. The tests I conducted could probably be improved, so please submit a PR to my repo (link below). I will update the article if neccessary!</p>
@@ -477,6 +477,7 @@
 <li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ForkJoinPool.html">Class ForkJoinPool</a></li>
 <li><a href="https://jenkov.com/tutorials/java-concurrency/thread-pools.html">Thread Pools</a></li>
 <li><a href="https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics)">FIFO</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html">Class Runnable</a></li>
 </ul>
 <h2 id="connect-with-me">Connect with me</h2>
 <ul>
