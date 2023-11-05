@@ -30,7 +30,7 @@ Here are a couple of lists of technologies I worked professionally with:
 - JaCoCo (Java Code Coverage)
 - Checkstyle/PMD/FindBugs (Static Code Analysis for Java)
 - JUnit (Unit Testing for Java and Kotlin)
-- Klocwork (Static Code Analysis)
+- Klocwork (C/C++ Static Code Analysis)
 - PTC Integrity Modeler (Windchill Modeler, a modeling and simulation tool)
 - Enterprise Architect (visual modeling and design tool)
 - Swagger and OpenAPI
