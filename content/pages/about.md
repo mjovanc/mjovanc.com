@@ -47,7 +47,7 @@ Here are a couple of lists of technologies I worked professionally with:
 - Liquibase
 - JDBC
 
-## CI/CD Tools
+## CI/CD
 
 - Azure DevOps
 - Jenkins
@@ -60,7 +60,7 @@ Here are a couple of lists of technologies I worked professionally with:
 - Docker
 - JFrog Artifactory
 
-## Data Analytics and Monitoring Tools
+## Data Analytics and Monitoring
 
 - Elasticsearch
 - Logstash
