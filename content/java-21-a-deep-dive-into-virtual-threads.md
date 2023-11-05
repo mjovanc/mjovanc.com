@@ -436,7 +436,7 @@ We can use the system property `jdk.traceVirtualThreadLocals` trigger a stack tr
 
 So now you probably know a little bit more about Virtual Threads. The tests I conducted could probably be improved, so feel free to contribute to my repo (link below). I will make sure the article is up-to-date and accurate. 
 
-The repository used you can find here: [https://github.com/mjovanc/medium-java-21-virtual-threads](https://github.com/mjovanc/medium-java-21-virtual-threads)
+The repository used you can find here: [https://github.com/mjovanc/java-21-virtual-threads/tree/master](https://github.com/mjovanc/java-21-virtual-threads/tree/master)
 
 If you found it valuable, please consider sharing it, as it might also be valuable to others. Let me know if you have any questions by reaching me on 𝕏!
 
