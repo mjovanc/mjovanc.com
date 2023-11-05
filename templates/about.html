@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+
+{% block content %}
+{% block header %}
+{{ super() }}
+{% endblock header %}
+
+<h1 class="small-title">{{ page.title }}</h1>
+
+<div class="content" itemprop="articleBody">
+    {{ page.content | safe }}
+</div>
+
+{% endblock content %}
