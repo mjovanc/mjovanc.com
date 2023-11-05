@@ -27,7 +27,6 @@ Here are a couple of lists of technologies I worked professionally with:
 
 ## Engineering and Development Tools
 
-- Detekt (Static Code Analysis for Kotlin)
 - JaCoCo (Java Code Coverage)
 - Checkstyle/PMD/FindBugs (Static Code Analysis for Java)
 - JUnit (Unit Testing for Java and Kotlin)
@@ -39,7 +38,6 @@ Here are a couple of lists of technologies I worked professionally with:
 ## Frameworks and Libraries
 
 - Spring Boot
-- Ktor
 - Jetty
 - Netty
 - Dropwizard
