@@ -6,7 +6,7 @@ path = "about"
 
 Hi, I'm Marcus Cvjeticanin. I work as a Software Engineer specialized in backend systems. I have worked for several years, but started out programming 2012. 
 
-Currently my main focus and interest is in Java, Kotlin, JVM, Concurrency, Distributed Systems, Decentralized Systems, Software Architecture and a bit with Cryptography. 
+Currently my main focus and interest are in Java, Kotlin, JVM, Concurrency, Distributed Systems, Decentralized Systems, Software Architecture and a bit with Cryptography. 
 
 Here are a couple of lists of technologies I worked professionally with:
 
