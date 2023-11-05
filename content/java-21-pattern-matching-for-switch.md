@@ -19,6 +19,8 @@ The version consists of a lot of different features such as:
 
 ## Resources
 
+- [JEP 441](https://openjdk.org/jeps/441)
+
 ## Connect with me
 - [𝕏](https://x.com/mjovanc)
 - [GitHub](https://github.com/mjovanc)
