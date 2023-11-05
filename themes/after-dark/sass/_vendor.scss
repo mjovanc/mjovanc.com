@@ -43,12 +43,41 @@ a {
   cursor: pointer;
   color: #ff6a5a;
   text-decoration: none;
-  border-bottom: 1px solid #8767b7
+  border-bottom: 1px solid #8767b7;
+animation: borderChange 10s linear infinite;
+}
+
+@keyframes borderChange {
+
+    0%,
+    100% {
+        border-color: #8767b7;
+    }
+
+    20% {
+        border-color: #7a67b7;
+        /* Slightly different shade of purple */
+    }
+
+    40% {
+        border-color: #9e67b7;
+        /* Another shade of purple */
+    }
+
+    60% {
+        border-color: #b767b7;
+        /* Yet another shade of purple */
+    }
+
+    80% {
+        border-color: #ce67b7;
+        /* One more shade of purple */
+    }
 }
 
 a:hover {
   background-color: #8767b7;
-  color: #fff
+  color: #fff;
 }
 
 .grid {
