@@ -14,7 +14,7 @@ tags = ["x"]
 Here are are a list of communities I found useful on the platform that may interest you:
 
 - [Software Engineering](https://twitter.com/i/communities/1699807431709041070)
-- [Java](https://twitter.com/i/communities/1471178821906821122)
+- [Java](https://twitter.com/i/communities/1722164793946063184)
 - [Rust](https://twitter.com/i/communities/1472230399355072517)
 - [Python](https://twitter.com/i/communities/1508750875442954242)
 - [Kotlin](https://twitter.com/i/communities/1494696949156663299)
