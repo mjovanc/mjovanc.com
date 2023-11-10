@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZ8BXTEW5D"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'G-YZ8BXTEW5D');
+        </script>
+
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+
+    
+    <title>Java 21 - Pattern Matching for switch</title>
+    <meta property="twitter:title" content="Java 21 - Pattern Matching for switch" />
+    <meta property="twitter:image" content="https:&#x2F;&#x2F;mjovanc.com/&#x2F;java&#x2F;java-21-pattern-matching-for-switch&#x2F;/main_thumb.png" />
+
+        
+            <meta property="twitter:url" content="https:&#x2F;&#x2F;mjovanc.com/java-21-pattern-matching-for-switch" />
+        
+
+      
+        <meta name="description" content="Java 21 is now out and with it comes a good amount of new features. But in this article we are going to be focusing on the most exciting one, virtual threads." />
+        <meta property="twitter:description" content="Java 21 is now out and with it comes a good amount of new features. But in this article we are going to be focusing on the most exciting one, virtual threads." />
+      
+    
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+      
+
+      
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="https://mjovanc.com/atom.xml">
+      
+
+      
+          <link rel="stylesheet" href="https://mjovanc.com/site.css">
+      
+
+      
+      
+    </head>
+
+    <body class="hack dark main container">
+        
+    
+        
+                
+                    <header>
+                        <nav itemscope itemtype="http://schema.org/SiteNavigationElement">
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com">
+                                <span itemprop="name">Home</span></a>
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com/categories">
+                                <span itemprop="name">Categories</span></a>
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com/tags">
+                                <span itemprop="name">Tags</span></a>
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com/about">
+                                <span itemprop="name">About</span></a>
+                        
+                        </nav>
+                    </header>
+                
+            
+    
+
+<article itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+        <h1 class="small-title" itemprop="headline">Java 21 - Pattern Matching for switch</h1>
+        <span class="muted">
+        <svg class="icon i-clock" viewBox="0 0 32 32"
+            width="16" height="16" fill="none" stroke="currentcolor"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+            <circle cx="16" cy="16" r="14"/>
+            <path d="M16 8 L16 16 20 20"/>
+        </svg>
+        <span>14 minute read</span>
+        <svg class="icon i-edit" viewBox="0 0 32 32"
+            width="16" height="16" fill="none" stroke="currentcolor"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+            <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z"/>
+        </svg>
+        Published: 2023-11-05
+</span>
+    </header>
+    <div class="article-margin" itemprop="articleBody">
+      <p>Java has now extended the pattern matching feature to <code>switch</code> statements. This allows an expression to be tested against a number of patterns, each for a specific action. It enables complex data-oriented queries to be expressed concisely and safely.</p>
+<span id="continue-reading"></span>
+<p>This new feature has co-evolved with <a href="https://openjdk.org/jeps/440">Record Patterns</a> feature (JEP 440), it proposes to finalize the feature with additional small refinements that are based upon continued experience and feedback. The main changes from the previous JEP are:</p>
+<ul>
+<li>Removing paraenthesized patterns</li>
+<li>Allow for qualified enum constants, case constants in switch expressions and statements</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>The goals of the JDK enhancement proposal were to expand the epressiveness and applicability for switch expressions and statements by allowing patterns to be used in case labels. It also allows for historical null-hostility of switch to be more easy when desired. It also increases the safety of switch statements by requiring that the pattern switch statements will cover all the possible input values. Also, it ensures that all exisiting switch expressions and statements will continue to compile with zero changes and execute with identical semantics.</p>
+<p>Unfortunately <em>prior</em> to Java 21, <code>switch</code> was very limited. There was only possible to switch on values of a few types. The corresponding boxed forms, enum types, <code>String</code> (excluding <code>long</code>) and we could only test for exact equality against constants. We might want to use patterns to test the same variable against a number of different possibilities and by taking actions on each one of them, but since the early <code>switch</code> didn't support it, we end up with a chain of if/else.</p>
+<p>A working example <em>prior</em> to Java 21 would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">static </span><span style="font-style:italic;color:#8767b7;">String </span><span>formatter(</span><span style="font-style:italic;color:#8767b7;">Object</span><span> obj) {
+</span><span>    </span><span style="font-style:italic;color:#8767b7;">String</span><span> formatted </span><span style="color:#6f8b94;">= </span><span style="color:#b5db99;">&quot;unknown&quot;</span><span>;
+</span><span>
+</span><span>    </span><span style="color:#6f8b94;">if </span><span>(obj </span><span style="color:#6f8b94;">instanceof </span><span style="font-style:italic;color:#8767b7;">Integer</span><span> i) {
+</span><span>        formatted </span><span style="color:#6f8b94;">= </span><span style="font-style:italic;color:#8767b7;">String</span><span>.format(</span><span style="color:#b5db99;">&quot;int %d&quot;</span><span>, i);
+</span><span>    } </span><span style="color:#6f8b94;">else if </span><span>(obj </span><span style="color:#6f8b94;">instanceof </span><span style="font-style:italic;color:#8767b7;">Long</span><span> l) {
+</span><span>        formatted </span><span style="color:#6f8b94;">= </span><span style="font-style:italic;color:#8767b7;">String</span><span>.format(</span><span style="color:#b5db99;">&quot;Long %d&quot;</span><span>, l);
+</span><span>    } </span><span style="color:#6f8b94;">else if </span><span>(obj </span><span style="color:#6f8b94;">instanceof </span><span style="font-style:italic;color:#8767b7;">Double</span><span> d) {
+</span><span>        formatted </span><span style="color:#6f8b94;">= </span><span style="font-style:italic;color:#8767b7;">String</span><span>.format(</span><span style="color:#b5db99;">&quot;Double %f&quot;</span><span>, d);
+</span><span>    } </span><span style="color:#6f8b94;">else if </span><span>(obj </span><span style="color:#6f8b94;">instanceof </span><span style="font-style:italic;color:#8767b7;">String</span><span> s) {
+</span><span>        formatted </span><span style="color:#6f8b94;">= </span><span style="font-style:italic;color:#8767b7;">String</span><span>.format(</span><span style="color:#b5db99;">&quot;String %s&quot;</span><span>, s);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#6f8b94;">return</span><span> formatted;
+</span><span>}
+</span></code></pre>
+<p>This might feel familiar, it benefits from using <code>instanceof</code> expression pattern. But it's not good enough. This approach allows for possible coding errors to be remained hidden since we are using an overly general control construct. But using a <code>switch</code> is a perfect match for pattern matching. </p>
+<p>We can re-write all of the code above to a more clearly an reliable piece of code since extending <code>switch</code> statements and expressions to work on any type allows for case labels with patterns rather than just constants.</p>
+<p>A working example <em>with</em> Java 21 would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">static </span><span style="font-style:italic;color:#8767b7;">String </span><span>formatterPatternSwitch(</span><span style="font-style:italic;color:#8767b7;">Object</span><span> obj) {
+</span><span>    </span><span style="color:#6f8b94;">return switch </span><span>(obj) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Integer </span><span>i </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">String</span><span>.format(</span><span style="color:#b5db99;">&quot;int %d&quot;</span><span>, i);
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Long </span><span>l    </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">String</span><span>.format(</span><span style="color:#b5db99;">&quot;long %d&quot;</span><span>, l);
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Double </span><span>d  </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">String</span><span>.format(</span><span style="color:#b5db99;">&quot;double %f&quot;</span><span>, d);
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">String </span><span>s  </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">String</span><span>.format(</span><span style="color:#b5db99;">&quot;String %s&quot;</span><span>, s);
+</span><span>        </span><span style="color:#8767b7;">default        </span><span style="color:#6f8b94;">-&gt;</span><span> obj.toString();
+</span><span>    }; 
+</span><span>}
+</span></code></pre>
+<p>As you can see, the <code>switch</code> semantics are very clear. A case label with a pattern applies if the value of the selector expression <code>obj</code> matches the pattern. We also see that the intent of the code is much clearer since we are using the right control construct. As a bonus, this code is more optimizable, we are likely to be able to perform the dispatch in O(1) time.</p>
+<h2 id="switches-and-null">Switches and null</h2>
+<p>Using <code>switch</code> statements and expressions traditionally throw <code>NullPointerException</code> if the selector expression evaluates to <code>null</code>, so the testing for <code>null</code> was be done outside of the <code>switch</code>. </p>
+<p>A working example <em>prior</em> to Java 21 would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">static</span><span> void testFooBar(</span><span style="font-style:italic;color:#8767b7;">String</span><span> s) {
+</span><span>    </span><span style="color:#6f8b94;">if </span><span>(s </span><span style="color:#6f8b94;">== </span><span style="color:#8767b7;">null</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Ouch!&quot;</span><span>);
+</span><span>        </span><span style="color:#6f8b94;">return</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#6f8b94;">switch </span><span>(s) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="color:#b5db99;">&quot;Foo&quot;</span><span>, </span><span style="color:#b5db99;">&quot;Bar&quot; </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Super&quot;</span><span>);
+</span><span>        </span><span style="color:#8767b7;">default           </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;OK&quot;</span><span>);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>This was a reasonable approach when <code>switch</code> supported only a few reference types. But, if <code>switch</code> allows a selector expression of any reference type and case labels that can have type patterns. In that case, the standalone <code>null</code> test feels like an arbitrary dinstiction that invites a needless boilerplate and opportunities for errors. </p>
+<p>The perferable way is to integrate the <code>null</code> test into the switch by allowing a new <code>null</code> case label. </p>
+<p>A working example <em>with</em> Java 21 would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">static</span><span> void testFooBar(</span><span style="font-style:italic;color:#8767b7;">String</span><span> s) {
+</span><span>    </span><span style="color:#6f8b94;">switch </span><span>(s) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="color:#8767b7;">null         </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Ouch&quot;</span><span>);
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="color:#b5db99;">&quot;Foo&quot;</span><span>, </span><span style="color:#b5db99;">&quot;Bar&quot; </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Super&quot;</span><span>);
+</span><span>        </span><span style="color:#8767b7;">default           </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;OK&quot;</span><span>);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>We can always determine <code>null</code> by using it as a case label in the <code>switch</code>. Without a case <code>null</code>, the <code>switch</code> throws <code>NullPointerException</code>, just as in previous Java versions. To keep backward compatibility with the current semantics of <code>switch</code>, the default label do not match a <code>null</code> selector.</p>
+<h2 id="case-refinement">Case refinement</h2>
+<p>By constrast to case labels with constants, we can apply many values by using a pattern case label. </p>
+<p>A working example <em>with</em> Java 21 would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">static</span><span> void testString(</span><span style="font-style:italic;color:#8767b7;">String</span><span> response) {
+</span><span>    </span><span style="color:#6f8b94;">switch </span><span>(response) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="color:#8767b7;">null </span><span style="color:#6f8b94;">-&gt; </span><span>{ }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">String </span><span>s </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="color:#6f8b94;">if </span><span>(s.equalsIgnoreCase(</span><span style="color:#b5db99;">&quot;YES&quot;</span><span>))
+</span><span>                </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;You got it&quot;</span><span>);
+</span><span>            </span><span style="color:#6f8b94;">else if </span><span>(s.equalsIgnoreCase(</span><span style="color:#b5db99;">&quot;NO&quot;</span><span>))
+</span><span>                </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Shame&quot;</span><span>);
+</span><span>            </span><span style="color:#6f8b94;">else
+</span><span>                </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Sorry?&quot;</span><span>);
+</span><span>        } 
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>By using a single pattern to discriminate among cases is a problem since it does not scale beyond a single condition. It would be preferable if we would write multiple patterns, but then we need a way to express a refinement to a pattern. We therefor allow when clauses in a <code>switch</code> block to specify guards for pattern case labels. </p>
+<p>A working example <em>with</em> Java 21 that we would refer to as guarded case label would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="font-style:italic;color:#8767b7;">String</span><span> s when s.equalsIgnoreCase(</span><span style="color:#b5db99;">&quot;YES&quot;</span><span>)
+</span></code></pre>
+<p>By using that approach we can re-write our existing <code>testString</code> method which will lead to a more readable way:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">static</span><span> void testString(</span><span style="font-style:italic;color:#8767b7;">String</span><span> response) {
+</span><span>    </span><span style="color:#6f8b94;">switch </span><span>(response) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="color:#8767b7;">null </span><span style="color:#6f8b94;">-&gt; </span><span>{ }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">String</span><span> s
+</span><span>        when s.equalsIgnoreCase(</span><span style="color:#b5db99;">&quot;YES&quot;</span><span>) </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;You got it&quot;</span><span>);
+</span><span>        }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">String</span><span> s
+</span><span>        when s.equalsIgnoreCase(</span><span style="color:#b5db99;">&quot;NO&quot;</span><span>) </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Shame&quot;</span><span>);
+</span><span>        }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">String </span><span>s </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Sorry?&quot;</span><span>);
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>There is a way we can further enhance this code by some extra rules for other constant strings:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">static</span><span> void testString(</span><span style="font-style:italic;color:#8767b7;">String</span><span> response) {
+</span><span>    </span><span style="color:#6f8b94;">switch </span><span>(response) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="color:#8767b7;">null </span><span style="color:#6f8b94;">-&gt; </span><span>{ }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="color:#b5db99;">&quot;y&quot;</span><span>, </span><span style="color:#b5db99;">&quot;Y&quot; </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;You got it&quot;</span><span>);
+</span><span>        }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="color:#b5db99;">&quot;n&quot;</span><span>, </span><span style="color:#b5db99;">&quot;N&quot; </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Shame&quot;</span><span>);
+</span><span>        }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">String</span><span> s
+</span><span>        when s.equalsIgnoreCase(</span><span style="color:#b5db99;">&quot;YES&quot;</span><span>) </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;You got it&quot;</span><span>);
+</span><span>        }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">String</span><span> s
+</span><span>        when s.equalsIgnoreCase(</span><span style="color:#b5db99;">&quot;NO&quot;</span><span>) </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Shame&quot;</span><span>);
+</span><span>        }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">String </span><span>s </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Sorry?&quot;</span><span>);
+</span><span>        } 
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h2 id="switches-and-enum-constants">Switches and enum constants</h2>
+<p>To use enum constants in case labels is highly constrained at the moment. We need to have an enum type for the selector expression in the <code>switch</code>, it also has to be simple names of the enum constants. </p>
+<p>A working example <em>prior</em> to Java 21 would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">public </span><span style="color:#6f8b94;">enum </span><span style="text-decoration:underline;color:#8767b7;">Suit </span><span>{ </span><span style="font-style:italic;color:#8767b7;">CLUBS</span><span>, DIAMONDS, HEARTS, SPADES }
+</span><span>
+</span><span style="color:#8767b7;">static</span><span> void testforHearts(</span><span style="font-style:italic;color:#8767b7;">Suit</span><span> s) {
+</span><span>    </span><span style="color:#6f8b94;">switch </span><span>(s) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span>HEARTS </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;It&#39;s a heart!&quot;</span><span>);
+</span><span>        </span><span style="color:#8767b7;">default </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Some other suit&quot;</span><span>);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Even if we are adding pattern labels this constraint will lead to unnecessarily verbose code. </p>
+<p>A working example <em>with</em> Java 21 would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span>sealed </span><span style="color:#6f8b94;">interface </span><span style="text-decoration:underline;color:#8767b7;">CardClassification </span><span>permits </span><span style="font-style:italic;color:#8767b7;">Suit</span><span>, </span><span style="font-style:italic;color:#8767b7;">Tarot </span><span>{}
+</span><span style="color:#8767b7;">public </span><span style="color:#6f8b94;">enum </span><span style="text-decoration:underline;color:#8767b7;">Suit </span><span style="color:#6f8b94;">implements </span><span style="text-decoration:underline;font-style:italic;color:#8767b7;">CardClassification </span><span>{ </span><span style="font-style:italic;color:#8767b7;">CLUBS</span><span>, DIAMONDS, HEARTS, SPADES }
+</span><span style="color:#8767b7;">final </span><span style="color:#6f8b94;">class </span><span style="text-decoration:underline;color:#8767b7;">Tarot </span><span style="color:#6f8b94;">implements </span><span style="text-decoration:underline;font-style:italic;color:#8767b7;">CardClassification </span><span>{}
+</span><span>
+</span><span style="color:#8767b7;">static</span><span> void exhaustiveSwitchWithoutEnumSupport(</span><span style="font-style:italic;color:#8767b7;">CardClassification</span><span> c) {
+</span><span>    </span><span style="color:#6f8b94;">switch </span><span>(c) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Suit</span><span> s when s </span><span style="color:#6f8b94;">== </span><span style="font-style:italic;color:#8767b7;">Suit</span><span>.</span><span style="color:#8767b7;">CLUBS </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;It&#39;s clubs&quot;</span><span>);
+</span><span>        }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Suit</span><span> s when s </span><span style="color:#6f8b94;">== </span><span style="font-style:italic;color:#8767b7;">Suit</span><span>.</span><span style="color:#8767b7;">DIAMONDS </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;It&#39;s diamonds&quot;</span><span>);
+</span><span>        }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Suit</span><span> s when s </span><span style="color:#6f8b94;">== </span><span style="font-style:italic;color:#8767b7;">Suit</span><span>.</span><span style="color:#8767b7;">HEARTS </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;It&#39;s hearts&quot;</span><span>);
+</span><span>        }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Suit </span><span>s </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;It&#39;s spades&quot;</span><span>);
+</span><span>        }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Tarot </span><span>t </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;It&#39;s a tarot&quot;</span><span>);
+</span><span>        } 
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>If we would have a seperate case for each enum constant, we could make this more readable rather than lots of guarded patterns. We could then re-write the above code as:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">static</span><span> void exhaustiveSwitchWithBetterEnumSupport(</span><span style="font-style:italic;color:#8767b7;">CardClassification</span><span> c) {
+</span><span>    </span><span style="color:#6f8b94;">switch </span><span>(c) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Suit</span><span>.</span><span style="color:#8767b7;">CLUBS </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;It&#39;s clubs&quot;</span><span>);
+</span><span>        }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Suit</span><span>.</span><span style="color:#8767b7;">DIAMONDS </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;It&#39;s diamonds&quot;</span><span>);
+</span><span>        }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Suit</span><span>.</span><span style="color:#8767b7;">HEARTS </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;It&#39;s hearts&quot;</span><span>);
+</span><span>        }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Suit</span><span>.</span><span style="color:#8767b7;">SPADES </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;It&#39;s spades&quot;</span><span>);
+</span><span>        }
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Tarot </span><span>t </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;It&#39;s a tarot&quot;</span><span>);
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Now there is a direct case for each of the enum constants without using a guarded type pattern.</p>
+<h2 id="enhanced-type-checking">Enhanced type checking</h2>
+<h3 id="selector-expression-typing">Selector expression typing</h3>
+<p>By supporting patterns in a <code>switch</code> it now means that we can have a relaxed restriction on the type of the selector expression. Currently, the type of the selector expression of a regular <code>switch</code> must be either an integral primitive type (exluding <code>long</code>), the corresponding boxed form such as <code>Character</code>, <code>Byte</code>, <code>Short</code>, <code>Integer</code>, <code>String</code>, or an enum type. </p>
+<p>For example, in the pattern switch below, the selector expression <code>obj</code> is matched with type patterns that involves a class type, enum type, record type and an array type. As well as a null case label and default.</p>
+<p>A working example <em>with</em> Java 21 would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span>record Point(</span><span style="color:#6f8b94;">int</span><span> i, </span><span style="color:#6f8b94;">int</span><span> j) {}
+</span><span style="color:#6f8b94;">enum </span><span style="text-decoration:underline;color:#8767b7;">Color </span><span>{ </span><span style="font-style:italic;color:#8767b7;">RED</span><span>, GREEN, BLUE; }
+</span><span>
+</span><span style="color:#8767b7;">static</span><span> void typeTester(</span><span style="font-style:italic;color:#8767b7;">Object</span><span> obj) {
+</span><span>    </span><span style="color:#6f8b94;">switch </span><span>(obj) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="color:#8767b7;">null     </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;null&quot;</span><span>);
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">String </span><span>s </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;String&quot;</span><span>);
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Color </span><span>c  </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Color: &quot; </span><span style="color:#6f8b94;">+</span><span> c.toString());
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Point </span><span>p  </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Record class: &quot; </span><span style="color:#6f8b94;">+</span><span> p.toString());
+</span><span>        </span><span style="color:#6f8b94;">case int</span><span style="color:#8767b7;">[] </span><span>ia </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Array of ints of length&quot; </span><span style="color:#6f8b94;">+</span><span> ia.length);
+</span><span>        </span><span style="color:#8767b7;">default       </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Something else&quot;</span><span>);
+</span><span>    } 
+</span><span>}
+</span></code></pre>
+<p>In the <code>switch</code> block, for every case label, must be compatible with the selector expression. A pattern label (a case label with a pattern), we use the existing notion of <em>compability of an expression with a pattern</em>.</p>
+<h3 id="dominance-of-case-labels">Dominance of case labels</h3>
+<p>Supporting pattern case labels means that for a given value of the selector expression it will be possible now to use more than one case label to apply, whereas in the earlier Java versions we could have at most one case label to be applied. </p>
+<p>One example would be if the selector expression should evaluate to a <code>String</code>, then both case labels <code>case String s</code> and <code>case CharSequence cs</code> would apply.</p>
+<p>An example <em>with</em> Java 21 would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">static</span><span> void first(</span><span style="font-style:italic;color:#8767b7;">Object</span><span> obj) {
+</span><span>    </span><span style="color:#6f8b94;">switch </span><span>(obj) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">String </span><span>s </span><span style="color:#6f8b94;">-&gt;
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;A string: &quot; </span><span style="color:#6f8b94;">+</span><span> s);
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">CharSequence </span><span>cs </span><span style="color:#6f8b94;">-&gt;
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;A sequence of length &quot; </span><span style="color:#6f8b94;">+</span><span> cs.length());
+</span><span>        </span><span style="color:#8767b7;">default </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="color:#6f8b94;">break</span><span>; 
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>The value of <code>obj</code> in this example if it's of type <code>String</code>, then it will apply the first case label. If it would be of type <code>CharSequence</code>, but not the type <code>String</code> then the second pattern label would apply. But let's say we swap the order of these two case labels?</p>
+<p>A working example <em>with</em> Java 21 would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">static</span><span> void first(</span><span style="font-style:italic;color:#8767b7;">Object</span><span> obj) {
+</span><span>    </span><span style="color:#6f8b94;">switch </span><span>(obj) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">CharSequence </span><span>cs </span><span style="color:#6f8b94;">-&gt;
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;A sequence of length &quot; </span><span style="color:#6f8b94;">+</span><span> cs.length());
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">String </span><span>s </span><span style="color:#6f8b94;">-&gt;    
+</span><span>            </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;A string: &quot; </span><span style="color:#6f8b94;">+</span><span> s);
+</span><span>        </span><span style="color:#8767b7;">default </span><span style="color:#6f8b94;">-&gt; </span><span>{
+</span><span>            </span><span style="color:#6f8b94;">break</span><span>; 
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>If the value of <code>obj</code> now would be of type <code>String</code> the <code>CharSequence</code> case label applies. This is because it appears first in the <code>switch</code> block. The <code>String</code> case label is unreachable since there is no value of the selector expression that could cause it to be chosen.</p>
+<h2 id="exhaustiveness-of-switch-expressions-and-statements">Exhaustiveness of switch expressions and statements</h2>
+<h3 id="type-coverage">Type coverage</h3>
+<p>By using a <code>switch</code> expression it requires that all possible values of the selector expression will be handled in the <code>switch</code> block. So to put it to another words, it must be <em>exhaustive</em>. For normal <code>switch</code> expressions, this property is enforced by a set of extra conditions on the <code>switch</code> block. </p>
+<p>For pattern switch expressions and statements, we achieve this by defining a notion of <em>type coverage</em> of <code>switch</code> labels in a <code>switch</code> block. </p>
+<p>A erroneous example <em>with</em> Java 21 would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">static </span><span style="color:#6f8b94;">int </span><span>coverage(</span><span style="font-style:italic;color:#8767b7;">Object</span><span> obj) {
+</span><span>    </span><span style="color:#6f8b94;">return switch </span><span>(obj) {           
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">String </span><span>s </span><span style="color:#6f8b94;">-&gt;</span><span> s.length();
+</span><span>    };
+</span><span>}
+</span></code></pre>
+<p>This switch block only have one switch label, <code>case String s</code>. This pattern <code>switch</code> expressions is not <em>exhaustive</em> because of the type coverage of its <code>switch</code> block does not include the type of the selector expression (<code>Object</code>).</p>
+<h3 id="exhaustiveness-in-practice">Exhaustiveness in practice</h3>
+<p>A erroneous example <em>prior</em> to Java 21 would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#6f8b94;">enum </span><span style="text-decoration:underline;color:#8767b7;">Color </span><span>{ </span><span style="font-style:italic;color:#8767b7;">RED</span><span>, YELLOW, GREEN }
+</span><span>
+</span><span style="color:#6f8b94;">int</span><span> numLetters </span><span style="color:#6f8b94;">= switch </span><span>(color) {
+</span><span>    </span><span style="color:#6f8b94;">case </span><span>RED </span><span style="color:#6f8b94;">-&gt; </span><span style="color:#b5db99;">3</span><span>;
+</span><span>    </span><span style="color:#6f8b94;">case </span><span>GREEN </span><span style="color:#6f8b94;">-&gt; </span><span style="color:#b5db99;">5</span><span>;
+</span><span>}
+</span></code></pre>
+<p>This <code>switch</code> expression over an enum class is not <em>exhaustive</em> since the anticipated input <code>YELLOW</code> is not covered. By adding a case label to handle the <code>YELLOW</code> enum constant is sufficient to make the <code>switch</code> <em>exhaustive</em>, as expected.</p>
+<p>A working example <em>prior</em> to Java 21 would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#6f8b94;">int</span><span> numLetters </span><span style="color:#6f8b94;">= switch </span><span>(color) {
+</span><span>    </span><span style="color:#6f8b94;">case </span><span>RED </span><span style="color:#6f8b94;">-&gt; </span><span style="color:#b5db99;">3</span><span>;
+</span><span>    </span><span style="color:#6f8b94;">case </span><span>GREEN </span><span style="color:#6f8b94;">-&gt; </span><span style="color:#b5db99;">5</span><span>;
+</span><span>    </span><span style="color:#6f8b94;">case </span><span>YELLOW </span><span style="color:#6f8b94;">-&gt; </span><span style="color:#b5db99;">6</span><span>;
+</span><span>}
+</span></code></pre>
+<h3 id="exhaustiveness-and-sealed-classes">Exhaustiveness and sealed classes</h3>
+<p>If the type of the selector expression is a sealed class, then the type coverage check can take into account the permits clause of the sealed class to determine if a <code>switch</code> block is <em>exhaustive</em> or not.</p>
+<blockquote>
+<p>Sealed classes and interfaces restrict which other classes or interfaces may extend or implement them.</p>
+</blockquote>
+<p>By using a sealed class as the selector expression, we can sometimes remove the need for a default clause, which is a good practice. </p>
+<p>An example <em>with</em> Java 21 would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span>sealed </span><span style="color:#6f8b94;">interface </span><span style="text-decoration:underline;color:#8767b7;">S </span><span>permits </span><span style="font-style:italic;color:#8767b7;">A</span><span>, </span><span style="font-style:italic;color:#8767b7;">B</span><span>, </span><span style="font-style:italic;color:#8767b7;">C </span><span>{}
+</span><span>
+</span><span style="color:#8767b7;">final </span><span style="color:#6f8b94;">class </span><span style="text-decoration:underline;color:#8767b7;">A </span><span style="color:#6f8b94;">implements </span><span style="text-decoration:underline;font-style:italic;color:#8767b7;">S </span><span>{}
+</span><span style="color:#8767b7;">final </span><span style="color:#6f8b94;">class </span><span style="text-decoration:underline;color:#8767b7;">B </span><span style="color:#6f8b94;">implements </span><span style="text-decoration:underline;font-style:italic;color:#8767b7;">S </span><span>{}
+</span><span>
+</span><span>record C(</span><span style="color:#6f8b94;">int</span><span> i) implements </span><span style="font-style:italic;color:#8767b7;">S </span><span>{}
+</span><span>
+</span><span style="color:#8767b7;">static </span><span style="color:#6f8b94;">int </span><span>testSealedExhaustive(</span><span style="font-style:italic;color:#8767b7;">S</span><span> s) {
+</span><span>    </span><span style="color:#6f8b94;">return switch </span><span>(s) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">A </span><span>a </span><span style="color:#6f8b94;">-&gt; </span><span style="color:#b5db99;">1</span><span>;
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">B </span><span>b </span><span style="color:#6f8b94;">-&gt; </span><span style="color:#b5db99;">2</span><span>;
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">C </span><span>c </span><span style="color:#6f8b94;">-&gt; </span><span style="color:#b5db99;">3</span><span>;
+</span><span>    };
+</span><span>}
+</span></code></pre>
+<p>The compiler can now determine that the type coverage of the <code>switch</code> block is the types A, B and C. Since <code>S</code>, the type of the selector expression is a sealed interface whose permitted subclasses are exactly A, B and C, this <code>switch</code> block is now <em>exhaustive</em>, and thus no need of using a default label clause.</p>
+<h2 id="dealing-with-null">Dealing with null</h2>
+<p>A <code>switch</code> traditionally throws <code>NullPointerException</code> if the selector expression evaluates to <code>null</code>. There are, however, reasonable and non-exception-raising semenatics for pattern matching and <code>null</code> values, so we can treat <code>null</code> in a more regular way and still remain compatible with existing semantics. </p>
+<p>In this new Java version, there is a new <code>null</code> case label. We should however know that:</p>
+<ul>
+<li>If the selector expression would evaluate to <code>null</code>, then any <code>null</code> case is said to match. We throw <code>NullPointerException</code> as before if there is no such label associated with the switch block. </li>
+<li>If the selector expression would evaluate to a non-null value, then we, as normal, select a matching case label. If there are no case label matches, then any default label is considered a match.</li>
+</ul>
+<p>An example <em>with</em> Java 21 would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">static</span><span> void nullMatch(</span><span style="font-style:italic;color:#8767b7;">Object</span><span> obj) {
+</span><span>    </span><span style="color:#6f8b94;">switch </span><span>(obj) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="color:#8767b7;">null     </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;null!&quot;</span><span>);
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">String </span><span>s </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;String&quot;</span><span>);
+</span><span>        </span><span style="color:#8767b7;">default       </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Something else&quot;</span><span>);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>With this given code example, we evaluate null, and print out <code>null!</code> instead of throwing a <code>NullPointerException</code>.</p>
+<p>An example <em>with</em> Java 21 that can throw <code>NullPointerException</code> would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">static</span><span> void nullMatch(</span><span style="font-style:italic;color:#8767b7;">Object</span><span> obj) {
+</span><span>    </span><span style="color:#6f8b94;">switch </span><span>(obj) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">String </span><span>s  </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;String: &quot; </span><span style="color:#6f8b94;">+</span><span> s);
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">Integer </span><span>i </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;Integer&quot;</span><span>);
+</span><span>        </span><span style="color:#8767b7;">default        </span><span style="color:#6f8b94;">-&gt; </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;default&quot;</span><span>);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h2 id="errors">Errors</h2>
+<p>For example, by matching a value against a record pattern, the record's accessor method can complete abruptly. In this case where we match against a record pattern, pattern matching is defined to complete abruptly by throwing a <code>MatchException</code>. It will also complete abruptly if such pattern appears as a label in a <code>switch</code> block by throwing <code>MatchException</code>. </p>
+<p>If no label in a pattern <code>switch</code> would match the value of the selector expression, then the <code>switch</code> completes abruptly and throws an <code>MatchException</code>, since it needs to be <em>exhaustive</em>.</p>
+<p>An example <em>with</em> Java 21 that throws an exception would be:</p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span>record R(</span><span style="color:#6f8b94;">int</span><span> i) {
+</span><span>    </span><span style="color:#8767b7;">public </span><span style="color:#6f8b94;">int </span><span>i() {
+</span><span>        </span><span style="color:#6f8b94;">return</span><span> i </span><span style="color:#6f8b94;">/ </span><span style="color:#b5db99;">0</span><span>;
+</span><span>    } 
+</span><span>}
+</span><span>
+</span><span style="color:#8767b7;">static</span><span> void example(</span><span style="font-style:italic;color:#8767b7;">R</span><span> r) {
+</span><span>    </span><span style="color:#6f8b94;">switch</span><span>(r) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span>R(var i)</span><span style="color:#6f8b94;">: </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(i);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>The invocation <code>example(new R(42))</code> will cause a <code>MatchException</code> to be thrown. </p>
+<p>A second example <em>with</em> Java 21 that throws an exception would be: </p>
+<pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">static</span><span> void example(</span><span style="font-style:italic;color:#8767b7;">Object</span><span> obj) {
+</span><span>    </span><span style="color:#6f8b94;">switch </span><span>(obj) {
+</span><span>        </span><span style="color:#6f8b94;">case </span><span style="font-style:italic;color:#8767b7;">R</span><span> r when (r.i </span><span style="color:#6f8b94;">/ </span><span style="color:#b5db99;">0 </span><span style="color:#6f8b94;">== </span><span style="color:#b5db99;">1</span><span>)</span><span style="color:#6f8b94;">: </span><span style="font-style:italic;color:#8767b7;">System</span><span>.out.println(</span><span style="color:#b5db99;">&quot;It&#39;s an R!&quot;</span><span>);
+</span><span>        </span><span style="color:#8767b7;">default</span><span style="color:#6f8b94;">: break</span><span>;
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>This will throw a <code>ArithmeticException</code>.</p>
+<h2 id="summary">Summary</h2>
+<p>So now you probably know a little bit more about Pattern Matching for switch. This new feature is very useful as you probably have realized until now comparing to older Java versions. </p>
+<p>If you found it valuable, please consider sharing it, as it might also be valuable to others. Let me know if you have any questions by reaching me on 𝕏!</p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://openjdk.org/jeps/441">JEP 441</a></li>
+<li><a href="https://openjdk.org/jeps/440">JEP 440</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/17/language/sealed-classes-and-interfaces.html#GUID-0C709461-CC33-419A-82BF-61461336E65F">Sealed Classes</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/17/language/pattern-matching-instanceof-operator.html#GUID-843060B5-240C-4F47-A7B0-95C42E5B08A7">Pattern Matching for instanceof</a></li>
+<li><a href="https://download.java.net/java/early_access/valhalla/docs/api/java.base/java/lang/MatchException.html">MatchException</a></li>
+<li><a href="https://docs.oracle.com/javase%2F7%2Fdocs%2Fapi%2F%2F/java/lang/ArithmeticException.html">ArithmeticException</a></li>
+</ul>
+<h2 id="connect-with-me">Connect with me</h2>
+<ul>
+<li><a href="https://x.com/mjovanc">𝕏</a></li>
+<li><a href="https://github.com/mjovanc">GitHub</a></li>
+<li><a href="https://www.linkedin.com/in/marcuscvjeticanin/">LinkedIn</a></li>
+</ul>
+
+    </div>
+
+    
+        <footer>
+            <hr>
+            <p>
+                
+                    Published by Marcus Cvjeticanin
+                
+                
+                    
+                    in <a href="https://mjovanc.com/categories/java/">java</a>
+                
+                
+                    and
+                    tagged
+                    
+                        <a href="https://mjovanc.com/tags/java/">java</a>
+                        
+                            
+                                
+                                    and
+                                
+                            
+                        
+                    
+                        <a href="https://mjovanc.com/tags/jdk21/">jdk21</a>
+                        
+                            
+                        
+                    
+                
+            </p>
+            
+            
+        </footer>
+    
+</article>
+
+
+    </body>
+
+</html>

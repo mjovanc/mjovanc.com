@@ -5,8 +5,22 @@
     <link href="https://mjovanc.com/atom.xml" rel="self" type="application/atom+xml"/>
     <link href="https://mjovanc.com"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
-    <updated>2023-11-04T00:00:00+00:00</updated>
+    <updated>2023-11-05T00:00:00+00:00</updated>
     <id>https://mjovanc.com/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Java 21 - Pattern Matching for switch</title>
+        <published>2023-11-05T00:00:00+00:00</published>
+        <updated>2023-11-05T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://mjovanc.com/java/java-21-pattern-matching-for-switch/" type="text/html"/>
+        <id>https://mjovanc.com/java/java-21-pattern-matching-for-switch/</id>
+        
+        <summary type="html">&lt;p&gt;Java has now extended the pattern matching feature to &lt;code&gt;switch&lt;&#x2F;code&gt; statements. This allows an expression to be tested against a number of patterns, each for a specific action. It enables complex data-oriented queries to be expressed concisely and safely.&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
     <entry xml:lang="en">
         <title>Java 21 - A deep dive into Virtual Threads</title>
         <published>2023-11-04T00:00:00+00:00</published>
