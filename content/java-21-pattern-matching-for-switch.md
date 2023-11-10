@@ -1,7 +1,7 @@
 +++
 title = "Java 21 - Pattern Matching for switch"
 description = "Java 21 is now out and with it comes a good amount of new features. But in this article we are going to be focusing on the most exciting one, virtual threads."
-date = 2023-11-05
+date = 2023-11-10
 path = "java/java-21-pattern-matching-for-switch"
 
 [taxonomies]

@@ -5,12 +5,12 @@
     <link href="https://mjovanc.com/tags/java/atom.xml" rel="self" type="application/atom+xml"/>
     <link href="https://mjovanc.com"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
-    <updated>2023-11-05T00:00:00+00:00</updated>
+    <updated>2023-11-10T00:00:00+00:00</updated>
     <id>https://mjovanc.com/tags/java/atom.xml</id>
     <entry xml:lang="en">
         <title>Java 21 - Pattern Matching for switch</title>
-        <published>2023-11-05T00:00:00+00:00</published>
-        <updated>2023-11-05T00:00:00+00:00</updated>
+        <published>2023-11-10T00:00:00+00:00</published>
+        <updated>2023-11-10T00:00:00+00:00</updated>
         <author>
           <name>Unknown</name>
         </author>
