@@ -30,8 +30,8 @@
         
 
       
-        <meta name="description" content="In this second article about Java 21, we are going to go through pattern matching for switch, which has got some real improvements." />
-        <meta property="twitter:description" content="In this second article about Java 21, we are going to go through pattern matching for switch, which has got some real improvements." />
+        <meta name="description" content="In this second article about Java 21, we are going to go through pattern matching for switch, which has got some great improvements." />
+        <meta property="twitter:description" content="In this second article about Java 21, we are going to go through pattern matching for switch, which has got some great improvements." />
       
     
     
@@ -130,7 +130,8 @@
 <li>Allow for qualified enum constants, case constants in switch expressions and statements</li>
 </ul>
 <h2 id="introduction">Introduction</h2>
-<p>The goals of the JDK enhancement proposal were to expand the epressiveness and applicability for switch expressions and statements by allowing patterns to be used in case labels. It also allows for historical null-hostility of switch to be more easy when desired. It also increases the safety of <code>switch</code> statements by requiring that the pattern switch statements will cover all the possible input values. Also, it ensures that all exisiting switch expressions and statements will continue to compile with zero changes and execute with identical semantics.</p>
+<p>The goals of the JDK enhancement proposal were to expand the epressiveness and applicability for switch expressions and statements by allowing patterns to be used in case labels. It allows for historical null-hostility of switch to be more easy when desired. </p>
+<p>It also increases the safety of <code>switch</code> statements by requiring that the pattern switch statements will cover all the possible input values. As well as ensuring that all exisiting switch expressions and statements will continue to compile with zero changes and execute with identical semantics.</p>
 <p>Unfortunately <em>prior</em> to Java 21, <code>switch</code> was very limited. There was only possible to switch on values of a few types. The corresponding boxed forms, enum types, <code>String</code> (excluding <code>long</code>) and we could only test for exact equality against constants. We might want to use patterns to test the same variable against a number of different possibilities and by taking actions on each one of them, but since the early <code>switch</code> didn't support it, we end up with a chain of if/else.</p>
 <p>A working example <em>prior</em> to Java 21 would be:</p>
 <pre data-lang="java" style="background-color:#111111;color:#cccccc;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#8767b7;">static </span><span style="font-style:italic;color:#8767b7;">String </span><span>formatter(</span><span style="font-style:italic;color:#8767b7;">Object</span><span> obj) {
@@ -162,7 +163,8 @@
 </span><span>    }; 
 </span><span>}
 </span></code></pre>
-<p>As you can see, the <code>switch</code> semantics are very clear. A case label with a pattern applies if the value of the selector expression <code>obj</code> matches the pattern. We also see that the intent of the code is much clearer since we are using the right control construct. As a bonus, this code is more optimizable, we are likely to be able to perform the dispatch in O(1) time.</p>
+<p>As you can see, the <code>switch</code> semantics are very clear. A case label with a pattern applies if the value of the selector expression <code>obj</code> matches the pattern. </p>
+<p>We also see that the intent of the code is much clearer since we are using the right control construct. As a bonus, this code is more optimizable, we are likely to be able to perform the dispatch in O(1) time.</p>
 <h2 id="switches-and-null">Switches and null</h2>
 <p>Using <code>switch</code> statements and expressions traditionally throw <code>NullPointerException</code> if the selector expression evaluates to <code>null</code>, so the testing for <code>null</code> was be done outside of the <code>switch</code>. </p>
 <p>A working example <em>prior</em> to Java 21 would be:</p>

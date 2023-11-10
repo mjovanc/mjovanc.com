@@ -1,6 +1,6 @@
 +++
 title = "Java 21 - Pattern Matching for switch"
-description = "In this second article about Java 21, we are going to go through pattern matching for switch, which has got some real improvements."
+description = "In this second article about Java 21, we are going to go through pattern matching for switch, which has got some great improvements."
 date = 2023-11-10
 path = "java/java-21-pattern-matching-for-switch"
 
@@ -18,7 +18,9 @@ This new feature has co-evolved with [Record Patterns](https://openjdk.org/jeps/
 
 ## Introduction
 
-The goals of the JDK enhancement proposal were to expand the epressiveness and applicability for switch expressions and statements by allowing patterns to be used in case labels. It also allows for historical null-hostility of switch to be more easy when desired. It also increases the safety of `switch` statements by requiring that the pattern switch statements will cover all the possible input values. Also, it ensures that all exisiting switch expressions and statements will continue to compile with zero changes and execute with identical semantics.
+The goals of the JDK enhancement proposal were to expand the epressiveness and applicability for switch expressions and statements by allowing patterns to be used in case labels. It allows for historical null-hostility of switch to be more easy when desired. 
+
+It also increases the safety of `switch` statements by requiring that the pattern switch statements will cover all the possible input values. As well as ensuring that all exisiting switch expressions and statements will continue to compile with zero changes and execute with identical semantics.
 
 Unfortunately _prior_ to Java 21, `switch` was very limited. There was only possible to switch on values of a few types. The corresponding boxed forms, enum types, `String` (excluding `long`) and we could only test for exact equality against constants. We might want to use patterns to test the same variable against a number of different possibilities and by taking actions on each one of them, but since the early `switch` didn't support it, we end up with a chain of if/else.
 
@@ -60,7 +62,9 @@ static String formatterPatternSwitch(Object obj) {
 }
 ```
 
-As you can see, the `switch` semantics are very clear. A case label with a pattern applies if the value of the selector expression `obj` matches the pattern. We also see that the intent of the code is much clearer since we are using the right control construct. As a bonus, this code is more optimizable, we are likely to be able to perform the dispatch in O(1) time.
+As you can see, the `switch` semantics are very clear. A case label with a pattern applies if the value of the selector expression `obj` matches the pattern. 
+
+We also see that the intent of the code is much clearer since we are using the right control construct. As a bonus, this code is more optimizable, we are likely to be able to perform the dispatch in O(1) time.
 
 ## Switches and null
 
