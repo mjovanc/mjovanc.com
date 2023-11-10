@@ -1,6 +1,6 @@
 +++
 title = "Java 21 - Pattern Matching for switch"
-description = "Java 21 is now out and with it comes a good amount of new features. But in this article we are going to be focusing on the most exciting one, virtual threads."
+description = "In this second article about Java 21, we are going to go through pattern matching for switch, which has got some real improvements."
 date = 2023-11-10
 path = "java/java-21-pattern-matching-for-switch"
 
@@ -18,7 +18,7 @@ This new feature has co-evolved with [Record Patterns](https://openjdk.org/jeps/
 
 ## Introduction
 
-The goals of the JDK enhancement proposal were to expand the epressiveness and applicability for switch expressions and statements by allowing patterns to be used in case labels. It also allows for historical null-hostility of switch to be more easy when desired. It also increases the safety of switch statements by requiring that the pattern switch statements will cover all the possible input values. Also, it ensures that all exisiting switch expressions and statements will continue to compile with zero changes and execute with identical semantics.
+The goals of the JDK enhancement proposal were to expand the epressiveness and applicability for switch expressions and statements by allowing patterns to be used in case labels. It also allows for historical null-hostility of switch to be more easy when desired. It also increases the safety of `switch` statements by requiring that the pattern switch statements will cover all the possible input values. Also, it ensures that all exisiting switch expressions and statements will continue to compile with zero changes and execute with identical semantics.
 
 Unfortunately _prior_ to Java 21, `switch` was very limited. There was only possible to switch on values of a few types. The corresponding boxed forms, enum types, `String` (excluding `long`) and we could only test for exact equality against constants. We might want to use patterns to test the same variable against a number of different possibilities and by taking actions on each one of them, but since the early `switch` didn't support it, we end up with a chain of if/else.
 
@@ -478,6 +478,7 @@ If you found it valuable, please consider sharing it, as it might also be valuab
 - [JEP 440](https://openjdk.org/jeps/440)
 - [Sealed Classes](https://docs.oracle.com/en/java/javase/17/language/sealed-classes-and-interfaces.html#GUID-0C709461-CC33-419A-82BF-61461336E65F)
 - [Pattern Matching for instanceof](https://docs.oracle.com/en/java/javase/17/language/pattern-matching-instanceof-operator.html#GUID-843060B5-240C-4F47-A7B0-95C42E5B08A7)
+- [Record Patterns](https://docs.oracle.com/en/java/javase/20/language/record-patterns.html#GUID-7623D3AD-4141-4914-A384-60C65BD0C010)
 - [MatchException](https://download.java.net/java/early_access/valhalla/docs/api/java.base/java/lang/MatchException.html)
 - [ArithmeticException](https://docs.oracle.com/javase%2F7%2Fdocs%2Fapi%2F%2F/java/lang/ArithmeticException.html)
 
