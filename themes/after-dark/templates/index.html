@@ -26,6 +26,7 @@
     <title>{% block title %}{{ page.title }}{% endblock title %}</title>
     <meta property="twitter:title" content="{{ page.title }}" />
     <meta property="twitter:image" content="{{ config.base_url }}/{{ page.path }}/main_thumb.png" />
+    <meta property="og:image" content="{{ config.base_url }}/{{ page.path }}/main_thumb.png" />
 
         {% if page.slug %}
             <meta property="twitter:url" content="{{ config.base_url }}/{{ page.slug }}" />
@@ -44,6 +45,7 @@
         <meta name="description" content="{{ config.description }}" />
         <title>{% block title %}{{ config.title }} - {{ config.description}} {% endblock title %}</title>
         <meta property="twitter:image" content="{{ config.base_url }}/images/mjovanc.png" />
+        <meta property="og:image" content="{{ config.base_url }}/images/mjovanc.png" />
     {% endif %}
     
     
