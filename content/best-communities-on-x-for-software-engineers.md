@@ -18,6 +18,7 @@ Here are are a list of communities I found useful on the platform that may inter
 - [Rust](https://twitter.com/i/communities/1472230399355072517)
 - [Python](https://twitter.com/i/communities/1508750875442954242)
 - [Kotlin](https://twitter.com/i/communities/1494696949156663299)
+- [Spring](https://twitter.com/i/communities/1723341874654527566)
 - [Ktor](https://twitter.com/i/communities/1711743225113760088)
 - [Android Developers](https://twitter.com/i/communities/1483910856257818626)
 - [WebAssembly](https://twitter.com/i/communities/1497545442023944192)
