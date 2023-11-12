@@ -44,6 +44,7 @@ Here are are a list of communities I found useful on the platform that may inter
 - [SQL](https://twitter.com/i/communities/1493646525494439937)
 - [F# on Twitter](https://twitter.com/i/communities/1493280005589196801)
 - [Progressive Web Apps Community](https://twitter.com/i/communities/1457807184436334608)
+- [OpenAPI](https://twitter.com/i/communities/1482061816792371200)
 
 ## Summary
 
