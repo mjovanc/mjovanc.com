@@ -21,4 +21,18 @@
 </summary>
         
     </entry>
+    <entry xml:lang="en">
+        <title>Get started with Docker and Docker Compose</title>
+        <published>2022-03-06T00:00:00+00:00</published>
+        <updated>2022-03-06T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://mjovanc.com/tooling/best-communities-on-x-for-software-engineers/" type="text/html"/>
+        <id>https://mjovanc.com/tooling/best-communities-on-x-for-software-engineers/</id>
+        
+        <summary type="html">&lt;p&gt;It’s hard to find a software company, besides embedded, that doesn’t take advantage of using &lt;a href=&quot;https:&#x2F;&#x2F;www.docker.com&quot;&gt;Docker&lt;&#x2F;a&gt; as their container solution. Even harder when it’s a company that focuses on the Web. There is a good reason why this is the case, it’s making life a lot easier for SWE&#x2F;SRE&#x2F;DevOps Engineers.&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
 </feed>

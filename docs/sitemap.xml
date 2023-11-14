@@ -10,6 +10,9 @@
         <loc>https://mjovanc.com/categories/</loc>
     </url>
     <url>
+        <loc>https://mjovanc.com/categories/ci-cd/</loc>
+    </url>
+    <url>
         <loc>https://mjovanc.com/categories/java/</loc>
     </url>
     <url>
@@ -17,6 +20,9 @@
     </url>
     <url>
         <loc>https://mjovanc.com/categories/tooling/</loc>
+    </url>
+    <url>
+        <loc>https://mjovanc.com/categories/virtualization/</loc>
     </url>
     <url>
         <loc>https://mjovanc.com/java/java-21-a-deep-dive-into-virtual-threads/</loc>
@@ -38,6 +44,9 @@
         <loc>https://mjovanc.com/page/1/</loc>
     </url>
     <url>
+        <loc>https://mjovanc.com/page/2/</loc>
+    </url>
+    <url>
         <loc>https://mjovanc.com/pages/categories/</loc>
     </url>
     <url>
@@ -45,6 +54,15 @@
     </url>
     <url>
         <loc>https://mjovanc.com/tags/</loc>
+    </url>
+    <url>
+        <loc>https://mjovanc.com/tags/containers/</loc>
+    </url>
+    <url>
+        <loc>https://mjovanc.com/tags/docker-compose/</loc>
+    </url>
+    <url>
+        <loc>https://mjovanc.com/tags/docker/</loc>
     </url>
     <url>
         <loc>https://mjovanc.com/tags/ide/</loc>
@@ -62,10 +80,17 @@
         <loc>https://mjovanc.com/tags/jetbrains/</loc>
     </url>
     <url>
+        <loc>https://mjovanc.com/tags/orchestration/</loc>
+    </url>
+    <url>
         <loc>https://mjovanc.com/tags/virtual-threads/</loc>
     </url>
     <url>
         <loc>https://mjovanc.com/tags/x/</loc>
+    </url>
+    <url>
+        <loc>https://mjovanc.com/tooling/best-communities-on-x-for-software-engineers/</loc>
+        <lastmod>2022-03-06</lastmod>
     </url>
     <url>
         <loc>https://mjovanc.com/tooling/handy-shortcuts-in-intellij-idea/</loc>

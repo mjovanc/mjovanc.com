@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZ8BXTEW5D"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'G-YZ8BXTEW5D');
+        </script>
+
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+
+    
+    <title>Get started with Docker and Docker Compose</title>
+    <meta property="twitter:title" content="Get started with Docker and Docker Compose" />
+    <meta property="og:title" content="Get started with Docker and Docker Compose" />
+    <meta property="twitter:image" content="https:&#x2F;&#x2F;mjovanc.com/&#x2F;tooling&#x2F;best-communities-on-x-for-software-engineers&#x2F;/main_thumb.png" />
+    <meta property="og:image" content="https:&#x2F;&#x2F;mjovanc.com/&#x2F;tooling&#x2F;best-communities-on-x-for-software-engineers&#x2F;/main_thumb.png" />
+
+        
+            <meta property="twitter:url" content="https:&#x2F;&#x2F;mjovanc.com/get-started-with-docker-and-docker-compose" />
+        
+
+      
+        <meta name="description" content="In this article we are going to take a look at Docker and Docker Compose and learn the basics by showcasing a real world example." />
+        <meta property="og:description" content="In this article we are going to take a look at Docker and Docker Compose and learn the basics by showcasing a real world example." />
+        <meta property="twitter:description" content="In this article we are going to take a look at Docker and Docker Compose and learn the basics by showcasing a real world example." />
+      
+    
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+      
+
+      
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="https://mjovanc.com/atom.xml">
+      
+
+      
+          <link rel="stylesheet" href="https://mjovanc.com/site.css">
+      
+
+      
+      
+    </head>
+
+    <body class="hack dark main container">
+        
+    
+        
+                
+                    <header>
+                        <nav itemscope itemtype="http://schema.org/SiteNavigationElement">
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com">
+                                <span itemprop="name">Home</span></a>
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com/categories">
+                                <span itemprop="name">Categories</span></a>
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com/tags">
+                                <span itemprop="name">Tags</span></a>
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com/about">
+                                <span itemprop="name">About</span></a>
+                        
+                        </nav>
+                    </header>
+                
+            
+    
+
+<article itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+        <h1 class="small-title" itemprop="headline">Get started with Docker and Docker Compose</h1>
+        <span class="muted">
+        <svg class="icon i-clock" viewBox="0 0 32 32"
+            width="16" height="16" fill="none" stroke="currentcolor"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+            <circle cx="16" cy="16" r="14"/>
+            <path d="M16 8 L16 16 20 20"/>
+        </svg>
+        <span>18 minute read</span>
+        <svg class="icon i-edit" viewBox="0 0 32 32"
+            width="16" height="16" fill="none" stroke="currentcolor"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+            <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z"/>
+        </svg>
+        Published: 2022-03-06
+</span>
+    </header>
+    <div class="article-margin" itemprop="articleBody">
+      <p>It’s hard to find a software company, besides embedded, that doesn’t take advantage of using <a href="https://www.docker.com">Docker</a> as their container solution. Even harder when it’s a company that focuses on the Web. There is a good reason why this is the case, it’s making life a lot easier for SWE/SRE/DevOps Engineers.</p>
+<span id="continue-reading"></span>
+<p>Earlier problems that could be faced were things like “it works on my machine”. Simply put that when deploying on production or on another developer's machine it could behave differently than expected and thus experience problems. Now we can easily say when using Docker “it works on every machine, in the same way”. That’s really good we can now have a certainty of the deliverable that we didn’t have before so we can deliver a good product, especially in production.</p>
+<p>From the Wikipedia:</p>
+<blockquote>
+<p>Docker is a set of platform as a service (PaaS) products that use OS-level virtualization to deliver software in packages called containers. The service has both free and premium tiers. The software that hosts the containers is called Docker Engine. It was first started in 2013 and is developed by Docker, Inc.</p>
+</blockquote>
+<p>This is the Docker Architecture and how it works:</p>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-0.webp" class="rounded-image" alt="Docker Screenshot 0" style="max-width: 100%; display: inline-block;">
+</div>
+<p>In this tutorial, you will need to understand how Spring Boot works and Gradle in order to understand some build processes.</p>
+<h2 id="pull-a-docker-image-and-run-a-container">Pull a Docker image and run a container</h2>
+<p>So from the client (your OS), you are running commands to the <a href="https://www.google.com/search?client=safari&amp;rls=en&amp;q=docker+daemon&amp;ie=UTF-8&amp;oe=UTF-8">Docker Deamon</a> that runs on your computer. You could either set up containers from images, create images, create volumes, create networks and much more. When we run a command such as:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>docker run -e POSTGRES_PASSWORD=password -d postgres
+</span></code></pre>
+<p>What this does is try to run a container with an image called postgres. We add an environment variable <code>POSTGRES_PASSWORD</code> with its value so <a href="https://www.postgresql.org">PostgreSQL</a> will use that for the postgres default user. Docker then tries to find it locally, if not it will try to pull the image from the configured registry, default <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;ved=2ahUKEwir953GlsSCAxUIIhAIHecVDuQQFnoECA0QAQ&amp;url=https%3A%2F%2Fhub.docker.com%2F&amp;usg=AOvVaw08oOGeIqomrCmPs9p07hDk&amp;opi=89978449">Docker Hub</a>. Then it’s trying to start it and we get back a full hash value of the container ID it has been assigned. </p>
+<p>So when we run <code>docker ps</code> we get the following information here about it:</p>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-1.webp" alt="Docker Screenshot 1" style="max-width: 100%; display: inline-block;">
+</div>
+<p>So here we get the unique container ID, image that we are using, the command that is passed to the container, when the container was created, the current status if it’s up or exited, what port it is listening on and the protocol and the assigned name. </p>
+<p>We can change the name if we want, this is how we do it with Docker, we just need to change our previous command slightly:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>docker run --name mydb -e POSTGRES_PASSWORD=password -d postgres
+</span></code></pre>
+<p>But before running that command again we need to remove the existing container since it will be listening on the same port twice. We first have to stop all the running containers.</p>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-2.webp" alt="Docker Screenshot 2" style="max-width: 100%; display: inline-block;">
+</div>
+<p>We then do a clean-up in two different ways (perhaps even more that I’m not aware of). We can do a total clean up like this:</p>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-3.webp" alt="Docker Screenshot 3" style="max-width: 100%; display: inline-block;">
+</div>
+<p>You have to be aware that this removes everything. So it’s not a good way to use this most of the times. But if you feel like you have been doing a lot of things and just want to start from the beginning, this is a good one.</p>
+<p>There is another more better alternative in most of the cases. We run these commands:</p>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-4.webp" alt="Docker Screenshot 4" style="max-width: 100%; display: inline-block;">
+</div>
+<p>So we just use the command docker rm along with its container name or you can also use the container ID with that command. So you can see that we removed keen_napier here and we only have our new container. Since we stopped all containers we have to start our new one and we can do that by:</p>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-5.webp" alt="Docker Screenshot 5" style="max-width: 100%; display: inline-block;">
+</div>
+<p>So it’s quite easy to just start it again here with the docker start command.</p>
+<p>Now we have a Docker container up and running. There are a lot of things with Docker we could go through here, but we will stick to the basics sort of. When we ran that command to set up PostgreSQL in a Docker container it automatically added a volume for us. </p>
+<p>Volumes are essential when we need to write something, and that is critical when it comes to databases. Docker won’t allow writing in a container so we always need to attach a volume to it. We will go through that soon how to create our own Docker image, but let’s explore how we can view the docker volumes on our computer:</p>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-6.webp" alt="Docker Screenshot 6" style="max-width: 100%; display: inline-block;">
+</div>
+<p>With docker volume ls we are listing all the volumes we have currently. We have two since we didn’t remove the last one. So how do we know which one is attached to the one that is running currently? We can do this by inspecting our current Docker container:</p>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-7.webp" alt="Docker Screenshot 7" style="max-width: 100%; display: inline-block;">
+</div>
+<p>Here we see a lot of information about it, this is very useful for troubleshooting.</p>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-8.webp" alt="Docker Screenshot 8" style="max-width: 100%; display: inline-block;">
+</div>
+<p>We scroll down a bit and we can find the Mounts array and we see the volume hash value and we compare that to the one we saw in the previous image <code>643579a4f6ce50dff92865e7d9163bf3cb16867b7274c2353c859ea86ffeb96</code>. So this is the volume that we need to keep so let's remove the other one since we don’t need it anymore:</p>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-9.webp" alt="Docker Screenshot 9" style="max-width: 100%; display: inline-block;">
+</div>
+<p>We get a confirmation here with the hash value back that it has been removed. Great!</p>
+<h2 id="create-a-docker-image-using-a-dockerfile">Create a Docker image using a Dockerfile</h2>
+<p>Now lets look at how to create our own custom Docker image by creating a Dockerfile. As we have been going through Spring Boot before we can try make our Spring Boot application to a Docker image. Clone down the repository: https://github.com/mjovanc/medium-docker-spring (does not exist anymore unfortunately...).</p>
+<p>Now let’s download all the dependencies and build the application, I suggest using <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;ved=2ahUKEwjKjsOHl8SCAxUHLRAIHS9iBPUQFnoECB4QAQ&amp;url=https%3A%2F%2Fwww.jetbrains.com%2Fidea%2F&amp;usg=AOvVaw1dUbYp3QZeAgvbt0Z6D1Zw&amp;opi=89978449">IntelliJ</a> for this. Open up the project and then <em>IntelliJ</em> will automatically download everything directly by looking at build.gradle file. Then we need to build it by either running <code>./gradlew build</code> or pressing the Gradle on the right sidebar in <em>IntelliJ</em> and press double click on build:</p>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-10.webp" class="rounded-image" alt="Docker Screenshot 10" style="max-width: 100%; display: inline-block;">
+</div>
+<p>So when we have done this we will get a <code>.war</code> file inside <code>./build/libs/blog-0.0.1.war</code>. This is needed so we can pick up this file with our <code>Dockerfile</code> and add it to the image. So lets create the <code>Dockerfile</code> in the root of the project:</p>
+<pre data-lang="Dockerfile" style="background-color:#111111;color:#cccccc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#374c60;"># Using Tomcat 9.0 since the latest doesn&#39;t work with Spring Boot
+</span><span style="color:#6f8b94;">FROM</span><span> tomcat:9.0-jdk16-openjdk
+</span><span style="color:#6f8b94;">ARG </span><span>WAR_FILE=build/libs/blog-*.war
+</span><span style="color:#6f8b94;">RUN </span><span>rm -rf /usr/local/tomcat/webapps/*
+</span><span style="color:#6f8b94;">COPY</span><span> ${WAR_FILE} /usr/local/tomcat/webapps/ROOT.war
+</span><span style="color:#6f8b94;">EXPOSE </span><span>8080
+</span><span style="color:#6f8b94;">CMD </span><span>[</span><span style="color:#b5db99;">&quot;catalina.sh&quot;</span><span>, </span><span style="color:#b5db99;">&quot;run&quot;</span><span>]
+</span></code></pre>
+<p>This is the necessary code for the Dockerfile. We are first using an existing image tomcat:9.0-jdk16-openjdk and then we modify it as we want. We set an argument where the .war file exists, then we remove all <code>.war</code> files inside <code>/usr/local/tomcat/webapps</code> that exists, then we copy that <code>.war</code> file we have created and we place it in that same directory where we deleted all the .war files so Tomcat can use that one. </p>
+<p>We then expose the container to port <em>8080</em> so it can be accessed outside the <em>Docker</em> container on our host OS and then run the shell script <code>catalina.sh</code> with the argument run.</p>
+<p>Now that the code is in place we need to build the image:</p>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-11.webp" alt="Docker Screenshot 11" style="max-width: 100%; display: inline-block;">
+</div>
+<p>We could also build the image and tag it so we get a name and a version to it by running this command:</p>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-12.webp" alt="Docker Screenshot 12" style="max-width: 100%; display: inline-block;">
+</div>
+<p>We have successfully built our first <em>Docker</em> image. Now we just need to start it. And since we already set fallback values for our environment variables in <code>application.yml</code> we don’t need to pass them while starting up the container locally:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>docker run --name blog-api mjovanc/blog-api:0.0.1
+</span></code></pre>
+<p>Now the container is up and running! This is a very basic example how to create and run a <em>Docker</em> container.</p>
+<h2 id="using-docker-compose-to-orchestrate">Using Docker Compose to orchestrate</h2>
+<p>Now we will look into how we could use <em>Docker Compose</em> to setup both the <em>PostgreSQL</em> and <em>Spring Boot</em>.</p>
+<blockquote>
+<p>Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application’s services. Then, with a single command, you create and start all the services from your configuration.</p>
+</blockquote>
+<p>Read more about <em>Docker Compose</em> here: https://docs.docker.com/compose/</p>
+<p>It will make it a little bit easier since we can configure everything in YAML file format. Lets look at this <em>Docker Compose</em> file:</p>
+<pre data-lang="yaml" style="background-color:#111111;color:#cccccc;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#6f8b94;">version</span><span>: </span><span style="color:#b5db99;">&#39;3.7&#39;
+</span><span>
+</span><span style="color:#6f8b94;">services</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">spring</span><span>:
+</span><span>    </span><span style="color:#6f8b94;">build</span><span>: </span><span style="color:#b5db99;">.
+</span><span>    </span><span style="color:#6f8b94;">container_name</span><span>: </span><span style="color:#b5db99;">blog-api
+</span><span>    </span><span style="color:#6f8b94;">environment</span><span>:
+</span><span>      </span><span style="color:#6f8b94;">POSTGRESQL_HOSTNAME</span><span>: </span><span style="color:#b5db99;">postgres
+</span><span>      </span><span style="color:#6f8b94;">POSTGRESQL_PORT</span><span>: </span><span style="color:#b5db99;">5432
+</span><span>      </span><span style="color:#6f8b94;">POSTGRESQL_DB_NAME</span><span>: </span><span style="color:#b5db99;">qryptic_dev
+</span><span>      </span><span style="color:#6f8b94;">POSTGRESQL_DB_USER</span><span>: </span><span style="color:#b5db99;">postgres
+</span><span>      </span><span style="color:#6f8b94;">POSTGRESQL_DB_PASSWORD</span><span>: </span><span style="color:#b5db99;">test1234
+</span><span>      </span><span style="color:#6f8b94;">KEYCLOAK_HOSTNAME</span><span>: </span><span style="color:#b5db99;">keycloak
+</span><span>      </span><span style="color:#6f8b94;">KEYCLOAK_PORT</span><span>: </span><span style="color:#b5db99;">11111
+</span><span>      </span><span style="color:#374c60;"># This below is optional if you need to specify a specific Spring Boot profile to use
+</span><span>      </span><span style="color:#374c60;"># JAVA_OPTS: &#39;-Dspring.profiles.active=dev&#39;
+</span><span>    </span><span style="color:#6f8b94;">ports</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">&quot;8080:8080&quot;
+</span><span>    </span><span style="color:#6f8b94;">links</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">postgres
+</span><span>      - </span><span style="color:#b5db99;">keycloak
+</span><span>    </span><span style="color:#6f8b94;">depends_on</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">postgres
+</span><span>    </span><span style="color:#6f8b94;">networks</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">blog-net
+</span><span>
+</span><span>  </span><span style="color:#6f8b94;">postgres</span><span>:
+</span><span>    </span><span style="color:#6f8b94;">image</span><span>: </span><span style="color:#b5db99;">postgres
+</span><span>    </span><span style="color:#6f8b94;">container_name</span><span>: </span><span style="color:#b5db99;">postgres
+</span><span>    </span><span style="color:#6f8b94;">restart</span><span>: </span><span style="color:#b5db99;">always
+</span><span>    </span><span style="color:#6f8b94;">environment</span><span>:
+</span><span>      </span><span style="color:#6f8b94;">POSTGRES_DB</span><span>: </span><span style="color:#b5db99;">qryptic_dev
+</span><span>      </span><span style="color:#6f8b94;">POSTGRES_USER</span><span>: </span><span style="color:#b5db99;">postgres
+</span><span>      </span><span style="color:#6f8b94;">POSTGRES_PASSWORD</span><span>: </span><span style="color:#b5db99;">test1234
+</span><span>    </span><span style="color:#6f8b94;">volumes</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">postgres:/data/postgres
+</span><span>    </span><span style="color:#6f8b94;">ports</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">&quot;5432:5432&quot;
+</span><span>    </span><span style="color:#6f8b94;">networks</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">blog-net
+</span><span>
+</span><span>  </span><span style="color:#6f8b94;">keycloak</span><span>:
+</span><span>    </span><span style="color:#6f8b94;">image</span><span>: </span><span style="color:#b5db99;">jboss/keycloak
+</span><span>    </span><span style="color:#6f8b94;">container_name</span><span>: </span><span style="color:#b5db99;">keycloak
+</span><span>    </span><span style="color:#6f8b94;">restart</span><span>: </span><span style="color:#b5db99;">always
+</span><span>    </span><span style="color:#6f8b94;">environment</span><span>:
+</span><span>      </span><span style="color:#6f8b94;">DB_VENDOR</span><span>: </span><span style="color:#b5db99;">h2
+</span><span>      </span><span style="color:#6f8b94;">KEYCLOAK_USER</span><span>: </span><span style="color:#b5db99;">admin
+</span><span>      </span><span style="color:#6f8b94;">KEYCLOAK_PASSWORD</span><span>: </span><span style="color:#b5db99;">password
+</span><span>      </span><span style="color:#6f8b94;">PROXY_ADDRESS_FORWARDING</span><span>: </span><span style="color:#b5db99;">&quot;true&quot;
+</span><span>    </span><span style="color:#6f8b94;">volumes</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">keycloak:/var/lib/keycloak/data
+</span><span>      - </span><span style="color:#b5db99;">./keycloak/realm-export.json:/opt/jboss/keycloak/realm-export.json
+</span><span>    </span><span style="color:#6f8b94;">expose</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">11111
+</span><span>    </span><span style="color:#6f8b94;">ports</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">&quot;11111:11111&quot;
+</span><span>    </span><span style="color:#6f8b94;">command</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">&quot;-b 0.0.0.0&quot;
+</span><span>      - </span><span style="color:#b5db99;">&quot;-Djboss.http.port=11111&quot;
+</span><span>      - </span><span style="color:#b5db99;">&quot;-Dkeycloak.import=/opt/jboss/keycloak/realm-export.json&quot;
+</span><span>    </span><span style="color:#6f8b94;">networks</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">blog-net
+</span><span>
+</span><span style="color:#6f8b94;">volumes</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">postgres</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">keycloak</span><span>:
+</span><span>
+</span><span style="color:#6f8b94;">networks</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">blog-net</span><span>:
+</span><span>    </span><span style="color:#6f8b94;">driver</span><span>: </span><span style="color:#b5db99;">bridge
+</span></code></pre>
+<p>These things has a lot of things we need to unwrap and go through. We obviously have something called <em>Keycloak</em> here. It’s just for demonstrating how we can go about adding more things here. But for this tutorial I will comment out <em>Keycloak</em> since we will not use it here. But if you are in need to setup <em>Keycloak</em>, here is a good example I’ve been using personally.</p>
+<p>So lets dig in by looking at the first line in the <code>docker-compose.yml</code> file:</p>
+<pre data-lang="yaml" style="background-color:#111111;color:#cccccc;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#6f8b94;">version</span><span>: </span><span style="color:#b5db99;">&#39;3.7&#39;
+</span></code></pre>
+<p>This specifies the version we will be using of <em>Docker Compose</em>, syntax could be changed between different versions. Check out documentation of it here: <a href="https://docs.docker.com/compose/compose-file/compose-versioning/">Compose file versions and upgrading</a></p>
+<pre data-lang="yaml" style="background-color:#111111;color:#cccccc;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#6f8b94;">services</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">spring</span><span>:
+</span><span>    </span><span style="color:#6f8b94;">build</span><span>: </span><span style="color:#b5db99;">.
+</span><span>    </span><span style="color:#6f8b94;">container_name</span><span>: </span><span style="color:#b5db99;">blog-api
+</span><span>    </span><span style="color:#6f8b94;">environment</span><span>:
+</span><span>      </span><span style="color:#6f8b94;">POSTGRESQL_HOSTNAME</span><span>: </span><span style="color:#b5db99;">postgres
+</span><span>      </span><span style="color:#6f8b94;">POSTGRESQL_PORT</span><span>: </span><span style="color:#b5db99;">5432
+</span><span>      </span><span style="color:#6f8b94;">POSTGRESQL_DB_NAME</span><span>: </span><span style="color:#b5db99;">blogdb_dev
+</span><span>      </span><span style="color:#6f8b94;">POSTGRESQL_DB_USER</span><span>: </span><span style="color:#b5db99;">postgres
+</span><span>      </span><span style="color:#6f8b94;">POSTGRESQL_DB_PASSWORD</span><span>: </span><span style="color:#b5db99;">test1234
+</span><span>      </span><span style="color:#6f8b94;">KEYCLOAK_HOSTNAME</span><span>: </span><span style="color:#b5db99;">keycloak
+</span><span>      </span><span style="color:#6f8b94;">KEYCLOAK_PORT</span><span>: </span><span style="color:#b5db99;">11111
+</span><span>      </span><span style="color:#374c60;"># This below is optional if you need to specify a specific Spring Boot profile to use
+</span><span>      </span><span style="color:#374c60;"># JAVA_OPTS: &#39;-Dspring.profiles.active=dev&#39;
+</span><span>    </span><span style="color:#6f8b94;">ports</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">&quot;8080:8080&quot;
+</span><span>    </span><span style="color:#6f8b94;">links</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">postgres
+</span><span>      - </span><span style="color:#b5db99;">keycloak
+</span><span>    </span><span style="color:#6f8b94;">depends_on</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">postgres
+</span><span>    </span><span style="color:#6f8b94;">networks</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">blog-net
+</span></code></pre>
+<p>Here we define what kind of services should be orchestrated. We define <strong>spring</strong> as a service and adding the path to the <code>Dockerfile</code>, which we set as <code>.</code> (current directory where the <code>docker-compose.yml</code> file exists as well). Then we set the name of the container, if we don’t it will set the name as the service name (spring), then we define all the environment variables we need. </p>
+<p>We also set what port should be used both internally and externally to expose. We set links to <strong>postgres</strong> and <strong>keycloak</strong> service here and we also set a <code>depends_on</code> to the <strong>postgres</strong> service and that means that first we need to orchestrate up the <em>PostgreSQL</em> database before we start with <em>Spring Boot</em> so it will not fail when starting the application and we define the network it should be connected to. We set all the services to have this network so they can communicate with each other.</p>
+<pre data-lang="yaml" style="background-color:#111111;color:#cccccc;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#6f8b94;">postgres</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">image</span><span>: </span><span style="color:#b5db99;">postgres
+</span><span>  </span><span style="color:#6f8b94;">container_name</span><span>: </span><span style="color:#b5db99;">postgres
+</span><span>  </span><span style="color:#6f8b94;">restart</span><span>: </span><span style="color:#b5db99;">always
+</span><span>  </span><span style="color:#6f8b94;">environment</span><span>:
+</span><span>    </span><span style="color:#6f8b94;">POSTGRES_DB</span><span>: </span><span style="color:#b5db99;">blogdb_dev
+</span><span>    </span><span style="color:#6f8b94;">POSTGRES_USER</span><span>: </span><span style="color:#b5db99;">postgres
+</span><span>    </span><span style="color:#6f8b94;">POSTGRES_PASSWORD</span><span>: </span><span style="color:#b5db99;">test1234
+</span><span>  </span><span style="color:#6f8b94;">volumes</span><span>:
+</span><span>    - </span><span style="color:#b5db99;">postgres:/data/postgres
+</span><span>  </span><span style="color:#6f8b94;">ports</span><span>:
+</span><span>    - </span><span style="color:#b5db99;">&quot;5432:5432&quot;
+</span><span>  </span><span style="color:#6f8b94;">networks</span><span>:
+</span><span>    - </span><span style="color:#b5db99;">blog-net
+</span></code></pre>
+<p>Here we do the same but defining the <em>PostgreSQL</em> configuration. We specify the image and that will be pulled down (if not already) from the <em>Docker Hub</em> registry. We set the restart to be always, set some environment variables that define what database should be created and what user we will use and set that password. </p>
+<p>We also define the volume for the container so we can store the data that is saved into the database, the ports as before with the default port number for <em>PostgreSQL</em> and set it to the same network as the spring service.</p>
+<pre data-lang="yaml" style="background-color:#111111;color:#cccccc;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#6f8b94;">keycloak</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">image</span><span>: </span><span style="color:#b5db99;">jboss/keycloak
+</span><span>  </span><span style="color:#6f8b94;">container_name</span><span>: </span><span style="color:#b5db99;">keycloak
+</span><span>  </span><span style="color:#6f8b94;">restart</span><span>: </span><span style="color:#b5db99;">always
+</span><span>  </span><span style="color:#6f8b94;">environment</span><span>:
+</span><span>    </span><span style="color:#6f8b94;">DB_VENDOR</span><span>: </span><span style="color:#b5db99;">h2
+</span><span>    </span><span style="color:#6f8b94;">KEYCLOAK_USER</span><span>: </span><span style="color:#b5db99;">admin
+</span><span>    </span><span style="color:#6f8b94;">KEYCLOAK_PASSWORD</span><span>: </span><span style="color:#b5db99;">password
+</span><span>    </span><span style="color:#6f8b94;">PROXY_ADDRESS_FORWARDING</span><span>: </span><span style="color:#b5db99;">&quot;true&quot;
+</span><span>  </span><span style="color:#6f8b94;">volumes</span><span>:
+</span><span>    - </span><span style="color:#b5db99;">keycloak:/var/lib/keycloak/data
+</span><span>    - </span><span style="color:#b5db99;">./keycloak/realm-export.json:/opt/jboss/keycloak/realm-export.json
+</span><span>  </span><span style="color:#6f8b94;">expose</span><span>:
+</span><span>    - </span><span style="color:#b5db99;">11111
+</span><span>  </span><span style="color:#6f8b94;">ports</span><span>:
+</span><span>    - </span><span style="color:#b5db99;">&quot;11111:11111&quot;
+</span><span>  </span><span style="color:#6f8b94;">command</span><span>:
+</span><span>    - </span><span style="color:#b5db99;">&quot;-b 0.0.0.0&quot;
+</span><span>    - </span><span style="color:#b5db99;">&quot;-Djboss.http.port=11111&quot;
+</span><span>    - </span><span style="color:#b5db99;">&quot;-Dkeycloak.import=/opt/jboss/keycloak/realm-export.json&quot;
+</span><span>  </span><span style="color:#6f8b94;">networks</span><span>:
+</span><span>    - </span><span style="color:#b5db99;">blog-net
+</span></code></pre>
+<p>Here we define the <strong>keycloak</strong> service to use. Note that we are adding a volume for a <code>realm-export.json</code>, we are attaching that file so we can import the file into the <em>Keycloak</em> instead of manually having to add the configuration to the Keycloak service. We have a command that we add the file to do the import.</p>
+<p>We are then sending the file in to the <em>Keycloak</em> application so that we will use another port than the standard 8080 since <em>Spring Boot</em> runs on port 8080, so we avoid port collisions.</p>
+<pre data-lang="yaml" style="background-color:#111111;color:#cccccc;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#6f8b94;">volumes</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">postgres</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">keycloak</span><span>:
+</span><span>
+</span><span style="color:#6f8b94;">networks</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">blog-net</span><span>:
+</span><span>    </span><span style="color:#6f8b94;">driver</span><span>: </span><span style="color:#b5db99;">bridge
+</span></code></pre>
+<p>Here we define the volumes that should exists and the networks with the type of driver that is of type bridge.</p>
+<p>So that’s an example how to setup <em>Spring Boot</em>, <em>PostgreSQL</em> and <em>Keycloak</em> with <em>Docker Compose</em>. But lets leave out <em>Keycloak</em> for now so I will comment out everything regarding <em>Keycloak</em> so we can test running this now. But first lets remove everything that we have been adding to our <em>Docker</em> before by running these commands:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>docker kill $(docker ps -q)
+</span><span>docker system prune --all
+</span></code></pre>
+<p>We now have this updated <code>docker-compose.yml</code> file:</p>
+<pre data-lang="yaml" style="background-color:#111111;color:#cccccc;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#6f8b94;">version</span><span>: </span><span style="color:#b5db99;">&#39;3.7&#39;
+</span><span>
+</span><span style="color:#6f8b94;">services</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">spring</span><span>:
+</span><span>    </span><span style="color:#6f8b94;">build</span><span>: </span><span style="color:#b5db99;">.
+</span><span>    </span><span style="color:#6f8b94;">container_name</span><span>: </span><span style="color:#b5db99;">blog-api
+</span><span>    </span><span style="color:#6f8b94;">environment</span><span>:
+</span><span>      </span><span style="color:#6f8b94;">POSTGRESQL_HOSTNAME</span><span>: </span><span style="color:#b5db99;">postgres
+</span><span>      </span><span style="color:#6f8b94;">POSTGRESQL_PORT</span><span>: </span><span style="color:#b5db99;">5432
+</span><span>      </span><span style="color:#6f8b94;">POSTGRESQL_DB_NAME</span><span>: </span><span style="color:#b5db99;">qryptic_dev
+</span><span>      </span><span style="color:#6f8b94;">POSTGRESQL_DB_USER</span><span>: </span><span style="color:#b5db99;">postgres
+</span><span>      </span><span style="color:#6f8b94;">POSTGRESQL_DB_PASSWORD</span><span>: </span><span style="color:#b5db99;">test1234
+</span><span>      </span><span style="color:#374c60;"># KEYCLOAK_HOSTNAME: keycloak
+</span><span>      </span><span style="color:#374c60;"># KEYCLOAK_PORT: 11111
+</span><span>      </span><span style="color:#374c60;"># This below is optional if you need to specify a specific Spring Boot profile to use
+</span><span>      </span><span style="color:#374c60;"># JAVA_OPTS: &#39;-Dspring.profiles.active=dev&#39;
+</span><span>    </span><span style="color:#6f8b94;">ports</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">&quot;8080:8080&quot;
+</span><span>    </span><span style="color:#6f8b94;">links</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">postgres
+</span><span>      </span><span style="color:#374c60;"># - keycloak
+</span><span>    </span><span style="color:#6f8b94;">depends_on</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">postgres
+</span><span>    </span><span style="color:#6f8b94;">networks</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">blog-net
+</span><span>
+</span><span>  </span><span style="color:#6f8b94;">postgres</span><span>:
+</span><span>    </span><span style="color:#6f8b94;">image</span><span>: </span><span style="color:#b5db99;">postgres
+</span><span>    </span><span style="color:#6f8b94;">container_name</span><span>: </span><span style="color:#b5db99;">postgres
+</span><span>    </span><span style="color:#6f8b94;">restart</span><span>: </span><span style="color:#b5db99;">always
+</span><span>    </span><span style="color:#6f8b94;">environment</span><span>:
+</span><span>      </span><span style="color:#6f8b94;">POSTGRES_DB</span><span>: </span><span style="color:#b5db99;">qryptic_dev
+</span><span>      </span><span style="color:#6f8b94;">POSTGRES_USER</span><span>: </span><span style="color:#b5db99;">postgres
+</span><span>      </span><span style="color:#6f8b94;">POSTGRES_PASSWORD</span><span>: </span><span style="color:#b5db99;">test1234
+</span><span>    </span><span style="color:#6f8b94;">volumes</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">postgres:/data/postgres
+</span><span>    </span><span style="color:#6f8b94;">ports</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">&quot;5432:5432&quot;
+</span><span>    </span><span style="color:#6f8b94;">networks</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">blog-net
+</span><span>
+</span><span style="color:#374c60;">#  keycloak:
+</span><span style="color:#374c60;">#    image: jboss/keycloak
+</span><span style="color:#374c60;">#    container_name: keycloak
+</span><span style="color:#374c60;">#    restart: always
+</span><span style="color:#374c60;">#    environment:
+</span><span style="color:#374c60;">#      DB_VENDOR: h2
+</span><span style="color:#374c60;">#      KEYCLOAK_USER: admin
+</span><span style="color:#374c60;">#      KEYCLOAK_PASSWORD: password
+</span><span style="color:#374c60;">#      PROXY_ADDRESS_FORWARDING: &quot;true&quot;
+</span><span style="color:#374c60;">#    volumes:
+</span><span style="color:#374c60;">#      - keycloak:/var/lib/keycloak/data
+</span><span style="color:#374c60;">#      - ./keycloak/realm-export.json:/opt/jboss/keycloak/realm-export.json
+</span><span style="color:#374c60;">#    expose:
+</span><span style="color:#374c60;">#      - 11111
+</span><span style="color:#374c60;">#    ports:
+</span><span style="color:#374c60;">#      - &quot;11111:11111&quot;
+</span><span style="color:#374c60;">#    command:
+</span><span style="color:#374c60;">#      - &quot;-b 0.0.0.0&quot;
+</span><span style="color:#374c60;">#      - &quot;-Djboss.http.port=11111&quot;
+</span><span style="color:#374c60;">#      - &quot;-Dkeycloak.import=/opt/jboss/keycloak/realm-export.json&quot;
+</span><span style="color:#374c60;">#    networks:
+</span><span style="color:#374c60;">#      - blog-net
+</span><span>
+</span><span style="color:#6f8b94;">volumes</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">postgres</span><span>:
+</span><span>  </span><span style="color:#374c60;"># keycloak:
+</span><span>
+</span><span style="color:#6f8b94;">networks</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">blog-net</span><span>:
+</span><span>    </span><span style="color:#6f8b94;">driver</span><span>: </span><span style="color:#b5db99;">bridge
+</span></code></pre>
+<p>Now lets run Docker Compose:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>docker-compose up
+</span></code></pre>
+<p>We can also set the flag <code>-d</code> so we don’t get all real time console output while running the applications:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>docker-compose up -d
+</span></code></pre>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-13.webp" alt="Docker Screenshot 13" style="max-width: 100%; display: inline-block;">
+</div>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-14.webp" alt="Docker Screenshot 14" style="max-width: 100%; display: inline-block;">
+</div>
+<div style="text-align: center;">
+  <img src="/tooling/get-started-with-docker-and-docker-compose/image-15.webp" alt="Docker Screenshot 15" style="max-width: 100%; display: inline-block;">
+</div>
+<p>To stop the <em>Docker Compose</em> we can press <strong>CTRL+C</strong>. Then we could also to also remove the network that has been created by:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>docker-compose down
+</span></code></pre>
+<p>If using the <code>-d</code> flag we can stop the orchestration by running the command above as well.</p>
+<p>If we would like to rebuild all images if we made some changes we can run this command:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>docker-compose up --build
+</span></code></pre>
+<p>This will force to rebuild all images.</p>
+<p>Personally when I’m developing a <em>Spring Boot</em> application it’s very nice to use <em>Docker Compose</em> for setting up everything around <em>Spring Boot</em> such as the <em>PostgreSQL</em> and <em>Keycloak</em> and perhaps even a frontend framework with <em>Angular</em> or <em>React</em>. </p>
+<p>But sometimes I want to leave out <em>Spring Boot</em> since it would take a lot of time to rebuild the project to generate a <code>.war</code> file then run docker compose again and so forth.</p>
+<p>So if you are like me and want to leave out <em>Spring Boot</em> while developing you could run this command to skip orchestrating up the <em>Spring Boot</em>:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>docker-compose up --scale blog-api=0
+</span></code></pre>
+<p>This is very handy to use. It’s still good to have spring as a service in <em>Docker Compose</em> since I could clone down the repository then run <code>docker-compose up</code> and everything is orchestrated for me so I can minimize time setting up the project locally to test and so forth.</p>
+<h2 id="summary">Summary</h2>
+<p>I feel like knowing Docker it has made me much more productive in my development since I don’t have to waste time setting up systems and development environment manually.</p>
+<p>There is a lot of other things we can do with Docker and <em>Docker Compose</em>, but I will leave it at this for now, perhaps in an upcoming tutorial I can go a little bit deeper into some problems that can occur and how we can fix them.</p>
+<p>If you found it valuable, please consider sharing it, as it might also be valuable to others. Let me know if you have any questions by reaching me on 𝕏!</p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://www.docker.com">Docker</a></li>
+<li><a href="https://www.google.com/search?client=safari&amp;rls=en&amp;q=docker+daemon&amp;ie=UTF-8&amp;oe=UTF-8">Docker Daemon</a></li>
+<li><a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;ved=2ahUKEwir953GlsSCAxUIIhAIHecVDuQQFnoECA0QAQ&amp;url=https%3A%2F%2Fhub.docker.com%2F&amp;usg=AOvVaw08oOGeIqomrCmPs9p07hDk&amp;opi=89978449">Docker Hub</a></li>
+<li><a href="https://docs.docker.com/engine/reference/builder/">Dockerfile</a></li>
+<li><a href="https://www.postgresql.org">PostgreSQL</a></li>
+<li><a href="https://www.docker.com/resources/what-container/">Docker Container</a></li>
+<li><a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;ved=2ahUKEwjKjsOHl8SCAxUHLRAIHS9iBPUQFnoECB4QAQ&amp;url=https%3A%2F%2Fwww.jetbrains.com%2Fidea%2F&amp;usg=AOvVaw1dUbYp3QZeAgvbt0Z6D1Zw&amp;opi=89978449">IntelliJ</a></li>
+<li><a href="https://gradle.org">Gradle</a></li>
+<li><a href="https://www.keycloak.org">Keycloak</a></li>
+<li><a href="https://spring.io/projects/spring-boot/">Spring Boot</a></li>
+</ul>
+<h2 id="connect-with-me">Connect with me</h2>
+<ul>
+<li><a href="https://x.com/mjovanc">𝕏</a></li>
+<li><a href="https://github.com/mjovanc">GitHub</a></li>
+<li><a href="https://www.linkedin.com/in/marcuscvjeticanin/">LinkedIn</a></li>
+</ul>
+
+    </div>
+
+    
+        <footer>
+            <hr>
+            <p>
+                
+                    Published by Marcus Cvjeticanin
+                
+                
+                    
+                    in <a href="https://mjovanc.com/categories/tooling/">tooling</a>
+                
+                
+                    and
+                    tagged
+                    
+                        <a href="https://mjovanc.com/tags/docker/">docker</a>
+                        
+                            
+                                
+                                    ,
+                                
+                            
+                        
+                    
+                        <a href="https://mjovanc.com/tags/docker-compose/">docker compose</a>
+                        
+                            
+                                
+                                    ,
+                                
+                            
+                        
+                    
+                        <a href="https://mjovanc.com/tags/containers/">containers</a>
+                        
+                            
+                                
+                                    and
+                                
+                            
+                        
+                    
+                        <a href="https://mjovanc.com/tags/orchestration/">orchestration</a>
+                        
+                            
+                        
+                    
+                
+            </p>
+            
+            
+        </footer>
+    
+</article>
+
+
+    </body>
+
+</html>
