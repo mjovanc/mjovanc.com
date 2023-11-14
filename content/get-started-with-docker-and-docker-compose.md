@@ -2,7 +2,7 @@
 title = "Get started with Docker and Docker Compose"
 description = "In this article we are going to take a look at Docker and Docker Compose and learn the basics by showcasing a real world example."
 date = 2022-03-06
-path = "tooling/best-communities-on-x-for-software-engineers"
+path = "tooling/get-started-with-docker-and-docker-compose"
 
 [taxonomies]
 categories = ["tooling", "ci/cd", "virtualization"]
