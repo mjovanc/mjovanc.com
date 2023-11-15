@@ -5,8 +5,23 @@
     <link href="https://mjovanc.com/categories/ci-cd/atom.xml" rel="self" type="application/atom+xml"/>
     <link href="https://mjovanc.com"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
-    <updated>2022-03-06T00:00:00+00:00</updated>
+    <updated>2023-10-25T00:00:00+00:00</updated>
     <id>https://mjovanc.com/categories/ci-cd/atom.xml</id>
+    <entry xml:lang="en">
+        <title>How to generate a Docker image for a Rust project using GitHub Actions</title>
+        <published>2023-10-25T00:00:00+00:00</published>
+        <updated>2023-10-25T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://mjovanc.com/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/" type="text/html"/>
+        <id>https://mjovanc.com/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/</id>
+        
+        <summary type="html">&lt;p&gt;In this article we are going through how to generate a &lt;a href=&quot;http:&#x2F;&#x2F;docker.com&quot;&gt;Docker&lt;&#x2F;a&gt; image for a Rust project, using web framework &lt;a href=&quot;http:&#x2F;&#x2F;rocket.rs&quot;&gt;Rocket&lt;&#x2F;a&gt;, with &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;features&#x2F;actions&quot;&gt;GitHub Actions&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;It’s very straight forward. But I will go step by step here in case you haven’t touched Docker or GitHub Actions before.&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
     <entry xml:lang="en">
         <title>Get started with Docker and Docker Compose</title>
         <published>2022-03-06T00:00:00+00:00</published>

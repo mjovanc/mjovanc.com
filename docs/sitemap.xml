@@ -65,6 +65,9 @@
         <loc>https://mjovanc.com/tags/docker/</loc>
     </url>
     <url>
+        <loc>https://mjovanc.com/tags/github-actions/</loc>
+    </url>
+    <url>
         <loc>https://mjovanc.com/tags/ide/</loc>
     </url>
     <url>
@@ -83,6 +86,12 @@
         <loc>https://mjovanc.com/tags/orchestration/</loc>
     </url>
     <url>
+        <loc>https://mjovanc.com/tags/rocket/</loc>
+    </url>
+    <url>
+        <loc>https://mjovanc.com/tags/rust/</loc>
+    </url>
+    <url>
         <loc>https://mjovanc.com/tags/virtual-threads/</loc>
     </url>
     <url>
@@ -95,5 +104,9 @@
     <url>
         <loc>https://mjovanc.com/tooling/handy-shortcuts-in-intellij-idea/</loc>
         <lastmod>2022-10-12</lastmod>
+    </url>
+    <url>
+        <loc>https://mjovanc.com/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/</loc>
+        <lastmod>2023-10-25</lastmod>
     </url>
 </urlset>

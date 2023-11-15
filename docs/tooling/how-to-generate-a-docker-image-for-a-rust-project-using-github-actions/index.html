@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZ8BXTEW5D"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'G-YZ8BXTEW5D');
+        </script>
+
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+
+    
+    <title>How to generate a Docker image for a Rust project using GitHub Actions</title>
+    <meta property="twitter:title" content="How to generate a Docker image for a Rust project using GitHub Actions" />
+    <meta property="og:title" content="How to generate a Docker image for a Rust project using GitHub Actions" />
+    <meta property="twitter:image" content="https:&#x2F;&#x2F;mjovanc.com/&#x2F;tooling&#x2F;how-to-generate-a-docker-image-for-a-rust-project-using-github-actions&#x2F;/main_thumb.png" />
+    <meta property="og:image" content="https:&#x2F;&#x2F;mjovanc.com/&#x2F;tooling&#x2F;how-to-generate-a-docker-image-for-a-rust-project-using-github-actions&#x2F;/main_thumb.png" />
+
+        
+            <meta property="twitter:url" content="https:&#x2F;&#x2F;mjovanc.com/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions" />
+        
+
+      
+        <meta name="description" content="In this article we are going through how to generate a Docker image for a Rust project, using web framework Rocket, with GitHub Actions." />
+        <meta property="og:description" content="In this article we are going through how to generate a Docker image for a Rust project, using web framework Rocket, with GitHub Actions." />
+        <meta property="twitter:description" content="In this article we are going through how to generate a Docker image for a Rust project, using web framework Rocket, with GitHub Actions." />
+      
+    
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+      
+
+      
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="https://mjovanc.com/atom.xml">
+      
+
+      
+          <link rel="stylesheet" href="https://mjovanc.com/site.css">
+      
+
+      
+      
+    </head>
+
+    <body class="hack dark main container">
+        
+    
+        
+                
+                    <header>
+                        <nav itemscope itemtype="http://schema.org/SiteNavigationElement">
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com">
+                                <span itemprop="name">Home</span></a>
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com/categories">
+                                <span itemprop="name">Categories</span></a>
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com/tags">
+                                <span itemprop="name">Tags</span></a>
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com/about">
+                                <span itemprop="name">About</span></a>
+                        
+                        </nav>
+                    </header>
+                
+            
+    
+
+<article itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+        <h1 class="small-title" itemprop="headline">How to generate a Docker image for a Rust project using GitHub Actions</h1>
+        <span class="muted">
+        <svg class="icon i-clock" viewBox="0 0 32 32"
+            width="16" height="16" fill="none" stroke="currentcolor"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+            <circle cx="16" cy="16" r="14"/>
+            <path d="M16 8 L16 16 20 20"/>
+        </svg>
+        <span>10 minute read</span>
+        <svg class="icon i-edit" viewBox="0 0 32 32"
+            width="16" height="16" fill="none" stroke="currentcolor"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+            <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z"/>
+        </svg>
+        Published: 2023-10-25
+</span>
+    </header>
+    <div class="article-margin" itemprop="articleBody">
+      <p>In this article we are going through how to generate a <a href="http://docker.com">Docker</a> image for a Rust project, using web framework <a href="http://rocket.rs">Rocket</a>, with <a href="https://github.com/features/actions">GitHub Actions</a>.</p>
+<p>It’s very straight forward. But I will go step by step here in case you haven’t touched Docker or GitHub Actions before.</p>
+<span id="continue-reading"></span><h2 id="initialize-rust-project">Initialize Rust project</h2>
+<p>First we need to create a repo on GitHub and clone the repo:</p>
+<div style="text-align: center;">
+  <img src="/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/image-0.webp" alt="Docker Rust GitHub Actions Screenshot 0" style="max-width: 100%; display: inline-block;">
+</div>
+<p>Then we are going to initialize a Rust binary project:</p>
+<div style="text-align: center;">
+  <img src="/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/image-1.webp" alt="Docker Rust GitHub Actions Screenshot 0" style="max-width: 100%; display: inline-block;">
+</div>
+<p>Now we need to add the Rocket v0.5.0 release candidate 3 to the dependencies in Cargo.toml. Note: you might need to change this later when it actually is a proper release.</p>
+<pre data-lang="toml" style="background-color:#111111;color:#cccccc;" class="language-toml "><code class="language-toml" data-lang="toml"><span>[dependencies]
+</span><span style="color:#6f8b94;">rocket </span><span>= </span><span style="color:#b5db99;">&quot;=0.5.0-rc.3&quot;
+</span></code></pre>
+<p>We also need to specify the target name (bin) for the project in the same file (we call it rocket in this example):</p>
+<pre data-lang="toml" style="background-color:#111111;color:#cccccc;" class="language-toml "><code class="language-toml" data-lang="toml"><span>[[bin]]
+</span><span style="color:#6f8b94;">name </span><span>= </span><span style="color:#b5db99;">&quot;rocket&quot;
+</span><span style="color:#6f8b94;">path </span><span>= </span><span style="color:#b5db99;">&quot;src/main.rs&quot;
+</span></code></pre>
+<p>Now we are going to open up the file in src/main.rs and remove the main function and then add the external crate rocket with the macro attribute #[macro_use] and then import the rocket::Request struct so we can use that later.</p>
+<pre data-lang="toml" style="background-color:#111111;color:#cccccc;" class="language-toml "><code class="language-toml" data-lang="toml"><span style="color:#374c60;">#[macro_use]
+</span><span style="color:#6f8b94;">extern</span><span style="background-color:#00a8c6;color:#f8f8f0;"> </span><span style="color:#6f8b94;">crate</span><span style="background-color:#00a8c6;color:#f8f8f0;"> </span><span style="color:#6f8b94;">rocket</span><span style="background-color:#00a8c6;color:#f8f8f0;">;</span><span>
+</span><span>
+</span><span style="color:#6f8b94;">use</span><span style="background-color:#00a8c6;color:#f8f8f0;"> </span><span style="color:#6f8b94;">rocket</span><span style="background-color:#00a8c6;color:#f8f8f0;">::Request;</span><span>
+</span></code></pre>
+<p>We are now going to create our first endpoint. This will basically just print out “Hello, world!” when we send a GET request to the root / path.</p>
+<pre data-lang="rust" style="background-color:#111111;color:#cccccc;" class="language-rust "><code class="language-rust" data-lang="rust"><span>#[get(</span><span style="color:#b5db99;">&quot;/&quot;</span><span>)]
+</span><span style="color:#6f8b94;">fn </span><span style="color:#b5db99;">index</span><span>() -&gt; </span><span style="color:#6f8b94;">&amp;</span><span style="color:#8767b7;">&#39;static </span><span style="color:#6f8b94;">str </span><span>{
+</span><span>    </span><span style="color:#b5db99;">&quot;Hello, world!&quot;
+</span><span>}
+</span></code></pre>
+<p>Then we are adding a second endpoint just for fun that can take request parameters such as name and age so we can send a more interesting response back when we send a request to it.</p>
+<pre data-lang="rust" style="background-color:#111111;color:#cccccc;" class="language-rust "><code class="language-rust" data-lang="rust"><span>#[get(</span><span style="color:#b5db99;">&quot;/hello/&lt;name&gt;/&lt;age&gt;&quot;</span><span>)]
+</span><span style="color:#6f8b94;">fn </span><span style="color:#b5db99;">hello</span><span>(name: </span><span style="color:#6f8b94;">&amp;str</span><span>, age: </span><span style="color:#6f8b94;">u32</span><span>) -&gt; String {
+</span><span>    format!(</span><span style="color:#b5db99;">&quot;Hello, </span><span style="color:#8767b7;">{}</span><span style="color:#b5db99;">! You are </span><span style="color:#8767b7;">{}</span><span style="color:#b5db99;"> years old.&quot;</span><span>, name, age)
+</span><span>}
+</span></code></pre>
+<p>And we are also adding some error response handling if we for some reason trying to request something that does not exist, just so we get some proper feedback. Here we are using the struct we imported as a function parameter.</p>
+<pre data-lang="rust" style="background-color:#111111;color:#cccccc;" class="language-rust "><code class="language-rust" data-lang="rust"><span>#[catch(404)]
+</span><span style="color:#6f8b94;">fn </span><span style="color:#b5db99;">not_found</span><span>(req: </span><span style="color:#6f8b94;">&amp;</span><span>Request) -&gt; String {
+</span><span>    format!(</span><span style="color:#b5db99;">&quot;Sorry, </span><span style="color:#8767b7;">{}</span><span style="color:#b5db99;"> was not found.&quot;</span><span>, req.</span><span style="color:#8767b7;">uri</span><span>())
+</span><span>}
+</span></code></pre>
+<p>Now the most important step is to actually mount the endpoints we created. We first use the macro attribute #[launch] before we define a new function. Then we add the function name as rocket and we return a new instance of the Rocket application by calling build() and mounting the routes index and hello and finally register the not_found function so Rocket knows it will use that for 404 responses if we request something which might not be registered.</p>
+<pre data-lang="rust" style="background-color:#111111;color:#cccccc;" class="language-rust "><code class="language-rust" data-lang="rust"><span>#[launch]
+</span><span style="color:#6f8b94;">fn </span><span style="color:#b5db99;">rocket</span><span>() -&gt; </span><span style="color:#6f8b94;">_ </span><span>{
+</span><span>    rocket::build()
+</span><span>        .</span><span style="color:#8767b7;">mount</span><span>(</span><span style="color:#b5db99;">&quot;/&quot;</span><span>, routes![index, hello])
+</span><span>        .</span><span style="color:#8767b7;">register</span><span>(</span><span style="color:#b5db99;">&quot;/&quot;</span><span>, catchers![not_found])
+</span><span>}
+</span></code></pre>
+<p>That’s it for the source code part, now we are ready to make our Dockerfile!</p>
+<h2 id="create-a-dockerfile-for-the-rust-application">Create a Dockerfile for the Rust application</h2>
+<p>We are going to produce a multi-stage Docker build so we can reduce the size of the Docker image as much as possible. Dependencies for building the Rust project is not neccessary to have after so we can skip files like that with the multi-stage build process.</p>
+<p>To begin, in the root of the repository create a file called Dockerfile.</p>
+<p>Now we are adding our first stage and set the current working directory to /app</p>
+<pre data-lang="Dockerfile" style="background-color:#111111;color:#cccccc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#6f8b94;">FROM</span><span> rust:latest </span><span style="color:#6f8b94;">as </span><span>builder
+</span><span style="color:#6f8b94;">WORKDIR </span><span>/app
+</span></code></pre>
+<p>Now we are creating a temporary src directory and copying over our files from src/ to the newly created src directory and also copying over Cargo.toml file:</p>
+<pre data-lang="Dockerfile" style="background-color:#111111;color:#cccccc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span>COPY Cargo.toml ./
+</span><span>RUN mkdir src
+</span><span>COPY src/ src/
+</span></code></pre>
+<p>Now we are ready to build so we add the RUN command with cargo build and the flag release. This will make the binary smaller.</p>
+<pre data-lang="Dockerfile" style="background-color:#111111;color:#cccccc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span>RUN cargo build --release
+</span></code></pre>
+<p>We now define our second build step:</p>
+<pre data-lang="Dockerfile" style="background-color:#111111;color:#cccccc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#6f8b94;">FROM</span><span> ubuntu:latest
+</span></code></pre>
+<p>Setting the working directory to /app and installing dependencies:</p>
+<pre data-lang="Dockerfile" style="background-color:#111111;color:#cccccc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span>WORKDIR /app
+</span><span>
+</span><span>RUN apt-get update &amp;&amp; apt-get install -y \
+</span><span>    libssl1.1
+</span></code></pre>
+<p>Now we are copying the target we created in the first build step to the second build step:</p>
+<pre data-lang="Dockerfile" style="background-color:#111111;color:#cccccc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span>COPY --from=builder /app/target/release/rocket . 
+</span></code></pre>
+<p>And lastly we are exposing the port 8000 and set a command that will run once we start the container. In this case ./rocket which is our name of the binary we specified in the Cargo.toml file.</p>
+<pre data-lang="Dockerfile" style="background-color:#111111;color:#cccccc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span>EXPOSE 8000
+</span><span>
+</span><span>CMD [&quot;./rocket&quot;]
+</span></code></pre>
+<p>Here is the complete Dockerfile:</p>
+<pre data-lang="Dockerfile" style="background-color:#111111;color:#cccccc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#374c60;"># step 1: build the rust application
+</span><span style="color:#6f8b94;">FROM</span><span> rust:latest </span><span style="color:#6f8b94;">as </span><span>builder
+</span><span>
+</span><span style="color:#6f8b94;">WORKDIR </span><span>/app
+</span><span>
+</span><span style="color:#6f8b94;">COPY</span><span> Cargo.toml ./
+</span><span style="color:#6f8b94;">RUN </span><span>mkdir src
+</span><span style="color:#6f8b94;">COPY</span><span> src/ src/
+</span><span>
+</span><span style="color:#6f8b94;">RUN </span><span>cargo build --release
+</span><span>
+</span><span style="color:#374c60;"># step 2: create the runtime image
+</span><span style="color:#6f8b94;">FROM</span><span> ubuntu:latest
+</span><span>
+</span><span style="color:#6f8b94;">WORKDIR </span><span>/app
+</span><span>
+</span><span style="color:#6f8b94;">RUN </span><span>apt-get update &amp;&amp; apt-get install -y \
+</span><span>    libssl-dev
+</span><span>
+</span><span style="color:#6f8b94;">COPY</span><span> --from=builder /app/target/release/rocket . 
+</span><span>
+</span><span style="color:#6f8b94;">EXPOSE </span><span>8000
+</span><span>
+</span><span style="color:#6f8b94;">CMD </span><span>[</span><span style="color:#b5db99;">&quot;./rocket&quot;</span><span>]
+</span></code></pre>
+<p>We can now try build this locally to see if it works. Run it with:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>docker build -t rust-rocket .
+</span></code></pre>
+<div style="text-align: center;">
+  <img src="/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/image-2.webp" alt="Docker Rust GitHub Actions Screenshot 0" style="max-width: 100%; display: inline-block;">
+</div>
+<p>Yey, it works to build. Now we just need to run it to see if the application starts. Run it with:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>docker run -p 8000:8000 rust-rocket
+</span></code></pre>
+<div style="text-align: center;">
+  <img src="/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/image-3.webp" alt="Docker Rust GitHub Actions Screenshot 0" style="max-width: 100%; display: inline-block;">
+</div>
+<p>And it works! We have now a working Dockerfile for our Rust project. Now we just have to make the final step to produce this Docker image on GitHub Actions and save it to the GitHub registry.</p>
+<h2 id="create-a-github-actions-workflow">Create a GitHub Actions workflow</h2>
+<h3 id="create-personal-access-token">Create personal access token</h3>
+<p>First we need to setup GitHub so login and go to https://github.com/settings/token and generate an token with these settings:</p>
+<div style="text-align: center;">
+  <img src="/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/image-4.webp" alt="Docker Rust GitHub Actions Screenshot 0" style="max-width: 100%; display: inline-block;">
+</div>
+<p>Now save the value temporary and go to the repository settings and select “Secrets and variables” and then “Actions”.</p>
+<div style="text-align: center;">
+  <img src="/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/image-5.webp" alt="Docker Rust GitHub Actions Screenshot 0" style="max-width: 100%; display: inline-block;">
+</div>
+<p>Add a new repository secret called GHCR_PAT and enter the token we generated and press save.</p>
+<h3 id="create-the-github-actions-workflow">Create the GitHub Actions workflow</h3>
+<p>Now we are ready to create the GitHub Actions workflow. So in the root of the repository create a directory called .github and inside it create another directory called workflows.</p>
+<p>Now create a new file called ci.yml and place the code below inside it. First we name the name of the workflow to build. Then we are setting environment variables we are going to use later. In this case we set the GITHUB_REGISTRY so we know which Docker registry we are targeting, GITHUB_OWNER to your account or organization and GITHUB_DOCKER_IMAGE to the name of the Docker image we are producing.</p>
+<p>Then we are adding two trigger rules, on-push and on-pull-request:</p>
+<ul>
+<li>on-push will trigger if we push to the master branch</li>
+<li>on-pull-request will trigger if we are targetting the master branch and we are also adding which files or paths we are ignoring. For example, if we make a change to README.md we don’t want to trigger a build since it does not effect the source code.</li>
+</ul>
+<pre data-lang="yaml" style="background-color:#111111;color:#cccccc;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#6f8b94;">name</span><span>: </span><span style="color:#b5db99;">build
+</span><span>
+</span><span style="color:#6f8b94;">env</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">GITHUB_REGISTRY</span><span>: </span><span style="color:#b5db99;">&quot;ghcr.io&quot;
+</span><span>  </span><span style="color:#6f8b94;">GITHUB_OWNER</span><span>: </span><span style="color:#b5db99;">&quot;mjovanc&quot;
+</span><span>  </span><span style="color:#6f8b94;">GITHUB_DOCKER_IMAGE</span><span>: </span><span style="color:#b5db99;">&quot;medium-rust-docker&quot;
+</span><span>
+</span><span style="color:#8767b7;">on</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">push</span><span>:
+</span><span>    </span><span style="color:#6f8b94;">branches</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">master
+</span><span>  </span><span style="color:#6f8b94;">pull_request</span><span>:
+</span><span>    </span><span style="color:#6f8b94;">branches</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">master
+</span><span>    </span><span style="color:#6f8b94;">paths-ignore</span><span>:
+</span><span>      - </span><span style="color:#b5db99;">&quot;**/README.md&quot;
+</span><span>      - </span><span style="color:#b5db99;">&quot;**/LICENSE&quot;
+</span><span>      - </span><span style="color:#b5db99;">&quot;**/.gitignore&quot;
+</span></code></pre>
+<p>Now we add a simple job below the on: section for building the Rust application, run clippy for linting and running unit tests (if we would add it later).</p>
+<pre data-lang="yaml" style="background-color:#111111;color:#cccccc;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#6f8b94;">jobs</span><span>:
+</span><span>  </span><span style="color:#6f8b94;">build</span><span>:
+</span><span>    </span><span style="color:#6f8b94;">name</span><span>: </span><span style="color:#b5db99;">build
+</span><span>    </span><span style="color:#6f8b94;">runs-on</span><span>: </span><span style="color:#b5db99;">ubuntu-latest
+</span><span>
+</span><span>    </span><span style="color:#6f8b94;">steps</span><span>:
+</span><span>      - </span><span style="color:#6f8b94;">uses</span><span>: </span><span style="color:#b5db99;">actions/checkout@v3
+</span><span>
+</span><span>      - </span><span style="color:#6f8b94;">name</span><span>: </span><span style="color:#b5db99;">Install Rust
+</span><span>        </span><span style="color:#6f8b94;">uses</span><span>: </span><span style="color:#b5db99;">actions-rs/toolchain@v1
+</span><span>        </span><span style="color:#6f8b94;">with</span><span>:
+</span><span>          </span><span style="color:#6f8b94;">profile</span><span>: </span><span style="color:#b5db99;">minimal
+</span><span>          </span><span style="color:#6f8b94;">toolchain</span><span>: </span><span style="color:#b5db99;">stable
+</span><span>
+</span><span>      - </span><span style="color:#6f8b94;">name</span><span>: </span><span style="color:#b5db99;">Cache Cargo Dependencies
+</span><span>        </span><span style="color:#6f8b94;">uses</span><span>: </span><span style="color:#b5db99;">actions/cache@v2
+</span><span>        </span><span style="color:#6f8b94;">with</span><span>:
+</span><span>          </span><span style="color:#6f8b94;">path</span><span>: </span><span style="color:#6f8b94;">|
+</span><span style="color:#b5db99;">            ~/.cargo
+</span><span>          </span><span style="color:#6f8b94;">key</span><span>: </span><span style="color:#b5db99;">${{ runner.os }}-cargo-${{ hashFiles(&#39;**/Cargo.lock&#39;) }}
+</span><span>
+</span><span>      - </span><span style="color:#6f8b94;">name</span><span>: </span><span style="color:#b5db99;">Run Clippy
+</span><span>        </span><span style="color:#6f8b94;">run</span><span>: </span><span style="color:#b5db99;">cargo clippy --all-targets --all-features
+</span><span>
+</span><span>      - </span><span style="color:#6f8b94;">name</span><span>: </span><span style="color:#b5db99;">Build Project
+</span><span>        </span><span style="color:#6f8b94;">run</span><span>: </span><span style="color:#b5db99;">cargo build --release
+</span><span>
+</span><span>      - </span><span style="color:#6f8b94;">name</span><span>: </span><span style="color:#b5db99;">Run Tests
+</span><span>        </span><span style="color:#6f8b94;">run</span><span>: </span><span style="color:#b5db99;">cargo test
+</span></code></pre>
+<p>And lastly we add the Docker job. This this will depend on the build job to succeed before starting and it will checkout the code, login to GitHub registry with the personal access token we generated before, build a docker image and tag it to latest, tag a new image with the commit SHA value and then finally push up both the image tagged with latest and the image tagged with the commit SHA.</p>
+<pre data-lang="yaml" style="background-color:#111111;color:#cccccc;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#6f8b94;">docker</span><span>:
+</span><span>    </span><span style="color:#6f8b94;">name</span><span>: </span><span style="color:#b5db99;">Build and Publish Docker Image
+</span><span>    </span><span style="color:#6f8b94;">runs-on</span><span>: </span><span style="color:#b5db99;">ubuntu-latest
+</span><span>    </span><span style="color:#6f8b94;">needs</span><span>: [</span><span style="color:#b5db99;">build</span><span>]
+</span><span>    </span><span style="color:#6f8b94;">steps</span><span>:
+</span><span>      - </span><span style="color:#6f8b94;">uses</span><span>: </span><span style="color:#b5db99;">actions/checkout@v3
+</span><span>      - </span><span style="color:#6f8b94;">uses</span><span>: </span><span style="color:#b5db99;">benjlevesque/short-sha@v2.2
+</span><span>
+</span><span>      - </span><span style="color:#6f8b94;">name</span><span>: </span><span style="color:#b5db99;">Log into registry ghcr.io
+</span><span>        </span><span style="color:#6f8b94;">uses</span><span>: </span><span style="color:#b5db99;">docker/login-action@v2
+</span><span>        </span><span style="color:#6f8b94;">with</span><span>:
+</span><span>          </span><span style="color:#6f8b94;">registry</span><span>: </span><span style="color:#b5db99;">ghcr.io
+</span><span>          </span><span style="color:#6f8b94;">username</span><span>: </span><span style="color:#b5db99;">${{ github.actor }}
+</span><span>          </span><span style="color:#6f8b94;">password</span><span>: </span><span style="color:#b5db99;">${{ secrets.GHCR_PAT }}
+</span><span>
+</span><span>      - </span><span style="color:#6f8b94;">name</span><span>: </span><span style="color:#b5db99;">Build Docker
+</span><span>        </span><span style="color:#6f8b94;">run</span><span>: </span><span style="color:#6f8b94;">|
+</span><span style="color:#b5db99;">          docker build -t $GITHUB_REGISTRY/$GITHUB_OWNER/$GITHUB_DOCKER_IMAGE:${{ env.SHA }} . --no-cache
+</span><span style="color:#b5db99;">
+</span><span>      - </span><span style="color:#6f8b94;">name</span><span>: </span><span style="color:#b5db99;">Tag Image
+</span><span>        </span><span style="color:#6f8b94;">run</span><span>: </span><span style="color:#6f8b94;">|
+</span><span style="color:#b5db99;">          docker tag $GITHUB_REGISTRY/$GITHUB_OWNER/$GITHUB_DOCKER_IMAGE:${{ env.SHA }} $GITHUB_REGISTRY/$GITHUB_OWNER/$GITHUB_DOCKER_IMAGE:latest
+</span><span style="color:#b5db99;">
+</span><span>      - </span><span style="color:#6f8b94;">name</span><span>: </span><span style="color:#b5db99;">Publish Docker Image to GitHub Repository
+</span><span>        </span><span style="color:#6f8b94;">run</span><span>: </span><span style="color:#6f8b94;">|
+</span><span style="color:#b5db99;">          docker push $GITHUB_REGISTRY/$GITHUB_OWNER/$GITHUB_DOCKER_IMAGE:${{ env.SHA }}
+</span><span style="color:#b5db99;">          docker push $GITHUB_REGISTRY/$GITHUB_OWNER/$GITHUB_DOCKER_IMAGE:latest
+</span></code></pre>
+<p>Now we push everything up to GitHub and let’s check. You are going to se a dot (could differ in color depending on theme) next to the commit SHA value. That means there is a workflow running.</p>
+<div style="text-align: center;">
+  <img src="/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/image-6.webp" alt="Docker Rust GitHub Actions Screenshot 0" style="max-width: 100%; display: inline-block;">
+</div>
+<p>Press on the dot and you will be able to se status of the workflow, you can also press on the tab “Actions”.</p>
+<div style="text-align: center;">
+  <img src="/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/image-7.webp" alt="Docker Rust GitHub Actions Screenshot 0" style="max-width: 100%; display: inline-block;">
+</div>
+<p>So now we can clearly see it passed on both jobs.</p>
+<div style="text-align: center;">
+  <img src="/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/image-8.webp" alt="Docker Rust GitHub Actions Screenshot 0" style="max-width: 100%; display: inline-block;">
+</div>
+<p>Let’s just check one final thing, if we actually have something up on GitHub registry, to confirm. Go to your GitHub profile and select “Packages” tab. And here it is! It’s private by default, but you can go into it and update it to be public if you want others to be able to pull the Docker image.</p>
+<div style="text-align: center;">
+  <img src="/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/image-9.webp" alt="Docker Rust GitHub Actions Screenshot 0" style="max-width: 100%; display: inline-block;">
+</div>
+<h2 id="summary">Summary</h2>
+<p>This was a very basic guide on how to setup a basic Rust project using Rocket, create a Dockerfile for it and configure a GitHub Actions workflow to automate the process.</p>
+<p>The repository used you can find here: <a href="https://github.com/mjovanc/medium-rust-docker">https://github.com/mjovanc/medium-rust-docker</a></p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://docs.github.com/en/actions">Github Actions Docs</a></li>
+<li><a href="https://rocket.rs/v0.5-rc/guide/">Rocket</a></li>
+<li><a href="https://docs.docker.com/">Docker Docs</a></li>
+<li><a href="https://docs.docker.com/engine/reference/builder/">Dockerfile reference</a></li>
+<li><a href="https://docs.docker.com/build/building/multi-stage/">Docker multi-stage</a></li>
+</ul>
+<h2 id="connect-with-me">Connect with me</h2>
+<ul>
+<li><a href="https://x.com/mjovanc">𝕏</a></li>
+<li><a href="https://github.com/mjovanc">GitHub</a></li>
+<li><a href="https://www.linkedin.com/in/marcuscvjeticanin/">LinkedIn</a></li>
+</ul>
+
+    </div>
+
+    
+        <footer>
+            <hr>
+            <p>
+                
+                    Published by Marcus Cvjeticanin
+                
+                
+                    
+                    in <a href="https://mjovanc.com/categories/tooling/">tooling</a>
+                
+                
+                    and
+                    tagged
+                    
+                        <a href="https://mjovanc.com/tags/docker/">docker</a>
+                        
+                            
+                                
+                                    ,
+                                
+                            
+                        
+                    
+                        <a href="https://mjovanc.com/tags/rust/">rust</a>
+                        
+                            
+                                
+                                    ,
+                                
+                            
+                        
+                    
+                        <a href="https://mjovanc.com/tags/github-actions/">github actions</a>
+                        
+                            
+                                
+                                    and
+                                
+                            
+                        
+                    
+                        <a href="https://mjovanc.com/tags/rocket/">rocket</a>
+                        
+                            
+                        
+                    
+                
+            </p>
+            
+            
+        </footer>
+    
+</article>
+
+
+    </body>
+
+</html>
