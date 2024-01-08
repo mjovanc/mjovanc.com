@@ -8,7 +8,7 @@ Hi, I'm Marcus Cvjeticanin. I work as a Software Engineer specialized in backend
 
 Currently my main focus and interest are in Java, Kotlin, JVM, Rust, Concurrency, Distributed Systems, Decentralized Systems, Software Architecture and a bit with Cryptography. 
 
-Here are a couple of lists of technologies I worked professionally with:
+Here are a couple of lists of technologies I worked with:
 
 ## Languages
 
