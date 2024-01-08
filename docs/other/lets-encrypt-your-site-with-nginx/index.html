@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZ8BXTEW5D"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'G-YZ8BXTEW5D');
+        </script>
+
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+
+    
+    <title>Let’s Encrypt your site with NGINX</title>
+    <meta property="twitter:title" content="Let’s Encrypt your site with NGINX" />
+    <meta property="og:title" content="Let’s Encrypt your site with NGINX" />
+    <meta property="twitter:image" content="https:&#x2F;&#x2F;mjovanc.com/&#x2F;other&#x2F;lets-encrypt-your-site-with-nginx&#x2F;/main_thumb.png" />
+    <meta property="og:image" content="https:&#x2F;&#x2F;mjovanc.com/&#x2F;other&#x2F;lets-encrypt-your-site-with-nginx&#x2F;/main_thumb.png" />
+
+        
+            <meta property="twitter:url" content="https:&#x2F;&#x2F;mjovanc.com/lets-encrypt-your-site-with-nginx" />
+        
+
+      
+        <meta name="description" content="In this article we are going to go through how to setup an NGINX server and use Let’s Encrypt to generate a certificate for us and also use certbot so we can automatically obtain a new certificate when it’s going to expire." />
+        <meta property="og:description" content="In this article we are going to go through how to setup an NGINX server and use Let’s Encrypt to generate a certificate for us and also use certbot so we can automatically obtain a new certificate when it’s going to expire." />
+        <meta property="twitter:description" content="In this article we are going to go through how to setup an NGINX server and use Let’s Encrypt to generate a certificate for us and also use certbot so we can automatically obtain a new certificate when it’s going to expire." />
+      
+    
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+      
+
+      
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="https://mjovanc.com/atom.xml">
+      
+
+      
+          <link rel="stylesheet" href="https://mjovanc.com/site.css">
+      
+
+      
+      
+    </head>
+
+    <body class="hack dark main container">
+        
+    
+        
+                
+                    <header>
+                        <nav itemscope itemtype="http://schema.org/SiteNavigationElement">
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com">
+                                <span itemprop="name">Home</span></a>
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com/categories">
+                                <span itemprop="name">Categories</span></a>
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com/tags">
+                                <span itemprop="name">Tags</span></a>
+                        
+                            <a itemprop="url"
+                               class=""
+                               href="https://mjovanc.com/about">
+                                <span itemprop="name">About</span></a>
+                        
+                        </nav>
+                    </header>
+                
+            
+    
+
+<article itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+        <h1 class="small-title" itemprop="headline">Let’s Encrypt your site with NGINX</h1>
+        <span class="muted">
+        <svg class="icon i-clock" viewBox="0 0 32 32"
+            width="16" height="16" fill="none" stroke="currentcolor"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+            <circle cx="16" cy="16" r="14"/>
+            <path d="M16 8 L16 16 20 20"/>
+        </svg>
+        <span>6 minute read</span>
+        <svg class="icon i-edit" viewBox="0 0 32 32"
+            width="16" height="16" fill="none" stroke="currentcolor"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+            <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z"/>
+        </svg>
+        Published: 2022-03-13
+</span>
+    </header>
+    <div class="article-margin" itemprop="articleBody">
+      <p>Since Google made the change to its ranking system for sites who use HTTPS instead of HTTP, finally websites started going over to the encrypted protocol. But instead of buying expensive certificates Let’s Encrypt solves this problem for us at zero cost.</p>
+<span id="continue-reading"></span>
+<p>So we are going to go through how to setup an NGINX server and use Let’s Encrypt to generate a certificate for us and also use certbot so we can automatically obtain a new certificate when it’s going to expire.</p>
+<p>This is a smaller tutorial and it actually doesn’t take too much time and effort to get it started but I thought it could be useful to share here as clear as possible all the nececssary steps to get it up and running. I will also share a shell script that will automate this process as much as possible if we need to start from scratch. It will be easy to just run the script again.</p>
+<h2 id="setup-script-for-installing-nginx">Setup script for installing NGINX</h2>
+<p>Login to your VM that you want to use to install NGINX on. We need two files in order for this script to run, we will create first file on VM called install_nginx.sh and put this code inside it:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#374c60;">#!/bin/bash
+</span><span style="color:#374c60;"># This script is intended to setup the environment for a NGINX Web Server with SSL certificate using Let&#39;s Encrypt.
+</span><span>
+</span><span>clear
+</span><span>
+</span><span>PROJECT_DIR</span><span style="color:#6f8b94;">=</span><span style="color:#b5db99;">&quot;/etc/nginx/sites-enabled&quot;
+</span><span>CURRENT_DIR</span><span style="color:#6f8b94;">=</span><span style="color:#b5db99;">$(pwd)
+</span><span>DOMAIN</span><span style="color:#6f8b94;">=</span><span style="color:#b5db99;">&quot;example.com&quot;
+</span><span>EMAIL</span><span style="color:#6f8b94;">=</span><span style="color:#b5db99;">&quot;foo@bar.com&quot;
+</span><span>
+</span><span style="color:#374c60;"># Get latest updates
+</span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;&quot;
+</span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;UPDATING SYSTEM...&quot;
+</span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;&quot;
+</span><span>sudo apt update
+</span><span>
+</span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;&quot;
+</span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;###### RUNNING NGINX SCRIPT ######&quot;
+</span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;&quot;
+</span><span>
+</span><span style="color:#6f8b94;">function </span><span style="color:#b5db99;">install_nginx
+</span><span>{
+</span><span> SOFTWARE</span><span style="color:#6f8b94;">=</span><span style="color:#b5db99;">&quot;nginx&quot;
+</span><span> QUERY</span><span style="color:#6f8b94;">=</span><span style="color:#b5db99;">&quot;$(sudo dpkg-query -l </span><span style="color:#6f8b94;">| </span><span style="color:#b5db99;">grep ${SOFTWARE} </span><span style="color:#6f8b94;">| </span><span style="color:#b5db99;">wc -l)&quot;
+</span><span>
+</span><span> </span><span style="color:#6f8b94;">if </span><span style="color:#8767b7;">[ </span><span style="color:#b5db99;">&quot;$QUERY&quot; </span><span>-eq 0 </span><span style="color:#8767b7;">]</span><span style="color:#6f8b94;">; then
+</span><span>  </span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;&quot;
+</span><span>  </span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;INSTALLING NGINX...&quot;
+</span><span>  </span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;&quot;
+</span><span>
+</span><span>  sudo apt -y install nginx
+</span><span>
+</span><span>  </span><span style="color:#374c60;"># Setup configuration file
+</span><span>  sudo cp $CURRENT_DIR/$DOMAIN $PROJECT_DIR/$DOMAIN
+</span><span>
+</span><span>  </span><span style="color:#374c60;"># Setup and configure Certbot
+</span><span>  sudo apt -y install certbot python3-certbot-nginx
+</span><span>  sudo certbot --nginx -d $DOMAIN --non-interactive --agree-tos -m $EMAIL
+</span><span> </span><span style="color:#6f8b94;">else
+</span><span>  </span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;${SOFTWARE} is already installed. skipping...&quot;
+</span><span> </span><span style="color:#6f8b94;">fi
+</span><span>}
+</span><span>
+</span><span>install_nginx
+</span></code></pre>
+<p>Let’s go through the first shell script what it does.</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>clear
+</span><span>
+</span><span>PROJECT_DIR</span><span style="color:#6f8b94;">=</span><span style="color:#b5db99;">&quot;/etc/nginx/sites-enabled&quot;
+</span><span>CURRENT_DIR</span><span style="color:#6f8b94;">=</span><span style="color:#b5db99;">$(pwd)
+</span><span>DOMAIN</span><span style="color:#6f8b94;">=</span><span style="color:#b5db99;">&quot;example.com&quot;
+</span><span>EMAIL</span><span style="color:#6f8b94;">=</span><span style="color:#b5db99;">&quot;foo@bar.com&quot;
+</span></code></pre>
+<p>We start by clearing the screen to get more space on the console. Then we add four constants we set the PROJECT_DIR as the directory where the configuration files should be located. Then we obtain the current directory we are in and set it to CURRENT_DIR. We set our domain constant and the email that should be associated with obtaining the certificate.</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#374c60;"># Get latest updates
+</span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;&quot;
+</span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;UPDATING SYSTEM...&quot;
+</span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;&quot;
+</span><span>sudo apt update
+</span></code></pre>
+<p>Here we obviously update the package list of the system before proceeding to install the software.</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#6f8b94;">function </span><span style="color:#b5db99;">install_nginx
+</span><span>{
+</span><span> SOFTWARE</span><span style="color:#6f8b94;">=</span><span style="color:#b5db99;">&quot;nginx&quot;
+</span><span> QUERY</span><span style="color:#6f8b94;">=</span><span style="color:#b5db99;">&quot;$(sudo dpkg-query -l </span><span style="color:#6f8b94;">| </span><span style="color:#b5db99;">grep ${SOFTWARE} </span><span style="color:#6f8b94;">| </span><span style="color:#b5db99;">wc -l)&quot;
+</span><span>
+</span><span> </span><span style="color:#6f8b94;">if </span><span style="color:#8767b7;">[ </span><span style="color:#b5db99;">&quot;$QUERY&quot; </span><span>-eq 0 </span><span style="color:#8767b7;">]</span><span style="color:#6f8b94;">; then
+</span><span>  </span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;&quot;
+</span><span>  </span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;INSTALLING NGINX...&quot;
+</span><span>  </span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;&quot;
+</span><span>
+</span><span>  sudo apt -y install $SOFTWARE
+</span><span>
+</span><span>  </span><span style="color:#374c60;"># Setup configuration file
+</span><span>  sudo cp $CURRENT_DIR/$DOMAIN $PROJECT_DIR/$DOMAIN
+</span><span>
+</span><span>  </span><span style="color:#374c60;"># Setup and configure Certbot
+</span><span>  sudo apt -y install certbot python3-certbot-nginx
+</span><span>  sudo certbot --nginx -d $DOMAIN --non-interactive --agree-tos -m $EMAIL
+</span><span> </span><span style="color:#6f8b94;">else
+</span><span>  </span><span style="color:#8767b7;">echo </span><span style="color:#b5db99;">&quot;${SOFTWARE} is already installed. skipping...&quot;
+</span><span> </span><span style="color:#6f8b94;">fi
+</span><span>}
+</span></code></pre>
+<p>We now created a function install_nginx. We define the software that will be installed and we do a query on the system to see if we already have that software installed, if we do we just print out a message that it has already been installed.</p>
+<p>Next if not installed, we installing the software and adding the flag -y to avoid having to manually input yes/no to install NGINX. We then continue by copying the configuration file we created to the destination directory where NGINX has it’s configurations.</p>
+<p>Then we install python3-certbot-nginx so we can have a bot that automatically retrieves a new certificate when it will expire.</p>
+<p>We run the certbot and adding the flag --nginx so we tell it will be used to insert config to the NGINX configuration and specify what domain with the -d flag should be used and that we don’t want it to be interactive with the --non-interactive flag as well as --agree-tos to agree automatically and -m for the email that should be used.</p>
+<p>If you want to add www. to the domain as well, just add another -d flag and add www.example.com as well as example.com. In this example we are not adding it.</p>
+<h2 id="configure-nginx-configuration">Configure NGINX configuration</h2>
+<p>Then we create another file that will hold the NGINX configuration called example.com (switch this to your own domain):</p>
+<pre data-lang="conf" style="background-color:#111111;color:#cccccc;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#6f8b94;">server </span><span>{
+</span><span>    root                </span><span style="color:#6f8b94;">/</span><span>var</span><span style="color:#6f8b94;">/</span><span>www</span><span style="color:#6f8b94;">/</span><span>html;
+</span><span style="color:#56738e;">    index</span><span>               index</span><span style="color:#6f8b94;">.</span><span>html index</span><span style="color:#6f8b94;">.</span><span>htm index</span><span style="color:#6f8b94;">.</span><span>nginx</span><span style="color:#6f8b94;">-</span><span>debian</span><span style="color:#6f8b94;">.</span><span>html;
+</span><span>    server_name         example</span><span style="color:#6f8b94;">.</span><span>com;
+</span><span style="color:#56738e;">    include             </span><span style="color:#6f8b94;">/</span><span>etc</span><span style="color:#6f8b94;">/</span><span>nginx</span><span style="color:#6f8b94;">/</span><span>mime</span><span style="color:#6f8b94;">.</span><span>types;
+</span><span>}
+</span><span style="color:#6f8b94;">server </span><span>{
+</span><span style="color:#56738e;">    if</span><span> (</span><span style="color:#8767b7;">$host </span><span style="color:#6f8b94;">=</span><span> example</span><span style="color:#6f8b94;">.</span><span>com) {
+</span><span>        return </span><span style="color:#b5db99;">301 </span><span style="color:#8767b7;">https://$host$request_uri</span><span>;
+</span><span>    }
+</span><span>    listen              </span><span style="color:#b5db99;">80</span><span>;
+</span><span>    listen              [</span><span style="color:#6f8b94;">::</span><span>]</span><span style="color:#6f8b94;">:</span><span style="color:#b5db99;">80</span><span>;
+</span><span>    server_name         example</span><span style="color:#6f8b94;">.</span><span>com;
+</span><span>    return              </span><span style="color:#b5db99;">404</span><span>;
+</span><span>}
+</span></code></pre>
+<p>Lets break the file down a little what it does. First we define a server block, we will use two server blocks for HTTP and HTTPS. First one will be HTTPS (port 443).</p>
+<pre data-lang="conf" style="background-color:#111111;color:#cccccc;" class="language-conf "><code class="language-conf" data-lang="conf"><span>root                </span><span style="color:#6f8b94;">/</span><span>var</span><span style="color:#6f8b94;">/</span><span>www</span><span style="color:#6f8b94;">/</span><span>html;
+</span></code></pre>
+<p>This defines where the root files are located for the NGINX server. This is the default setting when installing NGINX which we will be using in this tutorial.</p>
+<pre data-lang="conf" style="background-color:#111111;color:#cccccc;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#56738e;">index</span><span>               index</span><span style="color:#6f8b94;">.</span><span>html index</span><span style="color:#6f8b94;">.</span><span>htm index</span><span style="color:#6f8b94;">.</span><span>nginx</span><span style="color:#6f8b94;">-</span><span>debian</span><span style="color:#6f8b94;">.</span><span>html;
+</span><span>server_name         example</span><span style="color:#6f8b94;">.</span><span>com;
+</span><span style="color:#56738e;">include             </span><span style="color:#6f8b94;">/</span><span>etc</span><span style="color:#6f8b94;">/</span><span>nginx</span><span style="color:#6f8b94;">/</span><span>mime</span><span style="color:#6f8b94;">.</span><span>types;
+</span></code></pre>
+<p>Here we define what index file to load from that root directory. We define multiple if we can’t find the first one we look for index.htm and so on. Then we define what the name of the server should be. Here we are changing to the domain we want before running the script. We use include to the nginx mime.types as default setting.</p>
+<pre data-lang="conf" style="background-color:#111111;color:#cccccc;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#6f8b94;">server </span><span>{
+</span><span style="color:#56738e;">    if</span><span> (</span><span style="color:#8767b7;">$host </span><span style="color:#6f8b94;">=</span><span> example</span><span style="color:#6f8b94;">.</span><span>com) {
+</span><span>        return </span><span style="color:#b5db99;">301 </span><span style="color:#8767b7;">https://$host$request_uri</span><span>;
+</span><span>    }
+</span><span>
+</span><span>    listen              </span><span style="color:#b5db99;">80</span><span>;
+</span><span>    listen              [</span><span style="color:#6f8b94;">::</span><span>]</span><span style="color:#6f8b94;">:</span><span style="color:#b5db99;">80</span><span>;
+</span><span>    server_name         example</span><span style="color:#6f8b94;">.</span><span>com;
+</span><span>    return              </span><span style="color:#b5db99;">404</span><span>;
+</span><span>}
+</span></code></pre>
+<p>Here we define the second server block which will listen on HTTP port 80 the standard. But here we will add an if statement which checks if you try go to HTTP you will automatically be redirected to the other server block which serves HTTPS. We don’t want the users use the unencrypted protocol of security reasons.</p>
+<p>We can check the configuration is valid by:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>nginx -c /etc/nginx/nginx.conf -t
+</span></code></pre>
+<h2 id="install-nginx">Install NGINX</h2>
+<p>Now we are ready to install the NGINX server. Let’s set the permissions to the shell script and run it!</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>chmod +x install_nginx.sh
+</span><span>./install_sh
+</span></code></pre>
+<h2 id="confirm-the-nginx-service-is-up-and-running">Confirm the NGINX service is up and running</h2>
+<p>We can confirm the status by running the command:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>systemctl status nginx
+</span></code></pre>
+<div style="text-align: center;">
+  <img src="/other/lets-encrypt-your-site-with-nginx/image-0.webp" alt="NGINX Screenshot 0" style="max-width: 100%; display: inline-block;">
+</div>
+<p>We are up and running. Go to your domain URL and try access it and it should be displayed a default NGINX site using HTTPS. But there is just one small detail we need to fix. Open up the configuration file we added:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>sudo vim /etc/nginx/sites-enabled/example.com
+</span></code></pre>
+<p>Then remove the line with port 80 after include in the first server block. Then run:</p>
+<pre data-lang="sh" style="background-color:#111111;color:#cccccc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>sudo systemctl reload nginx
+</span><span>sudo systemctl restart nginx
+</span></code></pre>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://docs.nginx.com">NGINX Docs</a></li>
+</ul>
+
+    </div>
+
+    
+        <footer>
+            <hr>
+            <p>
+                
+                    Published by Marcus Cvjeticanin
+                
+                
+                    
+                    in <a href="https://mjovanc.com/categories/other/">other</a>
+                
+                
+                    and
+                    tagged
+                    
+                        <a href="https://mjovanc.com/tags/nginx/">nginx</a>
+                        
+                            
+                                
+                                    ,
+                                
+                            
+                        
+                    
+                        <a href="https://mjovanc.com/tags/letsencrypt/">letsencrypt</a>
+                        
+                            
+                                
+                                    and
+                                
+                            
+                        
+                    
+                        <a href="https://mjovanc.com/tags/certbot/">certbot</a>
+                        
+                            
+                        
+                    
+                
+            </p>
+            
+            
+        </footer>
+    
+</article>
+
+
+    </body>
+
+</html>

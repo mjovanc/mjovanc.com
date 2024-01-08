@@ -2,8 +2,8 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Marcus Cvjeticanin</title>
     <subtitle>Software Engineer specialized in backend systems. Java, Kotlin, JVM, CI&#x2F;CD, Concurrency, Distributed Systems, Decentralized Systems.</subtitle>
-    <link href="https://mjovanc.com/atom.xml" rel="self" type="application/atom+xml"/>
-    <link href="https://mjovanc.com"/>
+    <link rel="self" type="application/atom+xml" href="https://mjovanc.com/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://mjovanc.com"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2023-11-10T00:00:00+00:00</updated>
     <id>https://mjovanc.com/atom.xml</id>
@@ -11,10 +11,16 @@
         <title>Java 21 - Pattern Matching for switch</title>
         <published>2023-11-10T00:00:00+00:00</published>
         <updated>2023-11-10T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://mjovanc.com/java/java-21-pattern-matching-for-switch/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://mjovanc.com/java/java-21-pattern-matching-for-switch/"/>
         <id>https://mjovanc.com/java/java-21-pattern-matching-for-switch/</id>
         
         <summary type="html">&lt;p&gt;Java has now extended the pattern matching feature to &lt;code&gt;switch&lt;&#x2F;code&gt; statements. This allows an expression to be tested against a number of patterns, each for a specific action. It enables complex data-oriented queries to be expressed concisely and safely.&lt;&#x2F;p&gt;
@@ -25,10 +31,16 @@
         <title>Java 21 - A deep dive into Virtual Threads</title>
         <published>2023-11-04T00:00:00+00:00</published>
         <updated>2023-11-04T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://mjovanc.com/java/java-21-a-deep-dive-into-virtual-threads/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://mjovanc.com/java/java-21-a-deep-dive-into-virtual-threads/"/>
         <id>https://mjovanc.com/java/java-21-a-deep-dive-into-virtual-threads/</id>
         
         <summary type="html">&lt;p&gt;So the &lt;a href=&quot;https:&#x2F;&#x2F;openjdk.org&#x2F;projects&#x2F;jdk&#x2F;21&#x2F;&quot;&gt;JDK 21&lt;&#x2F;a&gt; came out, we already had some insight into how the virtual threads looked like earlier with the &lt;em&gt;preview&lt;&#x2F;em&gt; flag. However with a proper release now it is more accessible and I encourage everyone who can to upgrade to this version. &lt;&#x2F;p&gt;
@@ -39,10 +51,16 @@
         <title>Welcome to my new blog!</title>
         <published>2023-11-02T00:00:00+00:00</published>
         <updated>2023-11-02T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://mjovanc.com/other/welcome-to-my-new-blog/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://mjovanc.com/other/welcome-to-my-new-blog/"/>
         <id>https://mjovanc.com/other/welcome-to-my-new-blog/</id>
         
         <summary type="html">&lt;p&gt;Welcome to my new blog! In this newly styled (self hosted) blog will I cover a range of topics but mainly the Java ecosystem with the language, JVM, tooling and much more. I will try to migrate over my older articles from Medium to this place incrementally. Stay tuned for more!&lt;&#x2F;p&gt;
@@ -53,10 +71,16 @@
         <title>How to generate a Docker image for a Rust project using GitHub Actions</title>
         <published>2023-10-25T00:00:00+00:00</published>
         <updated>2023-10-25T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://mjovanc.com/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://mjovanc.com/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/"/>
         <id>https://mjovanc.com/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/</id>
         
         <summary type="html">&lt;p&gt;In this article we are going through how to generate a &lt;a href=&quot;http:&#x2F;&#x2F;docker.com&quot;&gt;Docker&lt;&#x2F;a&gt; image for a Rust project, using web framework &lt;a href=&quot;http:&#x2F;&#x2F;rocket.rs&quot;&gt;Rocket&lt;&#x2F;a&gt;, with &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;features&#x2F;actions&quot;&gt;GitHub Actions&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
@@ -68,10 +92,16 @@
         <title>Best communities on 𝕏 for Software Engineers</title>
         <published>2023-10-21T00:00:00+00:00</published>
         <updated>2023-10-21T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://mjovanc.com/other/best-communities-on-x-for-software-engineers/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://mjovanc.com/other/best-communities-on-x-for-software-engineers/"/>
         <id>https://mjovanc.com/other/best-communities-on-x-for-software-engineers/</id>
         
         <summary type="html">&lt;p&gt;𝕏 is really working hard, especially with the communities. It’s great that the team on 𝕏 are listening to the people and responding to the feedback as fast as they do. Great work I must say, it differs a lot from other platforms.&lt;&#x2F;p&gt;
@@ -82,10 +112,16 @@
         <title>Handy shortcuts in IntelliJ IDEA</title>
         <published>2022-10-12T00:00:00+00:00</published>
         <updated>2022-10-12T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://mjovanc.com/tooling/handy-shortcuts-in-intellij-idea/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://mjovanc.com/tooling/handy-shortcuts-in-intellij-idea/"/>
         <id>https://mjovanc.com/tooling/handy-shortcuts-in-intellij-idea/</id>
         
         <summary type="html">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.jetbrains.com&#x2F;idea&#x2F;&quot;&gt;IntelliJ IDEA&lt;&#x2F;a&gt; is my daily driver. Since I was introduced to &lt;a href=&quot;https:&#x2F;&#x2F;eclipseide.org&quot;&gt;Eclipse&lt;&#x2F;a&gt; for Java at my university a while ago and experienced the terror, I was looking for alternatives and I found Intellij. I use it all the time, and it&#x27;s definitely my favorite IDE. All the other Jetbrains products such as PyCharm and WebStorm are also on the same high standard.&lt;&#x2F;p&gt;
@@ -93,13 +129,39 @@
         
     </entry>
     <entry xml:lang="en">
+        <title>Let’s Encrypt your site with NGINX</title>
+        <published>2022-03-13T00:00:00+00:00</published>
+        <updated>2022-03-13T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://mjovanc.com/other/lets-encrypt-your-site-with-nginx/"/>
+        <id>https://mjovanc.com/other/lets-encrypt-your-site-with-nginx/</id>
+        
+        <summary type="html">&lt;p&gt;Since Google made the change to its ranking system for sites who use HTTPS instead of HTTP, finally websites started going over to the encrypted protocol. But instead of buying expensive certificates Let’s Encrypt solves this problem for us at zero cost.&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+    <entry xml:lang="en">
         <title>Get started with Docker and Docker Compose</title>
         <published>2022-03-06T00:00:00+00:00</published>
         <updated>2022-03-06T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://mjovanc.com/tooling/get-started-with-docker-and-docker-compose/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://mjovanc.com/tooling/get-started-with-docker-and-docker-compose/"/>
         <id>https://mjovanc.com/tooling/get-started-with-docker-and-docker-compose/</id>
         
         <summary type="html">&lt;p&gt;It’s hard to find a software company, besides embedded, that doesn’t take advantage of using &lt;a href=&quot;https:&#x2F;&#x2F;www.docker.com&quot;&gt;Docker&lt;&#x2F;a&gt; as their container solution. Even harder when it’s a company that focuses on the Web. There is a good reason why this is the case, it’s making life a lot easier for SWE&#x2F;SRE&#x2F;DevOps Engineers.&lt;&#x2F;p&gt;

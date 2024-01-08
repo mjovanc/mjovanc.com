@@ -2,8 +2,8 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Marcus Cvjeticanin - other</title>
     <subtitle>Software Engineer specialized in backend systems. Java, Kotlin, JVM, CI&#x2F;CD, Concurrency, Distributed Systems, Decentralized Systems.</subtitle>
-    <link href="https://mjovanc.com/categories/other/atom.xml" rel="self" type="application/atom+xml"/>
-    <link href="https://mjovanc.com"/>
+    <link rel="self" type="application/atom+xml" href="https://mjovanc.com/categories/other/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://mjovanc.com"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2023-11-02T00:00:00+00:00</updated>
     <id>https://mjovanc.com/categories/other/atom.xml</id>
@@ -11,10 +11,16 @@
         <title>Welcome to my new blog!</title>
         <published>2023-11-02T00:00:00+00:00</published>
         <updated>2023-11-02T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://mjovanc.com/other/welcome-to-my-new-blog/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://mjovanc.com/other/welcome-to-my-new-blog/"/>
         <id>https://mjovanc.com/other/welcome-to-my-new-blog/</id>
         
         <summary type="html">&lt;p&gt;Welcome to my new blog! In this newly styled (self hosted) blog will I cover a range of topics but mainly the Java ecosystem with the language, JVM, tooling and much more. I will try to migrate over my older articles from Medium to this place incrementally. Stay tuned for more!&lt;&#x2F;p&gt;
@@ -25,13 +31,39 @@
         <title>Best communities on 𝕏 for Software Engineers</title>
         <published>2023-10-21T00:00:00+00:00</published>
         <updated>2023-10-21T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://mjovanc.com/other/best-communities-on-x-for-software-engineers/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://mjovanc.com/other/best-communities-on-x-for-software-engineers/"/>
         <id>https://mjovanc.com/other/best-communities-on-x-for-software-engineers/</id>
         
         <summary type="html">&lt;p&gt;𝕏 is really working hard, especially with the communities. It’s great that the team on 𝕏 are listening to the people and responding to the feedback as fast as they do. Great work I must say, it differs a lot from other platforms.&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Let’s Encrypt your site with NGINX</title>
+        <published>2022-03-13T00:00:00+00:00</published>
+        <updated>2022-03-13T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://mjovanc.com/other/lets-encrypt-your-site-with-nginx/"/>
+        <id>https://mjovanc.com/other/lets-encrypt-your-site-with-nginx/</id>
+        
+        <summary type="html">&lt;p&gt;Since Google made the change to its ranking system for sites who use HTTPS instead of HTTP, finally websites started going over to the encrypted protocol. But instead of buying expensive certificates Let’s Encrypt solves this problem for us at zero cost.&lt;&#x2F;p&gt;
 </summary>
         
     </entry>

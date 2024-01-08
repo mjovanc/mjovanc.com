@@ -2,8 +2,8 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Marcus Cvjeticanin - ci&#x2F;cd</title>
     <subtitle>Software Engineer specialized in backend systems. Java, Kotlin, JVM, CI&#x2F;CD, Concurrency, Distributed Systems, Decentralized Systems.</subtitle>
-    <link href="https://mjovanc.com/categories/ci-cd/atom.xml" rel="self" type="application/atom+xml"/>
-    <link href="https://mjovanc.com"/>
+    <link rel="self" type="application/atom+xml" href="https://mjovanc.com/categories/ci-cd/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://mjovanc.com"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2023-10-25T00:00:00+00:00</updated>
     <id>https://mjovanc.com/categories/ci-cd/atom.xml</id>
@@ -11,10 +11,16 @@
         <title>How to generate a Docker image for a Rust project using GitHub Actions</title>
         <published>2023-10-25T00:00:00+00:00</published>
         <updated>2023-10-25T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://mjovanc.com/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://mjovanc.com/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/"/>
         <id>https://mjovanc.com/tooling/how-to-generate-a-docker-image-for-a-rust-project-using-github-actions/</id>
         
         <summary type="html">&lt;p&gt;In this article we are going through how to generate a &lt;a href=&quot;http:&#x2F;&#x2F;docker.com&quot;&gt;Docker&lt;&#x2F;a&gt; image for a Rust project, using web framework &lt;a href=&quot;http:&#x2F;&#x2F;rocket.rs&quot;&gt;Rocket&lt;&#x2F;a&gt;, with &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;features&#x2F;actions&quot;&gt;GitHub Actions&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
@@ -26,10 +32,16 @@
         <title>Get started with Docker and Docker Compose</title>
         <published>2022-03-06T00:00:00+00:00</published>
         <updated>2022-03-06T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://mjovanc.com/tooling/get-started-with-docker-and-docker-compose/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://mjovanc.com/tooling/get-started-with-docker-and-docker-compose/"/>
         <id>https://mjovanc.com/tooling/get-started-with-docker-and-docker-compose/</id>
         
         <summary type="html">&lt;p&gt;It’s hard to find a software company, besides embedded, that doesn’t take advantage of using &lt;a href=&quot;https:&#x2F;&#x2F;www.docker.com&quot;&gt;Docker&lt;&#x2F;a&gt; as their container solution. Even harder when it’s a company that focuses on the Web. There is a good reason why this is the case, it’s making life a lot easier for SWE&#x2F;SRE&#x2F;DevOps Engineers.&lt;&#x2F;p&gt;

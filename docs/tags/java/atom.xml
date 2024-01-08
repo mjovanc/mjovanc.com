@@ -2,8 +2,8 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Marcus Cvjeticanin - java</title>
     <subtitle>Software Engineer specialized in backend systems. Java, Kotlin, JVM, CI&#x2F;CD, Concurrency, Distributed Systems, Decentralized Systems.</subtitle>
-    <link href="https://mjovanc.com/tags/java/atom.xml" rel="self" type="application/atom+xml"/>
-    <link href="https://mjovanc.com"/>
+    <link rel="self" type="application/atom+xml" href="https://mjovanc.com/tags/java/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://mjovanc.com"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2023-11-10T00:00:00+00:00</updated>
     <id>https://mjovanc.com/tags/java/atom.xml</id>
@@ -11,10 +11,16 @@
         <title>Java 21 - Pattern Matching for switch</title>
         <published>2023-11-10T00:00:00+00:00</published>
         <updated>2023-11-10T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://mjovanc.com/java/java-21-pattern-matching-for-switch/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://mjovanc.com/java/java-21-pattern-matching-for-switch/"/>
         <id>https://mjovanc.com/java/java-21-pattern-matching-for-switch/</id>
         
         <summary type="html">&lt;p&gt;Java has now extended the pattern matching feature to &lt;code&gt;switch&lt;&#x2F;code&gt; statements. This allows an expression to be tested against a number of patterns, each for a specific action. It enables complex data-oriented queries to be expressed concisely and safely.&lt;&#x2F;p&gt;
@@ -25,10 +31,16 @@
         <title>Java 21 - A deep dive into Virtual Threads</title>
         <published>2023-11-04T00:00:00+00:00</published>
         <updated>2023-11-04T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://mjovanc.com/java/java-21-a-deep-dive-into-virtual-threads/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://mjovanc.com/java/java-21-a-deep-dive-into-virtual-threads/"/>
         <id>https://mjovanc.com/java/java-21-a-deep-dive-into-virtual-threads/</id>
         
         <summary type="html">&lt;p&gt;So the &lt;a href=&quot;https:&#x2F;&#x2F;openjdk.org&#x2F;projects&#x2F;jdk&#x2F;21&#x2F;&quot;&gt;JDK 21&lt;&#x2F;a&gt; came out, we already had some insight into how the virtual threads looked like earlier with the &lt;em&gt;preview&lt;&#x2F;em&gt; flag. However with a proper release now it is more accessible and I encourage everyone who can to upgrade to this version. &lt;&#x2F;p&gt;
